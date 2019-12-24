@@ -2,6 +2,7 @@ import turtle,random
 class props:
     def __init__(self,):#props_gif
         self.item=turtle.Turtle()
+        self.item.penup()
         self.item.setposition(random.randint(-250,250),random.randint(-250,250))
         prob=random.randint(1,3)
         if prob==1:

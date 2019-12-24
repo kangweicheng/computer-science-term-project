@@ -5,6 +5,7 @@ import config
 import player
 from PlayerKeyPressHandler import playerKeyPressHandler
 from map import Map
+from props import props
 
 def initScreen():
 	screen = turtle.Screen()
@@ -91,7 +92,11 @@ pressHandle = playerKeyPressHandler(
 
 
 screen.listen()
-
+proplist = []
+def createProps():
+	proplist.append(props())
+	screen.ontimer(createProps, 1)
+screen.ontimer(createProps, 1)
 
 
 # screen.ontimer(t.shoot(),15000)
