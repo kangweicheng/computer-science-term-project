@@ -8,7 +8,7 @@ class player(turtle.Turtle):
         self.penup()
         self.setheading(90)
         self.original_pos=pos
-        self.pos=list(pos)
+        # self.pos=list(pos)
         self.name=name
         self.attack=1
         self.hp=config.hpmax
@@ -43,10 +43,6 @@ class player(turtle.Turtle):
         self.bar.fd(config.bar_width)
         self.bar.rt(90)
         self.bar.fd(config.bar_height)
-    def setpos(self, pos):
-        self.original_pos = self.pos
-        self.setposition(pos)
-        self.pos = self.position()
     def display_bar(self):
         self.trueblood.clear()
         self.trueblood.begin_fill()
@@ -98,24 +94,17 @@ class player(turtle.Turtle):
     def fd(self,dis):
         self.original_pos=self.position()
         self.forward(dis)
-        self.pos = self.position()
-    def back(self,dis):
-        self.pos=self.original_pos
-        self.backward(dis)
     def get_prop(self,other):
         if isinstance(other,gun):
-            self.gun=gun
+            self.gun=other
         elif str(other)=='defense':
             self.defense-=other.ratio
         elif str(other)=='heal':
             self.hp+=other.ratio
         else:
             self.attack+=other.ratio
-        return None
     def hit(self,other):
         self.hp-other.damage
-        return None
     def shoot(self):
         self.gun.attack(self.pos,self.dir)
-        return None
 
