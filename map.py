@@ -1,39 +1,9 @@
 import turtle
-import datetime
+from datetime import timedelta, datetime
 import random
 import config
-random.seed(0)
-
-class player:
-	def __init__(self, pos):
-		self.original_pos = pos   #等於之前的pos
-		self.pos = pos
-		self.turtle = turtle.Turtle()
-		self.turtle.penup()
-		self.turtle.setpos(pos)
-	def penup(self):
-		self.turtle.penup()
-	def pendown(self):
-		self.turtle.pendown()
-	def forward(self, x):
-		self.turtle.penup()
-		self.turtle.forward(x)
-		self.update_pos()
-	def lt(self, x):
-		self.turtle.lt(x)
-	def rt(self, x):
-		self.turtle.rt(x)
-	def setheading(self, x):
-		self.turtle.setheading(x)
-	def update_pos(self):
-		self.original_pos = self.pos
-		self.pos = self.turtle.position()
-	def setpos(self, new_pos):
-		self.turtle.penup()
-		self.turtle.setpos(new_pos)
-		self.update_pos()
-
-
+import player
+from PlayerKeyPressHandler import playerKeyPressHandler
 class Map:
 	def penup_set_pos(self, Turtle, pos):
 		Turtle.penup()
@@ -75,14 +45,16 @@ class Map:
 			self.wall.append(stamp_id)
 		self.screen.update()
 		self.screen.tracer(1)
-	def __init__(self, map_size, fog_step, screen):
+	def __init__(self, map_size, fog_step, screen, fogUpdateInterval = config.FOG_UPDATE_INTERVAL):
 		self.screen = screen
 		self.wall_vertex = []
 		self.wall = []
+		self.player = []
 		self.fog_position = map_size[0]/ 2
 		self.fog_step = fog_step
 		self.map_size = map_size
 		self.wall_size = 40
+		self.fogUpdateInterval = fogUpdateInterval * 1000
 
 		self.initWallpos(10)
 		self.initWall()
@@ -92,7 +64,8 @@ class Map:
 		self.fog.hideturtle()
 		self.fog.width(fog_step)
 		self.penup_set_pos(self.fog, ( -1 * map_size[0] /2 , -1 * map_size[1] / 2 - self.fog_step))# - self.fog_step))
-		self.next_updateTime = datetime.datetime.now()
+		self.fogMove()
+		self.screen.ontimer(self.update, self.fogUpdateInterval)
 	def fogMove(self):
 		self.screen.tracer(0)
 		self.fog.forward(self.fog_step)
@@ -107,13 +80,13 @@ class Map:
 		self.fog.forward(self.map_size[1])
 		self.fog.rt(180)
 		self.map_size = (self.map_size[0] - self.fog_step * 2, self.map_size[1]  - self.fog_step * 2)
-		self.next_updateTime += datetime.timedelta(seconds = config.FOG_UPDATE_INTERVAL)
 		self.screen.update()
 		self.screen.tracer(1)
+		self.updatePlayers()
 
 	def update(self):
-		if datetime.datetime.now() > self.next_updateTime :
-			self.fogMove()
+		self.fogMove()
+		self.screen.ontimer(self.update, self.fogUpdateInterval)
 	def in_square(self, original_pos, pos, square_pos, square_size):
 		xgt = square_pos[0] + square_size / 2 > pos[0]
 		xlt = square_pos[0] - square_size / 2 < pos[0]
@@ -138,11 +111,14 @@ class Map:
 			return False, None
 
 	def hit_wall(self, obj):
+		print(obj.pos)
 		for i in self.wall_pos:
 			x, y = self.in_square(obj.original_pos, obj.pos, i, self.wall_size)
 			if x:
-				self.penup_set_pos(obj, y)
-				obj.penup()
+				return True, y
+		return False, None
+				# self.penup_set_pos(obj, y)
+				# obj.penup()
 
 	def hit_boundary(self, obj):
 		square_pos = (0, 0)
@@ -165,56 +141,26 @@ class Map:
 				pos[1] = self.map_size[1]/2
 			elif obj.pos[1] < -1 * self.map_size[1]/2:
 				pos[1] = -1 * self.map_size[1]/2
-			self.penup_set_pos(obj, pos)
-			# obj.hit(config.TOUCH_FOG_DAMAGE)
-			obj.penup()
+			return True, pos
+			# self.penup_set_pos(obj, pos)
+			# # obj.hit(config.TOUCH_FOG_DAMAGE)
+			# obj.penup()
 			# return True, tuple(pos)
+	def updatePlayers(self):
+		for i in self.player:
+			collide, backPos = self.hit_wall(i)
+			print(collide)
+			if collide:
+				i.back(9)
+				# i.setpos(backPos)
+				return
+			collide, backPos = self.hit_boundary(i)
 
-def initScreen():
-	screen = turtle.Screen()
-	screen.register_shape("rect", ((-5, -5), (5, -5), (5,5), (-5, 5)))
-	screen.setworldcoordinates(-300,-300,300,300)
-	return screen
+			if collide:
+				i.setpos(backPos)
+				return
 
-map_size = config.MAP_SIZE
-
-fog_step = 2
-screen = initScreen()
-
-gameMap = Map(map_size, fog_step, screen)
-t = player((-200, -200))
-t.penup()
-def update():
-	gameMap.update()
-	gameMap.hit_boundary(t)
-	gameMap.hit_wall(t)
-	screen.ontimer(update, 10)
-def funcUp():
-	t.setheading(90)
-	t.forward(9)
-	# update()
-def funcDown():
-	t.setheading(270)
-	t.forward(9)
-	# update()
-	screen.update()
-def funcLeft():
-	t.setheading(180)
-	t.forward(9)
-	# update()
-	screen.update()
-def funcRight():
-	t.setheading(0)
-	t.forward(9)
-	
-	# screen.update()
-screen.onkey(funcUp, "Up")
-screen.onkey(funcDown, "Down")
-screen.onkey(funcLeft, "Left")
-screen.onkey(funcRight, "Right")
-screen.listen()
-
-screen.ontimer(update, 10)
+	def registerPlayer(self, Player):
+		self.player.append(Player)
 
 
-turtle.mainloop()
