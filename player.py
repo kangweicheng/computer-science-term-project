@@ -1,7 +1,9 @@
 import turtle,config,gun,math
 class player(turtle.Turtle):
-    def __init__(self,pos,name,gif,bar_on_left_or_right):
+    def __init__(self,pos,name,dir,gif,bar_on_left_or_right):
         super().__init__()
+        self.dir=dir
+        self.image=gif
         self.penup()
         self.setposition(pos)
         self.shape(gif)
@@ -88,8 +90,10 @@ class player(turtle.Turtle):
             self.trueblood.pendown()
             self.dir=90
         self.trueblood.end_fill()
-    def setheading(self,ang):
+    def setheading(self,ang,gif):
         self.seth(ang)
+        self.image=gif
+        self.shape(gif)
         self.dir=ang
     def fd(self,dis):
         self.original_pos=self.position()
@@ -105,6 +109,7 @@ class player(turtle.Turtle):
             self.attack+=other.ratio
     def hit(self,other):
         self.hp-other.damage
-    def shoot(self):
+    def shoot(self,gif):
         self.gun.attack(self.pos,self.dir)
-
+        self.shape(gif)
+        self.shape(self.image)
