@@ -109,7 +109,5 @@ class player(turtle.Turtle):
             self.attack+=other.ratio
     def hit(self,other):
         self.hp-other.damage
-    def shoot(self,gif):
+    def shoot(self):
         self.gun.attack(self.pos,self.dir)
-        self.shape(gif)
-        self.shape(self.image)
