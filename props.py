@@ -19,7 +19,7 @@ class props:
         else:
             self.ratio=1000 if self.type=='HEAL' else 0.1
     def hit_prop(self,player_pos):#center to front
-        props_width=20 #undetermined
+        props_width=20
         player_width=10
         xr=(self.item.xcor-props_width/2,self.item.xcor+props_width/2)
         yr=(self.item.ycor-props_width/2,self.item.ycor+props_width/2)
