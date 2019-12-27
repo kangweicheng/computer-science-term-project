@@ -17,6 +17,7 @@ map_size = config.MAP_SIZE
 
 fog_step = 2
 screen = initScreen()
+screen.addshape('fireball.gif')
 screen.addshape('player1-0.gif')
 screen.addshape('player1-90.gif')
 screen.addshape('player1-180.gif')
@@ -30,6 +31,7 @@ screen.addshape('player2-270.gif')
 gameMap = Map(map_size, fog_step, screen)
 
 p1 = player.player((-200, -200),'哈哈哈',0,'player1-0.gif','left')
+p1.get_prop(config.bomber)
 p1.display_bar()
 
 

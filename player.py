@@ -101,7 +101,7 @@ class player(turtle.Turtle):
         self.original_pos=self.position()
         self.forward(dis)
     def get_prop(self,other):
-        if isinstance(other,gun):
+        if isinstance(other,gun.gun):
             self.gun=other
         elif str(other)=='defense':
             self.defense-=other.ratio

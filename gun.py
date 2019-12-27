@@ -63,7 +63,7 @@ class gun:
                     b.shape()
                     b.pencolor(self.traj_col)
                 elif self.eff=='Panic':
-                    b.shape()
+                    b.shape('fireball.gif')
                     b.pencolor(self.traj_col)
                 else:
                     if self.name=='Sparky':
