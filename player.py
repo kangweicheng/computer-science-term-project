@@ -28,8 +28,8 @@ class player(turtle.Turtle):
         self.bar.penup()
         self.trueblood.penup()
         if bar_on_left_or_right=='left':
-            self.bar.setposition(-config.MAP_SIZE[0]/2+50,config.MAP_SIZE[1]/2+config.bar_height+50)
-            self.trueblood.setposition(-config.MAP_SIZE[0]/2+50,config.MAP_SIZE[1]/2+config.bar_height+50)
+            self.bar.setposition(-config.MAP_SIZE[0]/2-50,config.MAP_SIZE[1]/2+config.bar_height-50)
+            self.trueblood.setposition(-config.MAP_SIZE[0]/2-50,config.MAP_SIZE[1]/2+config.bar_height-50)
             self.bar.write(self.name,False,'left',font=("Arial", 25, "normal"))
         else:
             self.bar.setposition(config.MAP_SIZE[0]/2+50,config.MAP_SIZE[1]/2+config.bar_height+50)
