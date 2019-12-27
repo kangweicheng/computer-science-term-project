@@ -135,9 +135,9 @@ pressHandle = playerKeyPressHandler(
 			upHandler = funcUp_p2, downHandler = funcDown_p2, 
 			leftHandler = funcLeft_p2, rightHandler = funcRight_p2, 
 			attackHandler = funcAtt_p2,
-			upKey = "W", downKey = "S",
-			leftKey = "A", rightKey = "D",
-			attackKey = "O",
+			upKey = "w", downKey = "s",
+			leftKey = "a", rightKey = "d",
+			attackKey = "o",
 			whenUpCallback = upCallback, whenDownCallback = downCallback, 
 			whenLeftCallback = leftCallback, whenRightCallback = rightCallback,
 			whenAttackCallback = attackCallback)
