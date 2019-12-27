@@ -13,16 +13,7 @@ def initScreen():
 	screen.setworldcoordinates(-300,-300,300,300)
 	return screen
 
-map_size = config.MAP_SIZE
 
-fog_step = 2
-screen = initScreen()
-screen.addshape('player1.gif')
-gameMap = Map(map_size, fog_step, screen)
-t = player.player((-200, -200),'哈哈哈','player1.gif','right')
-t.display_bar()
-t.turtlesize(0.1)
-gameMap.registerPlayer(t)
 def update():
 	gameMap.update()
 	screen.ontimer(update, 10)
@@ -78,6 +69,18 @@ def rightCallback():
 	gameMap.updatePlayers()
 def attackCallback():
 	gameMap.updatePlayers()
+
+map_size = config.MAP_SIZE
+
+fog_step = 2
+screen = initScreen()
+screen.addshape('player1.gif')
+gameMap = Map(map_size, fog_step, screen)
+t = player.player((-200, -200),'哈哈哈','player1.gif','right')
+t.display_bar()
+t.turtlesize(0.1)
+gameMap.registerPlayer(t)
+
 pressHandle = playerKeyPressHandler(
 			screen = screen, shortest_event_interval = config.keyPressCoolTime, player = t,
 			upHandler = funcUp, downHandler = funcDown, 
@@ -92,11 +95,33 @@ pressHandle = playerKeyPressHandler(
 
 
 screen.listen()
-proplist = []
-def createProps():
-	proplist.append(props())
-	screen.ontimer(createProps, 1)
-screen.ontimer(createProps, 1)
+
+
+class bullet:
+	def __init__(self):
+		self.damage = 1000
+
+
+# routinely hit
+def self_hit():
+	print('hit')
+	screen.tracer(0)
+	t.shoot()
+	t.hit(bullet())
+	t.display_bar()
+	screen.update()
+	screen.tracer(1)
+	screen.ontimer(self_hit, 1000)
+
+screen.ontimer(self_hit, 1000)
+# routinely create props
+# proplist = []
+# def createProps():
+# 	print('createProps')
+# 	proplist.append(props())
+# 	screen.ontimer(createProps, 1000)
+
+# screen.ontimer(createProps, 1000)
 
 
 # screen.ontimer(t.shoot(),15000)

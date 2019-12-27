@@ -50,6 +50,8 @@ class player(turtle.Turtle):
     def display_bar(self):
         self.trueblood.clear()
         self.trueblood.begin_fill()
+        self.trueblood.speed(0)
+        print(self.hp)
         if self.bar_on_left_or_right=='left':
             self.trueblood.write(f'槍名: {str(self.gun)}',False,'right',("Arial", 14, "normal"))
             self.trueblood.fd(self.hp*config.bar_width/config.hpmax)
@@ -113,7 +115,7 @@ class player(turtle.Turtle):
             self.attack+=other.ratio
         return None
     def hit(self,other):
-        self.hp-other.damage
+        self.hp -= other.damage
         return None
     def shoot(self):
         self.gun.attack(self.pos,self.dir)
