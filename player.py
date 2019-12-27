@@ -8,7 +8,7 @@ class player(turtle.Turtle):
         self.setposition(pos)
         self.shape(gif)
         self.penup()
-        self.setheading(90)
+        self.setheading(90,gif)
         self.original_pos=pos
         # self.pos=list(pos)
         self.name=name

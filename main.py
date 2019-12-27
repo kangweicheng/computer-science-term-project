@@ -17,9 +17,12 @@ map_size = config.MAP_SIZE
 
 fog_step = 2
 screen = initScreen()
-screen.addshape('player1.gif')
+screen.addshape('player1-0.gif')
+screen.addshape('player1-90.gif')
+screen.addshape('player1-180.gif')
+screen.addshape('player1-270.gif')
 gameMap = Map(map_size, fog_step, screen)
-t = player.player((-200, -200),'哈哈哈','player1.gif','right')
+t = player.player((-200, -200),'哈哈哈',0,'player1-0.gif','right')
 t.display_bar()
 t.turtlesize(0.1)
 gameMap.registerPlayer(t)
@@ -29,23 +32,23 @@ def update():
 
 
 def funcUp(screen = None , player = None):
-	player.setheading(90)
+	player.setheading(90,'player1-90.gif')
 	player.fd(9)
 	if screen:
 		screen.update()
 def funcDown(screen = None , player = None):
-	player.setheading(270)
+	player.setheading(270,'player1-270.gif')
 	player.fd(9)
 	# update()
 	if screen:
 		screen.update()
 def funcLeft(screen = None , player = None):
-	player.setheading(180)
+	player.setheading(180,'player1-180.gif')
 	player.fd(9)
 	if screen:
 		screen.update()
 def funcRight(screen = None , player = None):
-	player.setheading(0)
+	player.setheading(0,'player1-0.gif')
 	player.fd(9)
 	if screen:
 		screen.update()
