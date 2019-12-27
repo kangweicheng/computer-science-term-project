@@ -236,8 +236,8 @@ screen.listen()
 proplist = []
 def createProps():
 	proplist.append(props())
-	screen.ontimer(createProps, 1)
-screen.ontimer(createProps, 1)
+	screen.ontimer(createProps, 1000)
+screen.ontimer(createProps, 1000)
 
 
 # screen.ontimer(t.shoot(),15000)

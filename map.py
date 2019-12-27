@@ -130,7 +130,7 @@ class Map:
 		if xgt and xlt and ygt and ylt:
 			return False, None
 		else:
-			pos = [pos[0], pos[0]]
+			pos = [pos[0], pos[1]]
 			if pos[0] > self.map_size[0]/2:
 				pos[0] = self.map_size[0]/2
 			elif pos[0] < -1 * self.map_size[0]/2:
@@ -146,11 +146,12 @@ class Map:
 			collide, backPos = self.hit_wall(i)
 			if collide:
 				i.back(9)
-				# i.setpos(backPos)
 				return
 			collide, backPos = self.hit_boundary(i)
 
 			if collide:
+				print("hit boundary")
+				print(backPos)
 				i.setpos(backPos)
 				return
 
