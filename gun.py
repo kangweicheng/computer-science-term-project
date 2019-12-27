@@ -94,15 +94,16 @@ class gun:
                 b.clear()
                 b.hideturtle()
                 del b
-    def hit_gun(self,player_pos,ctf):#center to front
-        width=60 #undetermined
-        xr=(self.item.xcor-width/2,self.item.xcor+width/2)
-        yr=(self.item.ycor-width/2,self.item.ycor+width/2)
-        if player_pos[0]+ctf>=xr[0] or player_pos[0]-ctf<=xr[1] or player_pos[1]+ctf>=yr[0] or player_pos[1]-ctf<=yr[1]:
+    def hit_gun(self,player_pos):
+        gun_width=20
+        player_width=10
+        xr=(self.item.xcor-gun_width/2,self.item.xcor+gun_width/2)
+        yr=(self.item.ycor-gun_width/2,self.item.ycor+gun_width/2)
+        if player_pos[0]+player_width>=xr[0] or player_pos[0]-player_width<=xr[1] or player_pos[1]+player_width>=yr[0] or player_pos[1]-player_width<=yr[1]:
             return True #I can't del self here, please do it in __main__.
     def hit_bullet(self,player_pos):
-        bullet_width=37
-        player_width=25
+        bullet_width=20
+        player_width=10
         xr=(self.item.xcor-bullet_width/2,self.item.xcor+bullet_width/2)
         yr=(self.item.ycor-bullet_width/2,self.item.ycor+bullet_width/2)
         if player_pos[0]+player_width>=xr[0] or player_pos[0]-player_width<=xr[1] or player_pos[1]+player_width>=yr[0] or player_pos[1]-player_width<=yr[1]:
