@@ -1,4 +1,4 @@
-import turtle,player
+import turtle
 class gun:
     '''
     name
@@ -43,7 +43,6 @@ class gun:
             b.penup()
             b.setposition(pos)
             b.pendown()
-            before=player.pos
             if self.eff=='Electrify':
                 b.speed(0)
                 b.setheading(dir-10)
@@ -71,7 +70,7 @@ class gun:
                         b.speed(0)
                     b.shape()
                     b.pencolor(self.traj_col)
-                while b.distance(before)<self.rop:
+                while b.distance(pos)<self.rop:
                     b.forward(1)
             b.clear()
             b.hideturtle()
@@ -88,8 +87,7 @@ class gun:
                 b.pensize(self.rod*0.5)
                 b.shape()
                 b.pencolor(self.traj_col)
-                before=player.pos
-                while b.distance(before)<self.rop:
+                while b.distance(pos)<self.rop:
                     b.forward(1)
                 b.clear()
                 b.hideturtle()
@@ -100,13 +98,13 @@ class gun:
         xr=(self.item.xcor-gun_width/2,self.item.xcor+gun_width/2)
         yr=(self.item.ycor-gun_width/2,self.item.ycor+gun_width/2)
         if player_pos[0]+player_width>=xr[0] or player_pos[0]-player_width<=xr[1] or player_pos[1]+player_width>=yr[0] or player_pos[1]-player_width<=yr[1]:
-            return True #I can't del self here, please do it in __main__.
+            return True
     def hit_bullet(self,player_pos):
         bullet_width=20
         player_width=10
         xr=(self.item.xcor-bullet_width/2,self.item.xcor+bullet_width/2)
         yr=(self.item.ycor-bullet_width/2,self.item.ycor+bullet_width/2)
         if player_pos[0]+player_width>=xr[0] or player_pos[0]-player_width<=xr[1] or player_pos[1]+player_width>=yr[0] or player_pos[1]-player_width<=yr[1]:
-            return True #I can't del self here, please do it in __main__.
+            return True
     def __del__(self):
         return
