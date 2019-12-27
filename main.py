@@ -14,8 +14,7 @@ def initScreen():
 	return screen
 
 
-<<<<<<< HEAD
-=======
+
 fog_step = 2
 screen = initScreen()
 screen.addshape('player1-0.gif')
@@ -27,7 +26,7 @@ t = player.player((-200, -200),'哈哈哈',0,'player1-0.gif','right')
 t.display_bar()
 t.turtlesize(0.1)
 gameMap.registerPlayer(t)
->>>>>>> 6c750ad822fd8b4be1ba181870f71705794a2497
+
 def update():
 	gameMap.update()
 	screen.ontimer(update, 10)

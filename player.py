@@ -110,11 +110,9 @@ class player(turtle.Turtle):
         else:
             self.attack+=other.ratio
     def hit(self,other):
-<<<<<<< HEAD
+
         self.hp -= other.damage
         return None
-=======
-        self.hp-other.damage
->>>>>>> 6c750ad822fd8b4be1ba181870f71705794a2497
+
     def shoot(self):
         self.gun.attack(self.pos,self.dir)
