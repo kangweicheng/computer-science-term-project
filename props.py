@@ -18,11 +18,12 @@ class props:
             self.ratio=1500 if self.type=='HEAL' else 0.15
         else:
             self.ratio=1000 if self.type=='HEAL' else 0.1
-    def hit_prop(self,player_pos,ctf):#center to front
-        width=60 #undetermined
-        xr=(self.item.xcor-width/2,self.item.xcor+width/2)
-        yr=(self.item.ycor-width/2,self.item.ycor+width/2)
-        if player_pos[0]+ctf>=xr[0] or player_pos[0]-ctf<=xr[1] or player_pos[1]+ctf>=yr[0] or player_pos[1]-ctf<=yr[1]:
+    def hit_prop(self,player_pos):#center to front
+        props_width=20
+        player_width=10
+        xr=(self.item.xcor-props_width/2,self.item.xcor+props_width/2)
+        yr=(self.item.ycor-props_width/2,self.item.ycor+props_width/2)
+        if player_pos[0]+player_width>=xr[0] or player_pos[0]-player_width<=xr[1] or player_pos[1]+player_width>=yr[0] or player_pos[1]-player_width<=yr[1]:
             return True #I can't del self here, please do it in __main__.
     def __str__(self):
         return self.type

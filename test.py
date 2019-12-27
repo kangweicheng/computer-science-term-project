@@ -3,21 +3,36 @@ import msvcrt
 #     if msvcrt.kbhit():
 #         key_stroke = msvcrt.getch()
 #         print(key_stroke)   # will print which key is pressed
+# import turtle
+# img = r"rsz_th.gif"
+# turtle.addshape(img)
+
+# class player:
+# 	def __init__(self):
+# 		self.turtle = turtle.Turtle()
+
+# 		self.turtle.shape(img)
+# 		self.turtle.shapesize(5, 1)
+# 		self.turtle.penup()
+
+# 		self.dir = 'right'
+# t = player()
+# turtle.mainloop()
 import turtle
-img = r"rsz_th.gif"
-turtle.addshape(img)
-
-class player:
-	def __init__(self):
-		self.turtle = turtle.Turtle()
-
-		self.turtle.shape(img)
-		self.turtle.shapesize(5, 1)
-		self.turtle.penup()
-
-		self.dir = 'right'
-t = player()
+screen=turtle.Screen()
+img = "player1.gif"
+screen.addshape(img)
+t=turtle.Turtle()
+t.shape(img)
 turtle.mainloop()
+s=turtle.Turtle()
+# s.penup()
+# s.setposition(-100,-100)
+# s.pendown()
+s.fd(50)
+
+
+
 
 # screen = turtle.Screen()  
 # screen.tracer(0)      # tell screen to not show automatically

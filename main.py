@@ -14,29 +14,43 @@ def initScreen():
 	return screen
 
 
+<<<<<<< HEAD
+=======
+fog_step = 2
+screen = initScreen()
+screen.addshape('player1-0.gif')
+screen.addshape('player1-90.gif')
+screen.addshape('player1-180.gif')
+screen.addshape('player1-270.gif')
+gameMap = Map(map_size, fog_step, screen)
+t = player.player((-200, -200),'哈哈哈',0,'player1-0.gif','right')
+t.display_bar()
+t.turtlesize(0.1)
+gameMap.registerPlayer(t)
+>>>>>>> 6c750ad822fd8b4be1ba181870f71705794a2497
 def update():
 	gameMap.update()
 	screen.ontimer(update, 10)
 
 
 def funcUp(screen = None , player = None):
-	player.setheading(90)
+	player.setheading(90,'player1-90.gif')
 	player.fd(9)
 	if screen:
 		screen.update()
 def funcDown(screen = None , player = None):
-	player.setheading(270)
+	player.setheading(270,'player1-270.gif')
 	player.fd(9)
 	# update()
 	if screen:
 		screen.update()
 def funcLeft(screen = None , player = None):
-	player.setheading(180)
+	player.setheading(180,'player1-180.gif')
 	player.fd(9)
 	if screen:
 		screen.update()
 def funcRight(screen = None , player = None):
-	player.setheading(0)
+	player.setheading(0,'player1-0.gif')
 	player.fd(9)
 	if screen:
 		screen.update()

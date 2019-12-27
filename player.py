@@ -1,14 +1,16 @@
 import turtle,config,gun,math
 class player(turtle.Turtle):
-    def __init__(self,pos,name,gif,bar_on_left_or_right):
+    def __init__(self,pos,name,dir,gif,bar_on_left_or_right):
         super().__init__()
+        self.dir=dir
+        self.image=gif
         self.penup()
         self.setposition(pos)
         self.shape(gif)
         self.penup()
-        self.setheading(90)
+        self.setheading(90,gif)
         self.original_pos=pos
-        self.pos=list(pos)
+        # self.pos=list(pos)
         self.name=name
         self.attack=1
         self.hp=config.hpmax
@@ -26,12 +28,12 @@ class player(turtle.Turtle):
         self.bar.penup()
         self.trueblood.penup()
         if bar_on_left_or_right=='left':
-            self.bar.setposition(-config.MAP_SIZE[0]/2,config.MAP_SIZE[1]/2+config.bar_height)
-            self.trueblood.setposition(-config.MAP_SIZE[0]/2,config.MAP_SIZE[1]/2+config.bar_height)
+            self.bar.setposition(-config.MAP_SIZE[0]/2-50,config.MAP_SIZE[1]/2+config.bar_height+50)
+            self.trueblood.setposition(-config.MAP_SIZE[0]/2-50,config.MAP_SIZE[1]/2+config.bar_height+50)
             self.bar.write(self.name,False,'left',font=("Arial", 25, "normal"))
         else:
-            self.bar.setposition(config.MAP_SIZE[0]/2,config.MAP_SIZE[1]/2+config.bar_height)
-            self.trueblood.setposition(config.MAP_SIZE[0]/2,config.MAP_SIZE[1]/2+config.bar_height)
+            self.bar.setposition(config.MAP_SIZE[0]/2+50,config.MAP_SIZE[1]/2+config.bar_height+50)
+            self.trueblood.setposition(config.MAP_SIZE[0]/2+50,config.MAP_SIZE[1]/2+config.bar_height+50)
             self.bar.write(self.name,False,'right',font=("Arial", 25, "normal"))
             self.bar.back(config.bar_width)
         self.bar.pendown()
@@ -43,10 +45,6 @@ class player(turtle.Turtle):
         self.bar.fd(config.bar_width)
         self.bar.rt(90)
         self.bar.fd(config.bar_height)
-    def setpos(self, pos):
-        self.original_pos = self.pos
-        self.setposition(pos)
-        self.pos = self.position()
     def display_bar(self):
         self.trueblood.clear()
         self.trueblood.begin_fill()
@@ -94,30 +92,29 @@ class player(turtle.Turtle):
             self.trueblood.pendown()
             self.dir=90
         self.trueblood.end_fill()
-    def setheading(self,ang):
+    def setheading(self,ang,gif):
         self.seth(ang)
+        self.image=gif
+        self.shape(gif)
         self.dir=ang
     def fd(self,dis):
         self.original_pos=self.position()
         self.forward(dis)
-        self.pos = self.position()
-    def back(self,dis):
-        self.pos=self.original_pos
-        self.backward(dis)
     def get_prop(self,other):
         if isinstance(other,gun):
-            self.gun=gun
+            self.gun=other
         elif str(other)=='defense':
             self.defense-=other.ratio
         elif str(other)=='heal':
             self.hp+=other.ratio
         else:
             self.attack+=other.ratio
-        return None
     def hit(self,other):
+<<<<<<< HEAD
         self.hp -= other.damage
         return None
+=======
+        self.hp-other.damage
+>>>>>>> 6c750ad822fd8b4be1ba181870f71705794a2497
     def shoot(self):
         self.gun.attack(self.pos,self.dir)
-        return None
-
