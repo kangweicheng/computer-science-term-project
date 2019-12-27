@@ -106,7 +106,7 @@ class Map:
 			if ylt:
 				return True, (original_pos[0], square_pos[1] - square_size / 2 - 1)
 
-			# return True, (square_pos[0]  - square_size / 2, pos[1])
+			return True, (original_pos[0], square_pos[1] - square_size / 2 - 1)
 		else:
 			return False, None
 
