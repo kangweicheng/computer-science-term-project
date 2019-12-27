@@ -111,9 +111,8 @@ class Map:
 			return False, None
 
 	def hit_wall(self, obj):
-		print(obj.pos)
 		for i in self.wall_pos:
-			x, y = self.in_square(obj.original_pos, obj.pos, i, self.wall_size)
+			x, y = self.in_square(obj.original_pos, obj.pos(), i, self.wall_size)
 			if x:
 				return True, y
 		return False, None
@@ -123,7 +122,7 @@ class Map:
 	def hit_boundary(self, obj):
 		square_pos = (0, 0)
 		square_size = self.map_size[0]
-		pos = obj.pos
+		pos = obj.pos()
 		xgt = square_pos[0] + square_size / 2 > pos[0]
 		xlt = square_pos[0] - square_size / 2 < pos[0]
 		ygt = square_pos[1] + square_size / 2 > pos[1]
@@ -131,25 +130,20 @@ class Map:
 		if xgt and xlt and ygt and ylt:
 			return False, None
 		else:
-			pos = [obj.pos[0], obj.pos[1]]
-			if obj.pos[0] > self.map_size[0]/2:
+			pos = [pos[0], pos[0]]
+			if pos[0] > self.map_size[0]/2:
 				pos[0] = self.map_size[0]/2
-			elif obj.pos[0] < -1 * self.map_size[0]/2:
+			elif pos[0] < -1 * self.map_size[0]/2:
 				pos[0] = -1 * self.map_size[0]/2
 
-			if obj.pos[1] > self.map_size[1]/2:
+			if pos[1] > self.map_size[1]/2:
 				pos[1] = self.map_size[1]/2
-			elif obj.pos[1] < -1 * self.map_size[1]/2:
+			elif pos[1] < -1 * self.map_size[1]/2:
 				pos[1] = -1 * self.map_size[1]/2
 			return True, pos
-			# self.penup_set_pos(obj, pos)
-			# # obj.hit(config.TOUCH_FOG_DAMAGE)
-			# obj.penup()
-			# return True, tuple(pos)
 	def updatePlayers(self):
 		for i in self.player:
 			collide, backPos = self.hit_wall(i)
-			print(collide)
 			if collide:
 				i.back(9)
 				# i.setpos(backPos)

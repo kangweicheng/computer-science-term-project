@@ -43,7 +43,7 @@ class gun:
             b.penup()
             b.setposition(pos)
             b.pendown()
-            before=player.pos
+            before=player.pos()
             if self.eff=='Electrify':
                 b.speed(0)
                 b.setheading(dir-10)
@@ -88,7 +88,7 @@ class gun:
                 b.pensize(self.rod*0.5)
                 b.shape()
                 b.pencolor(self.traj_col)
-                before=player.pos
+                before=player.pos()
                 while b.distance(before)<self.rop:
                     b.forward(1)
                 b.clear()
