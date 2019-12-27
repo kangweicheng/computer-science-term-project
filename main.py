@@ -15,17 +15,6 @@ def initScreen():
 
 
 
-fog_step = 2
-screen = initScreen()
-screen.addshape('player1-0.gif')
-screen.addshape('player1-90.gif')
-screen.addshape('player1-180.gif')
-screen.addshape('player1-270.gif')
-gameMap = Map(map_size, fog_step, screen)
-t = player.player((-200, -200),'哈哈哈',0,'player1-0.gif','right')
-t.display_bar()
-t.turtlesize(0.1)
-gameMap.registerPlayer(t)
 
 def update():
 	gameMap.update()
