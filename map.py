@@ -157,5 +157,12 @@ class Map:
 
 	def registerPlayer(self, Player):
 		self.player.append(Player)
-
+	def registerProps(self, Props):
+		None
+	def removeProps(self, Props):
+		None
+	def registerBullet(self, Bullet):
+		None
+	def removeBullet(self, Bullet):
+		None
 
