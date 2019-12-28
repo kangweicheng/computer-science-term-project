@@ -1,11 +1,7 @@
 import turtle
 from datetime import timedelta, datetime
 import random
-import config
-import player
-from PlayerKeyPressHandler import playerKeyPressHandler
-from map import Map
-from props import props
+
 
 def initScreen():
 	screen = turtle.Screen()
@@ -13,9 +9,7 @@ def initScreen():
 	screen.setworldcoordinates(-300,-300,300,300)
 	return screen
 
-map_size = config.MAP_SIZE
 
-fog_step = 2
 screen = initScreen()
 screen.addshape('poor_gun.gif')
 screen.addshape('fireball.gif')
@@ -32,6 +26,16 @@ screen.addshape('player2-0.gif')
 screen.addshape('player2-90.gif')
 screen.addshape('player2-180.gif')
 screen.addshape('player2-270.gif')
+
+import player
+from PlayerKeyPressHandler import playerKeyPressHandler
+from map import Map
+from props import props
+import config
+
+map_size = config.MAP_SIZE
+fog_step = 2
+
 
 gameMap = Map(map_size, fog_step, screen)
 
