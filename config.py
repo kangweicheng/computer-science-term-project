@@ -1,4 +1,4 @@
-import gun
+import bullet
 MAP_SIZE = (500, 500)
 FOG_UPDATE_INTERVAL = 1
 TOUCH_FOG_DAMAGE = 1
@@ -14,19 +14,17 @@ dop:damage of one projectile
 rop:radius of projectiles
 rod:radius of damage
 ang:spreading angle
-eff:special effects('Electrify':stuck for 1s,'Panic':keyboard go out of order for 2s,'Freeze':slowed down 50% for 5s)
-gun_gif:image of the gun
+eff:special effects('Electrify':stuck,'Panic':keyboard out of order,'Freeze':slowed down 50%)
 bul_gif:image of bullets
 traj_col:color of trajectories
 '''
-poor_gun=gun.gun('Poor Gun',1.5,1,600,120,20,0,None,'dark grey')
-bomber=gun.gun('Bomber',3,1,400,140,20,0,'Panic','orange')
-musket=gun.gun('Musket',1.1,1,1600,140,20,0,None,'plum')
-three_muskets=gun.gun('Three Muskets',3,3,1600,140,20,30,None,'plum')
-dart_goblin=gun.gun('Dart Goblin',0,3,1000,180,2,0,None,'lawn green')
-electro_wizard=gun.gun('Electro Wizard',2.2,1,300,110,20,0,'Electrify','light sky blue')
-sparky=gun.gun('Sparky',6,1,2500,90,20,0,None,'yellow')
-hunter=gun.gun('Hunter',2.2,7,850,110,20,90,None,'slate grey')
-wizard=gun.gun('Wizard',2.2,1,1000,140,50,0,None,'salmon')
-ice_wizard=gun.gun('Ice Wizard',2.2,1,400,110,20,0,'Freeze','azure')
-GUN_LIST=[poor_gun,bomber,musket,three_muskets,dart_goblin,electro_wizard,sparky,hunter,wizard,ice_wizard]
+bpoor_gun=bullet.bullet('Poor Gun',1.5,1,600,120,20,0,None,'dark grey','poor_gun.gif')
+bbomber=bullet.bullet('Bomber',3,1,400,140,20,0,'Panic','orange','fireball.gif')
+bmusket=bullet.bullet('Musket',1.1,1,1600,140,20,0,None,'plum','poor_gun.gif')
+bthree_muskets=bullet.bullet('Three Muskets',3,3,1600,140,20,30,None,'plum','poor_gun.gif')
+bdart_goblin=bullet.bullet('Dart Goblin',0,3,1000,180,2,0,None,'lawn green','poor_gun.gif')
+belectro_wizard=bullet.bullet('Electro Wizard',2.2,1,300,110,20,0,'Electrify','light sky blue','electrify.gif')
+bsparky=bullet.bullet('Sparky',6,1,2500,90,20,0,None,'yellow','light.gif')
+bhunter=bullet.bullet('Hunter',2.2,7,850,110,20,90,None,'slate grey','poor_gun.gif')
+bwizard=bullet.bullet('Wizard',2.2,1,1000,140,50,0,None,'salmon','wizard.gif')
+bice_wizard=bullet.bullet('Ice Wizard',2.2,1,400,110,20,0,'Freeze','azure','snowball.gif')

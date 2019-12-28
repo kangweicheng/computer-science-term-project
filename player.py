@@ -1,4 +1,4 @@
-import turtle,config,gun,math
+import turtle,config,gun2,math
 class player(turtle.Turtle):
     def __init__(self,pos,name,dir,gif,bar_on_left_or_right):
         super().__init__()

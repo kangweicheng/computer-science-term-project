@@ -17,7 +17,12 @@ map_size = config.MAP_SIZE
 
 fog_step = 2
 screen = initScreen()
+screen.addshape('poor_gun.gif')
 screen.addshape('fireball.gif')
+screen.addshape('snowball.gif')
+screen.addshape('electrify.gif')
+screen.addshape('light.gif')
+
 screen.addshape('player1-0.gif')
 screen.addshape('player1-90.gif')
 screen.addshape('player1-180.gif')
