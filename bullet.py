@@ -32,15 +32,15 @@ class bullet:
                 self.items.speed(8)
             self.items.pensize(rod*0.2)
             self.items.shape(bul_gif)
-            self.items.hideturtle()
-            self.items.penup()
+            # self.items.hideturtle()
+            # self.items.penup()
         else:
             self.items=[turtle.Turtle()]*nop
             for t in self.items:
                 t.pensize(rod*0.2)
                 t.shape(bul_gif)
-                t.hideturtle()
-                t.penup()
+                # t.hideturtle()
+                # t.penup()
         self.name=name
         self.cd=cd
         self.nop=nop

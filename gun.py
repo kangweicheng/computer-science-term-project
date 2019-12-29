@@ -6,26 +6,28 @@ class gun:
     def __str__(self):
         return self.name
     def attack(self,pos,dir):
+        b = None
         if self.name=='Poor Gun':
-            b=config.poor_gun
+            b=config.poor_gun()
         if self.name=='Bomber':
-            b=config.bomber
+            b=config.bomber()
         if self.name=='Musket':
-            b=config.musket
+            b=config.musket()
         if self.name=='Three Muskets':
-            b=config.three_muskets
+            b=config.three_muskets()
         if self.name=='Dart Goblin':
-            b=config.dart_goblin
+            b=config.dart_goblin()
         if self.name=='Electro Wizard':
-            b=config.electro_wizard
+            b=config.electro_wizard()
         if self.name=='Sparky':
-            b=config.sparky
+            b=config.sparky()
         if self.name=='Hunter':
-            b=config.hunter
+            b=config.hunter()
         if self.name=='Wizard':
-            b=config.wizard
+            b=config.wizard()
         if self.name=='Ice Wizard':
-            b=config.ice_wizard
+            b=config.ice_wizard()
+        print(b)
         return b
 #    def hit_gun(self,player_pos):
 #        gun_width=20
