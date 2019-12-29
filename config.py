@@ -6,18 +6,6 @@ hpmax=10000
 bar_width=240
 bar_height=30
 keyPressCoolTime = 0.3 # seconds
-'''
-name
-cd:countdown time
-nop:number of projectiles
-dop:damage of one projectile
-rop:radius of projectiles
-rod:radius of damage
-ang:spreading angle
-eff:special effects('Electrify':stuck,'Panic':keyboard out of order,'Freeze':slowed down 50%)
-bul_gif:image of bullets
-traj_col:color of trajectories
-'''
 poor_gun=		lambda:bullet.bullet('Poor Gun',1.5,1,600,120,20,0,None,'dark grey','poor_gun.gif')
 bomber=			lambda:bullet.bullet('Bomber',3,1,400,140,20,0,'Panic','orange','fireball.gif')
 musket=			lambda:bullet.bullet('Musket',1.1,1,1600,140,20,0,None,'plum','poor_gun.gif')
