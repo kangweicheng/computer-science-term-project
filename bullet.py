@@ -23,7 +23,7 @@ class bullet:
     bwizard=bullet.bullet('Wizard',2.2,1,1000,140,50,0,None,'salmon','wizard.gif')
     bice_wizard=bullet.bullet('Ice Wizard',2.2,1,400,110,20,0,'Freeze','azure','snowball.gif')
     '''
-    def __init__(self,name,cd,nop,damage,rop,rod,ang,eff,traj_col,bul_gif,attack_ratio, pos, dir):
+    def __init__(self,name,cd,nop,damage,rop,rod,ang,eff,traj_col,bul_gif,attack_ratio, pos, dir, kill_self_callback=None):
         self.screen = turtle.getscreen()
         self.screen.tracer(0)
         if nop==1:
@@ -38,12 +38,10 @@ class bullet:
             # self.items.hideturtle()
             # self.items.penup()
         else:
-            self.items=[turtle.Turtle()]*nop
+            self.items=[turtle.Turtle() for i in range(nop)]
             for t in self.items:
                 t.pensize(rod*0.2)
                 t.shape(bul_gif)
-                # t.hideturtle()
-                # t.penup()
         self.name=name
         self.cd=cd
         self.nop=nop
@@ -59,44 +57,65 @@ class bullet:
         self.attack=attack_ratio
         self.pos = pos
         self.dir = dir
+        self.move_distance = 0
+        self.speed=50
+        self.step_time = 1000 # milliseconds
 
-        for i in self.items:
-            i.penup()
-            i.setpos(self.pos)
-            i.pendown()
+        self.initBulletAngle()
         self.screen.update()
         self.screen.tracer(1)
-
-
-    def move(self,pos,dir):
-        if self.nop==1:
-            self.items.setposition(pos)
-            self.items.pendown()
-            if self.name=='Electro Wizard':
-                self.items.setheading(dir-15)
-                while self.items.distance(pos)<self.rop:
-                    self.items.lt(30)
-                    self.items.forward(10)
-                    if self.items.distance(pos)>=self.rop:
-                        break
-                    self.items.rt(30)
-                    self.items.forward(10)
-            else:
-                self.items.setheading(dir)
-                while self.items.distance(pos)<self.rop:
-                    self.items.forward(1)
-            self.items.clear()
-            self.items.hideturtle()
+        self.routinely_move()
+    # this function is to initialized angle of each bullet
+    def initBulletAngle(self):
+        middle=(self.nop-1)/2
+        step_ang=self.ang/(self.nop-1)
+        for i,t in enumerate(self.items):
+            t.penup()
+            t.setposition(self.pos)
+            t.pendown()
+            t.setheading(self.dir+(middle-i)*step_ang)
+            t.pendown()
+    # this method is responsible for move the bullets routinely
+    def routinely_move(self):
+        self.move()
+        if self.move_distance < self.rop:
+            self.screen.ontimer(self.routinely_move, self.step_time)
+    def move(self):
+        if self.nop == 1:
+            None
         else:
-            middle=(self.nop-1)/2
-            step_ang=self.ang/(self.nop-1)
-            for i,t in enumerate(self.items):
-                t.setposition(pos)
-                t.pendown()
-                t.setheading(dir+(middle-i)*step_ang)
-                while t.distance(pos)<self.rop:
-                    t.forward(1)
-                t.clear()
-                t.hideturtle()
+            for i in self.items:
+                i.fd(self.speed)
+                self.move_distance += self.speed
+
+        # if self.nop==1:
+        #     self.items.setposition(pos)
+        #     self.items.pendown()
+        #     if self.name=='Electro Wizard':
+        #         self.items.setheading(dir-15)
+        #         while self.items.distance(pos)<self.rop:
+        #             self.items.lt(30)
+        #             self.items.forward(10)
+        #             if self.items.distance(pos)>=self.rop:
+        #                 break
+        #             self.items.rt(30)
+        #             self.items.forward(10)
+        #     else:
+        #         self.items.setheading(dir)
+        #         while self.items.distance(pos)<self.rop:
+        #             self.items.forward(1)
+        #     self.items.clear()
+        #     self.items.hideturtle()
+        # else:
+        #     middle=(self.nop-1)/2
+        #     step_ang=self.ang/(self.nop-1)
+        #     for i,t in enumerate(self.items):
+        #         t.setposition(pos)
+        #         t.pendown()
+        #         t.setheading(dir+(middle-i)*step_ang)
+        #         while t.distance(pos)<self.rop:
+        #             t.forward(1)
+        #         t.clear()
+        #         t.hideturtle()
     def __del__(self):
         return
