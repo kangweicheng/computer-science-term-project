@@ -68,8 +68,12 @@ class bullet:
         self.routinely_move()
     # this function is to initialized angle of each bullet
     def initBulletAngle(self):
-        middle=(self.nop-1)/2
-        step_ang=self.ang/(self.nop-1)
+        if self.nop == 1:
+            step_ang = 0
+            middle = 0
+        else:
+            middle=(self.nop-1)/2
+            step_ang=self.ang/(self.nop-1)
         for i,t in enumerate(self.items):
             t.penup()
             t.setposition(self.pos)
@@ -83,10 +87,19 @@ class bullet:
             self.screen.ontimer(self.routinely_move, self.step_time)
         else:
             print('delete')
+            self.deleteItem()
             self.delete_callback(self)
     def move(self):
         if self.nop == 1:
-            None
+            if self.name=='Electro Wizard':
+                self.items.lt(10)
+                self.fd(self.speed/2)
+                self.items.rt(10)
+                self.fd(self.speed/2)
+            else:
+                for t in self.items:
+                    t.fd(self.speed)
+                    self.move_distance += self.speed
         else:
             for t in self.items:
                 t.fd(self.speed)
@@ -124,12 +137,12 @@ class bullet:
         #             t.forward(1)
         #         t.clear()
         #         t.hideturtle()
-    def __delete__(self, instance):
+    def deleteItem(self):
 
-        for t in instance.items:
+        for t in self.items:
             print('instance')
             print(t)
             t.clear()
             t.hideturtle()
             del t
-        return
+

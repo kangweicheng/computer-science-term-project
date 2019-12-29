@@ -56,11 +56,7 @@ def update():
 
 bullets= []
 def deletebullet(bullet):
-	print('main delete bullet')
-	print(bullet)
-	a = bullets.index(bullet)
-	print(a)
-	del bullets[a]
+	del bullet
 	print(bullets)
 def funcUp_p1(screen = None , player = None):
 	player.setheading(90,'player1-90.gif')
@@ -173,10 +169,7 @@ proplist = []
 def createProps():
 	proplist.append(props())
 	screen.ontimer(createProps, 5000)
-	print(bullets)
-	# for i in bullets:
-	# 	del i
-	# print(bullets)
+
 
 screen.ontimer(createProps, 5000)
 
