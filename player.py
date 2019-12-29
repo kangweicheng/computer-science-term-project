@@ -1,4 +1,4 @@
-import turtle,config,gun,math
+import turtle,config,gun,math,bullet
 class player(turtle.Turtle):
     def __init__(self,pos,name,dir,gif,bar_on_left_or_right):
         super().__init__()
@@ -110,8 +110,10 @@ class player(turtle.Turtle):
         else:
             self.attack+=other.ratio
     def hit(self,other):
-
-        self.hp -= other.damage
+        if isinstance(other,bullet.bullet):
+            self.hp -= other.damage*other.attack
+        else:
+            self.hp -= other.damage
         return None
 
     def shoot(self):

@@ -23,7 +23,7 @@ class bullet:
     bwizard=bullet.bullet('Wizard',2.2,1,1000,140,50,0,None,'salmon','wizard.gif')
     bice_wizard=bullet.bullet('Ice Wizard',2.2,1,400,110,20,0,'Freeze','azure','snowball.gif')
     '''
-    def __init__(self,name,cd,nop,dop,rop,rod,ang,eff,traj_col,bul_gif):
+    def __init__(self,name,cd,nop,dop,rop,rod,ang,eff,traj_col,bul_gif,attack_ratio):
         if nop==1:
             self.items=turtle.Turtle()
             if name=='Electro Wizard' or name=='Sparky':
@@ -53,6 +53,7 @@ class bullet:
         #################################
         # new attr
         self.ratio = 10
+        self.attack=attack_ratio
     def move(self,pos,dir):
         if self.nop==1:
             self.items.setposition(pos)
