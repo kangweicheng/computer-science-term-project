@@ -15,7 +15,8 @@ screen.addshape('poor_gun.gif')
 screen.addshape('fireball.gif')
 screen.addshape('snowball.gif')
 screen.addshape('electrify.gif')
-screen.addshape('light.gif')
+screen.addshape('wizard.gif')
+# screen.addshape('light.gif')
 
 screen.addshape('player1-0.gif')
 screen.addshape('player1-90.gif')
@@ -136,7 +137,7 @@ pressHandle = playerKeyPressHandler(
 			attackHandler = funcAtt_p1,
 			upKey = "Up", downKey = "Down",
 			leftKey = "Left", rightKey = "Right",
-			attackKey = "Enter",
+			attackKey = "Return",
 			whenUpCallback = upCallback, whenDownCallback = downCallback, 
 			whenLeftCallback = leftCallback, whenRightCallback = rightCallback,
 			whenAttackCallback = attackCallback)

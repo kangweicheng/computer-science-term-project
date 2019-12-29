@@ -50,6 +50,9 @@ class bullet:
         self.ang=ang
         self.eff=eff
         self.traj_col=traj_col
+        #################################
+        # new attr
+        self.ratio = 10
     def move(self,pos,dir):
         if self.nop==1:
             self.items.setposition(pos)
