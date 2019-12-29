@@ -15,7 +15,7 @@ class player(turtle.Turtle):
         self.attack=1
         self.hp=config.hpmax
         self.defense=1
-        self.gun=config.POOR_GUN
+        self.gun=config.POOR_GUN()
         self.bar=turtle.Turtle()
         self.bar.width(5)
         self.bar.pencolor('black')
