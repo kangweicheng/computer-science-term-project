@@ -118,4 +118,4 @@ class player(turtle.Turtle):
 
     def shoot(self):
         print('shoot')
-        return self.gun.attack(self.pos(),self.dir)
+        return self.gun.attack(self.pos(),self.dir,self.attack)
