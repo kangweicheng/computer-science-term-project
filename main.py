@@ -55,7 +55,7 @@ def update():
 	gameMap.update()
 	screen.ontimer(update, 10)
 
-
+bullets= []
 def funcUp_p1(screen = None , player = None):
 	player.setheading(90,'player1-90.gif')
 	player.fd(9)
@@ -78,7 +78,7 @@ def funcRight_p1(screen = None , player = None):
 	if screen:
 		screen.update()
 def funcAtt_p1(screen = None, player = None):
-	player.shoot()
+	bullets.append(player.shoot())
 
 
 def funcUp_p2(screen = None , player = None):
@@ -102,8 +102,9 @@ def funcRight_p2(screen = None , player = None):
 	player.fd(9)
 	if screen:
 		screen.update()
+		
 def funcAtt_p2(screen = None, player = None):
-	player.shoot()
+	bullets.append(player.shoot())
 
 # def keyPressCallback():
 # 	for i in gameMap.player:
@@ -130,6 +131,8 @@ def rightCallback():
 	gameMap.updatePlayers()
 def attackCallback():
 	gameMap.updatePlayers()
+	
+	
 pressHandle = playerKeyPressHandler(
 			screen = screen, shortest_event_interval = config.keyPressCoolTime, player = p1,
 			upHandler = funcUp_p1, downHandler = funcDown_p1, 
