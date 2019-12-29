@@ -28,6 +28,8 @@ class bullet:
             self.items=turtle.Turtle()
             if name=='Electro Wizard' or name=='Sparky':
                 self.items.speed(0)
+            else:
+                self.items.speed(8)
             self.items.pensize(rod*0.2)
             self.items.shape(bul_gif)
             self.items.hideturtle()
