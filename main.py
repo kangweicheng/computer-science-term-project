@@ -55,6 +55,13 @@ def update():
 	screen.ontimer(update, 10)
 
 bullets= []
+def deletebullet(bullet):
+	print('main delete bullet')
+	print(bullet)
+	a = bullets.index(bullet)
+	print(a)
+	del bullets[a]
+	print(bullets)
 def funcUp_p1(screen = None , player = None):
 	player.setheading(90,'player1-90.gif')
 	player.fd(9)
@@ -77,7 +84,9 @@ def funcRight_p1(screen = None , player = None):
 	if screen:
 		screen.update()
 def funcAtt_p1(screen = None, player = None):
-	bullets.append(player.shoot())
+	bullet = player.shoot()
+	bullet.setDeleteCallback(deletebullet)
+	bullets.append(bullet)
 
 
 def funcUp_p2(screen = None , player = None):
@@ -103,7 +112,10 @@ def funcRight_p2(screen = None , player = None):
 		screen.update()
 
 def funcAtt_p2(screen = None, player = None):
-	bullets.append(player.shoot())
+	bullet = player.shoot()
+	bullet.setDeleteCallback(deletebullet)
+	bullets.append(bullet)
+
 
 
 # def keyPressCallback():
@@ -160,9 +172,13 @@ screen.listen()
 proplist = []
 def createProps():
 	proplist.append(props())
-	screen.ontimer(createProps, 1000)
+	screen.ontimer(createProps, 5000)
 	print(bullets)
-screen.ontimer(createProps, 1000)
+	# for i in bullets:
+	# 	del i
+	# print(bullets)
+
+screen.ontimer(createProps, 5000)
 
 
 # screen.ontimer(t.shoot(),15000)

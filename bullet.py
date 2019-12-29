@@ -58,8 +58,9 @@ class bullet:
         self.pos = pos
         self.dir = dir
         self.move_distance = 0
-        self.speed=50
+        self.speed=10
         self.step_time = 1000 # milliseconds
+        self.delete_callback = None
 
         self.initBulletAngle()
         self.screen.update()
@@ -80,13 +81,19 @@ class bullet:
         self.move()
         if self.move_distance < self.rop:
             self.screen.ontimer(self.routinely_move, self.step_time)
+        else:
+            print('delete')
+            self.delete_callback(self)
     def move(self):
         if self.nop == 1:
             None
         else:
-            for i in self.items:
-                i.fd(self.speed)
+            for t in self.items:
+                t.fd(self.speed)
                 self.move_distance += self.speed
+    def setDeleteCallback(self, callback):
+        print('setDeleteCallback')
+        self.delete_callback = callback
 
         # if self.nop==1:
         #     self.items.setposition(pos)
@@ -117,5 +124,12 @@ class bullet:
         #             t.forward(1)
         #         t.clear()
         #         t.hideturtle()
-    def __del__(self):
+    def __delete__(self, instance):
+
+        for t in instance.items:
+            print('instance')
+            print(t)
+            t.clear()
+            t.hideturtle()
+            del t
         return
