@@ -96,6 +96,7 @@ class bullet:
                 self.fd(self.speed/2)
                 self.items.rt(10)
                 self.fd(self.speed/2)
+                self.move_distance += self.speed
             else:
                 for t in self.items:
                     t.fd(self.speed)

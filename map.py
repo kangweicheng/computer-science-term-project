@@ -146,14 +146,10 @@ class Map:
 			collide, backPos = self.hit_wall(i)
 			if collide:
 				i.back(9)
-				return
-			collide, backPos = self.hit_boundary(i)
 
+			collide, backPos = self.hit_boundary(i)
 			if collide:
-				print("hit boundary")
-				print(backPos)
 				i.setpos(backPos)
-				return
 
 	def registerPlayer(self, Player):
 		self.player.append(Player)

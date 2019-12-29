@@ -57,7 +57,6 @@ def update():
 bullets= []
 def deletebullet(bullet):
 	del bullet
-	print(bullets)
 def funcUp_p1(screen = None , player = None):
 	player.setheading(90,'player1-90.gif')
 	player.fd(9)

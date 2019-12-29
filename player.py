@@ -117,5 +117,4 @@ class player(turtle.Turtle):
         return None
 
     def shoot(self):
-        print('shoot')
         return self.gun.attack(self.pos(),self.dir,self.attack)
