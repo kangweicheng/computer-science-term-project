@@ -1,4 +1,4 @@
-import bullet
+import bullet,gun
 MAP_SIZE = (500, 500)
 FOG_UPDATE_INTERVAL = 1
 TOUCH_FOG_DAMAGE = 1
@@ -28,3 +28,13 @@ sparky=bullet.bullet('Sparky',6,1,2500,90,20,0,None,'yellow','electrify.gif')
 hunter=bullet.bullet('Hunter',2.2,7,850,110,20,90,None,'slate grey','poor_gun.gif')
 wizard=bullet.bullet('Wizard',2.2,1,1000,140,50,0,None,'salmon','wizard.gif')
 ice_wizard=bullet.bullet('Ice Wizard',2.2,1,400,110,20,0,'Freeze','azure','snowball.gif')
+POOR_GUN=gun.gun('Poor Gun')
+BOMBER=gun.gun('Bomber')
+MUSKET=gun.gun('Musket')
+THREE_MUSKETS=gun.gun('Three Muskets')
+DART_GOBLIN=gun.gun('Dart Goblin')
+ELECTRO_WIZARD=gun.gun('Electro Wizard')
+SPARKY=gun.gun('Sparky')
+HUNTER=gun.gun('Hunter')
+WIZARD=gun.gun('Wizard')
+ICE_WIZARD=gun.gun('Ice Wizard')
