@@ -8,25 +8,26 @@ class gun:
     def attack(self,pos,dir,attack_ratio):
         b = None
         if self.name=='Poor Gun':
-            b=config.poor_gun(attack_ratio)
+            b=config.poor_gun(attack_ratio, pos, dir)
         if self.name=='Bomber':
-            b=config.bomber(attack_ratio)
+            b=config.bomber(attack_ratio, pos, dir)
         if self.name=='Musket':
-            b=config.musket(attack_ratio)
+            b=config.musket(attack_ratio, pos, dir)
         if self.name=='Three Muskets':
-            b=config.three_muskets(attack_ratio)
+            b=config.three_muskets(attack_ratio, pos, dir)
         if self.name=='Dart Goblin':
-            b=config.dart_goblin(attack_ratio)
+            b=config.dart_goblin(attack_ratio, pos, dir)
         if self.name=='Electro Wizard':
-            b=config.electro_wizard(attack_ratio)
+            b=config.electro_wizard(attack_ratio, pos, dir)
         if self.name=='Sparky':
-            b=config.sparky(attack_ratio)
+            b=config.sparky(attack_ratio, pos, dir)
         if self.name=='Hunter':
-            b=config.hunter(attack_ratio)
+            b=config.hunter(attack_ratio, pos, dir)
         if self.name=='Wizard':
-            b=config.wizard(attack_ratio)
+            b=config.wizard(attack_ratio, pos, dir)
         if self.name=='Ice Wizard':
-            b=config.ice_wizard(attack_ratio)
+            b=config.ice_wizard(attack_ratio, pos, dir)
+        
         print(b)
         return b
 #    def hit_gun(self,player_pos):

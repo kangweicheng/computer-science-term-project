@@ -23,15 +23,18 @@ class bullet:
     bwizard=bullet.bullet('Wizard',2.2,1,1000,140,50,0,None,'salmon','wizard.gif')
     bice_wizard=bullet.bullet('Ice Wizard',2.2,1,400,110,20,0,'Freeze','azure','snowball.gif')
     '''
-    def __init__(self,name,cd,nop,damage,rop,rod,ang,eff,traj_col,bul_gif,attack_ratio):
+    def __init__(self,name,cd,nop,damage,rop,rod,ang,eff,traj_col,bul_gif,attack_ratio, pos, dir):
+        self.screen = turtle.getscreen()
+        self.screen.tracer(0)
         if nop==1:
-            self.items=turtle.Turtle()
+
+            self.items=[turtle.Turtle()]
             if name=='Electro Wizard' or name=='Sparky':
-                self.items.speed(0)
+                self.items[0].speed(0)
             else:
-                self.items.speed(8)
-            self.items.pensize(rod*0.2)
-            self.items.shape(bul_gif)
+                self.items[0].speed(8)
+            self.items[0].pensize(rod*0.2)
+            self.items[0].shape(bul_gif)
             # self.items.hideturtle()
             # self.items.penup()
         else:
@@ -54,6 +57,17 @@ class bullet:
         # new attr
         self.ratio = 10
         self.attack=attack_ratio
+        self.pos = pos
+        self.dir = dir
+
+        for i in self.items:
+            i.penup()
+            i.setpos(self.pos)
+            i.pendown()
+        self.screen.update()
+        self.screen.tracer(1)
+
+
     def move(self,pos,dir):
         if self.nop==1:
             self.items.setposition(pos)

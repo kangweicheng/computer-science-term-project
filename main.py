@@ -16,7 +16,6 @@ screen.addshape('fireball.gif')
 screen.addshape('snowball.gif')
 screen.addshape('electrify.gif')
 screen.addshape('wizard.gif')
-# screen.addshape('light.gif')
 
 screen.addshape('player1-0.gif')
 screen.addshape('player1-90.gif')
@@ -41,6 +40,7 @@ fog_step = 2
 gameMap = Map(map_size, fog_step, screen)
 
 p1 = player.player((-200, -200),'哈哈哈',0,'player1-0.gif','left')
+p1.get_prop(config.THREE_MUSKETS())
 p1.display_bar()
 
 
@@ -131,8 +131,6 @@ def rightCallback():
 	gameMap.updatePlayers()
 def attackCallback():
 	gameMap.updatePlayers()
-	
-	
 pressHandle = playerKeyPressHandler(
 			screen = screen, shortest_event_interval = config.keyPressCoolTime, player = p1,
 			upHandler = funcUp_p1, downHandler = funcDown_p1, 
