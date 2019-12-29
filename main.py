@@ -54,9 +54,7 @@ def update():
 	gameMap.update()
 	screen.ontimer(update, 10)
 
-bullets= []
-def deletebullet(bullet):
-	del bullet
+
 def funcUp_p1(screen = None , player = None):
 	player.setheading(90,'player1-90.gif')
 	player.fd(9)
@@ -80,8 +78,8 @@ def funcRight_p1(screen = None , player = None):
 		screen.update()
 def funcAtt_p1(screen = None, player = None):
 	bullet = player.shoot()
-	bullet.setDeleteCallback(deletebullet)
-	bullets.append(bullet)
+	bullet.setDeleteCallback(gameMap.removeBullet)
+	gameMap.registerBullet(bullet)
 
 
 def funcUp_p2(screen = None , player = None):
@@ -92,7 +90,6 @@ def funcUp_p2(screen = None , player = None):
 def funcDown_p2(screen = None , player = None):
 	player.setheading(270,'player2-270.gif')
 	player.fd(9)
-	# update()
 	if screen:
 		screen.update()
 def funcLeft_p2(screen = None , player = None):
@@ -105,28 +102,10 @@ def funcRight_p2(screen = None , player = None):
 	player.fd(9)
 	if screen:
 		screen.update()
-
 def funcAtt_p2(screen = None, player = None):
 	bullet = player.shoot()
-	bullet.setDeleteCallback(deletebullet)
-	bullets.append(bullet)
-
-
-
-# def keyPressCallback():
-# 	for i in gameMap.player:
-# 		print(i.position())
-# 		collide, backPos = gameMap.hit_wall(i)
-# 		# print(valid)
-# 		if collide:
-# 			i.setpos(backPos)
-# 			return
-# 		collide, backPos = gameMap.hit_boundary(i)
-# 		# print(valid)
-# 		if collide:
-# 			i.setpos(backPos)
-# 			# i.hit(config.TOUCH_FOG_DAMAGE)
-			# return
+	bullet.setDeleteCallback(gameMap.removeBullet)
+	gameMap.registerBullet(bullet)
 
 def upCallback():
 	gameMap.updatePlayers()
@@ -138,6 +117,7 @@ def rightCallback():
 	gameMap.updatePlayers()
 def attackCallback():
 	gameMap.updatePlayers()
+
 pressHandle = playerKeyPressHandler(
 			screen = screen, shortest_event_interval = config.keyPressCoolTime, player = p1,
 			upHandler = funcUp_p1, downHandler = funcDown_p1, 

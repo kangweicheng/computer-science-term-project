@@ -87,7 +87,7 @@ class bullet:
             self.screen.ontimer(self.routinely_move, self.step_time)
         else:
             print('delete')
-            self.deleteItem()
+            self.deleteBullet()
             self.delete_callback(self)
     def move(self):
         if self.nop == 1:
@@ -138,7 +138,8 @@ class bullet:
         #             t.forward(1)
         #         t.clear()
         #         t.hideturtle()
-    def deleteItem(self):
+    # remove all bullets objects
+    def deleteBullet(self):
 
         for t in self.items:
             print('instance')
@@ -146,4 +147,16 @@ class bullet:
             t.clear()
             t.hideturtle()
             del t
+    # remove one object
+    def deleteItem(self, item):
+        print(self.items)
+        index = self.items.index(item)
+        print(index)
+        try:
+            self.items[index].clear()
+            self.items[index].hideturtle()
+            del self.items[index]
+        except:
+            print('except')
+
 

@@ -49,7 +49,10 @@ class Map:
 		self.screen = screen
 		self.wall_vertex = []
 		self.wall = []
-		self.player = []
+
+		self.players = []
+		self.bullets = []
+
 		self.fog_position = map_size[0]/ 2
 		self.fog_step = fog_step
 		self.map_size = map_size
@@ -66,6 +69,8 @@ class Map:
 		self.penup_set_pos(self.fog, ( -1 * map_size[0] /2 , -1 * map_size[1] / 2 - self.fog_step))# - self.fog_step))
 		self.fogMove()
 		self.screen.ontimer(self.update, self.fogUpdateInterval)
+		self.updateBullets()
+		self.updatePlayers()
 	def fogMove(self):
 		self.screen.tracer(0)
 		self.fog.forward(self.fog_step)
@@ -82,7 +87,7 @@ class Map:
 		self.map_size = (self.map_size[0] - self.fog_step * 2, self.map_size[1]  - self.fog_step * 2)
 		self.screen.update()
 		self.screen.tracer(1)
-		self.updatePlayers()
+
 
 	def update(self):
 		self.fogMove()
@@ -93,26 +98,32 @@ class Map:
 		ygt = square_pos[1] + square_size / 2 > pos[1]
 		ylt = square_pos[1] - square_size / 2 < pos[1]
 		if xgt and xlt and ygt and ylt:
-			xgt = square_pos[0] + square_size / 2 <= original_pos[0]
-			xlt = square_pos[0] - square_size / 2 >= original_pos[0]
-			ygt = square_pos[1] + square_size / 2 <= original_pos[1]
-			ylt = square_pos[1] - square_size / 2 >= original_pos[1]
-			if xgt:
-				return True, (square_pos[0]  + square_size / 2 + 1, original_pos[1])
-			if xlt:
-				return True, (square_pos[0]  - square_size / 2 - 1, original_pos[1])
-			if ygt:
-				return True, (original_pos[0], square_pos[1] + square_size / 2 + 1)
-			if ylt:
-				return True, (original_pos[0], square_pos[1] - square_size / 2 - 1)
+			if original_pos:
+				xgt = square_pos[0] + square_size / 2 <= original_pos[0]
+				xlt = square_pos[0] - square_size / 2 >= original_pos[0]
+				ygt = square_pos[1] + square_size / 2 <= original_pos[1]
+				ylt = square_pos[1] - square_size / 2 >= original_pos[1]
+				if xgt:
+					return True, (square_pos[0]  + square_size / 2 + 1, original_pos[1])
+				if xlt:
+					return True, (square_pos[0]  - square_size / 2 - 1, original_pos[1])
+				if ygt:
+					return True, (original_pos[0], square_pos[1] + square_size / 2 + 1)
+				if ylt:
+					return True, (original_pos[0], square_pos[1] - square_size / 2 - 1)
 
-			return True, (original_pos[0], square_pos[1] - square_size / 2 - 1)
+				return True, (original_pos[0], square_pos[1] - square_size / 2 - 1)
+			else:
+				return True, None
 		else:
 			return False, None
 
 	def hit_wall(self, obj):
 		for i in self.wall_pos:
-			x, y = self.in_square(obj.original_pos, obj.pos(), i, self.wall_size)
+			if hasattr(obj, 'original_pos'):
+				x, y = self.in_square(obj.original_pos, obj.pos(), i, self.wall_size)
+			else:
+				x, y = self.in_square(None, obj.pos(), i, self.wall_size)
 			if x:
 				return True, y
 		return False, None
@@ -142,7 +153,7 @@ class Map:
 				pos[1] = -1 * self.map_size[1]/2
 			return True, pos
 	def updatePlayers(self):
-		for i in self.player:
+		for i in self.players:
 			collide, backPos = self.hit_wall(i)
 			if collide:
 				i.back(9)
@@ -150,15 +161,30 @@ class Map:
 			collide, backPos = self.hit_boundary(i)
 			if collide:
 				i.setpos(backPos)
+		self.screen.ontimer(self.updatePlayers, 500)
+	def updateBullets(self):
+		for bullet in self.bullets:
+			print('bullet')
+			for obj in bullet.items:
+				print('obj')
+				collide, backPos = self.hit_wall(obj)
+				if collide:
+					bullet.deleteItem(obj)
 
+				collide, backPos = self.hit_boundary(obj)
+				if collide:
+					bullet.deleteItem(obj)
+		self.screen.ontimer(self.updateBullets, 500)
 	def registerPlayer(self, Player):
-		self.player.append(Player)
+		self.players.append(Player)
 	def registerProps(self, Props):
 		None
 	def removeProps(self, Props):
 		None
 	def registerBullet(self, Bullet):
-		None
+		self.bullets.append(Bullet)
+		print(self.bullets)
 	def removeBullet(self, Bullet):
-		None
+		index = self.bullets.index(Bullet)
+		del self.bullets[index]
 
