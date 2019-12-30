@@ -61,8 +61,11 @@ class bullet:
         self.pos = pos
         self.dir = dir
         self.move_distance = 0
-        self.speed=100
-        self.step_time = 1000 # milliseconds
+
+        self.speed = 400
+        self.step_time = 100 # milliseconds
+        self.step=self.speed*self.step_time/1000
+
         self.delete_callback = None
 
         self.initBulletAngle()
@@ -96,18 +99,18 @@ class bullet:
         if self.nop == 1:
             if self.name=='Electro Wizard':
                 self.items.lt(10)
-                self.fd(self.speed/2)
+                self.fd(self.step/2)
                 self.items.rt(10)
-                self.fd(self.speed/2)
-                self.move_distance += self.speed
+                self.fd(self.step/2)
+                self.move_distance += self.step
             else:
                 for t in self.items:
-                    t.fd(self.speed)
-                    self.move_distance += self.speed
+                    t.fd(self.step)
+                    self.move_distance += self.step
         else:
             for t in self.items:
-                t.fd(self.speed)
-                self.move_distance += self.speed
+                t.fd(self.step)
+                self.move_distance += self.step
     def setDeleteCallback(self, callback):
         print('setDeleteCallback')
         self.delete_callback = callback

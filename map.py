@@ -8,22 +8,16 @@ class Map:
 	def penup_set_pos(self, Turtle, pos):
 		Turtle.penup()
 		Turtle.setpos((pos[0], pos[1]))
-		# Turtle.setx()
-		# Turtle.sety(pos[1])
 		Turtle.pendown()
 	def pendown_set_pos(self, Turtle, pos):
 		Turtle.setpos((pos[0], pos[1]))
-		# Turtle.setx(pos[0])
-		# Turtle.sety(pos[1])
 	def draw_wall(self, Turtle, pos, size):
-
 		Turtle.penup()
 		Turtle.shape('square')
 		Turtle.turtlesize(size / 20, size / 20)
 		Turtle.setpos(pos[0], pos[1])
 		stamp_id = Turtle.stamp()
 		return stamp_id
-		# t = turtle.Turtle()
 
 
 	def initWallpos(self, num):
@@ -161,7 +155,7 @@ class Map:
 			collide, backPos = self.hit_boundary(i)
 			if collide:
 				i.setpos(backPos)
-		self.screen.ontimer(self.updatePlayers, 500)
+		self.screen.ontimer(self.updatePlayers, 100)
 	def updateBullets(self):
 		for bullet in self.bullets:
 			print('bullet')
@@ -174,8 +168,9 @@ class Map:
 				collide, backPos = self.hit_boundary(obj)
 				if collide:
 					bullet.deleteItem(obj)
-		self.screen.ontimer(self.updateBullets, 500)
+		self.screen.ontimer(self.updateBullets, 100)
 	def registerPlayer(self, Player):
+		self.updatePlayers()
 		self.players.append(Player)
 	def registerProps(self, Props):
 		None
@@ -183,7 +178,6 @@ class Map:
 		None
 	def registerBullet(self, Bullet):
 		self.bullets.append(Bullet)
-		print(self.bullets)
 	def removeBullet(self, Bullet):
 		index = self.bullets.index(Bullet)
 		del self.bullets[index]

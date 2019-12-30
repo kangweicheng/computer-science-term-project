@@ -110,15 +110,15 @@ def funcAtt_p2(screen = None, player = None):
 	gameMap.registerBullet(bullet)
 
 def upCallback():
-	gameMap.updatePlayers()
+	None
 def downCallback():
-	gameMap.updatePlayers()
+	None
 def leftCallback():
-	gameMap.updatePlayers()
+	None
 def rightCallback():
-	gameMap.updatePlayers()
+	None
 def attackCallback():
-	gameMap.updatePlayers()
+	None
 
 pressHandle = playerKeyPressHandler(
 			screen = screen, shortest_event_interval = config.keyPressCoolTime, player = p1,
