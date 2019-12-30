@@ -34,7 +34,10 @@ class bullet:
             else:
                 self.items[0].speed(8)
             self.items[0].pensize(rod*0.2)
-            self.items[0].shape(bul_gif)
+            if bul_gif=='snowball.gif' or bul_gif=='electrify.gif' or bul_gif=='fireball.gif' or bul_gif=='poor_gun.gif':
+                self.items[0].shape(bul_gif[:-4]+'-'+str(dir)+'.gif')
+            else:
+                self.items[0].shape(bul_gif)
             # self.items.hideturtle()
             # self.items.penup()
         else:

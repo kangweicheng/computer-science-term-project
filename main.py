@@ -11,11 +11,12 @@ def initScreen():
 
 
 screen = initScreen()
-screen.addshape('poor_gun.gif')
-screen.addshape('fireball.gif')
-screen.addshape('snowball.gif')
-screen.addshape('electrify.gif')
-screen.addshape('wizard.gif')
+for i in range(24):
+	screen.addshape(f'poor_gun-{i*15}.gif')
+for i in range(4):
+	screen.addshape(f'fireball-{90*i}.gif')
+	screen.addshape(f'snowball-{90*i}.gif')
+	screen.addshape(f'electrify-{90*i}.gif')
 
 screen.addshape('player1-0.gif')
 screen.addshape('player1-90.gif')
@@ -40,12 +41,12 @@ fog_step = 2
 gameMap = Map(map_size, fog_step, screen)
 
 p1 = player.player((-200, -200),'哈哈哈',0,'player1-0.gif','left')
-p1.get_prop(config.THREE_MUSKETS())
+p1.get_prop(config.ICE_WIZARD())
 p1.display_bar()
 
 
 p2 = player.player((200, 200),'哈哈哈',0,'player2-0.gif','right')
-p1.get_prop(config.BOMBER())
+p2.get_prop(config.BOMBER())
 p2.display_bar()
 
 gameMap.registerPlayer(p1)
