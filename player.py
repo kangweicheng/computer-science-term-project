@@ -105,7 +105,7 @@ class player(turtle.Turtle):
         self.trueblood.end_fill()
         self.screen.update()
         self.screen.tracer(1)
-        self.screen.ontimer(self.display_bar, 4000)
+        self.screen.ontimer(self.display_bar, 1000)
     def setheading(self,ang,gif):
         self.seth(ang)
         self.image=gif
@@ -133,4 +133,4 @@ class player(turtle.Turtle):
         return None
 
     def shoot(self):
-        return self.gun.attack(self.pos(),self.dir,self.attack)
+        return self.gun.attack(self.pos(),self.dir,self.attack, self.name)

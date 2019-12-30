@@ -65,6 +65,7 @@ class Map:
 		self.screen.ontimer(self.update, self.fogUpdateInterval)
 		self.updateBullets()
 		self.updatePlayers()
+		self.bulletHitPlayers()
 	def fogMove(self):
 		self.screen.tracer(0)
 		self.fog.forward(self.fog_step)
@@ -165,9 +166,7 @@ class Map:
 	def updateBullets(self):
 		
 		for bullet in self.bullets:
-			print('bullet')
 			for obj in bullet.items:
-				print('obj')
 				collide, backPos = self.hit_wall(obj)
 				if collide:
 					bullet.deleteItem(obj)
@@ -177,20 +176,27 @@ class Map:
 					bullet.deleteItem(obj)
 		self.screen.ontimer(self.updateBullets, 100)
 
-	def touchPlayers(self, player, obj):
-		if (player.pos()[0] + obj.pos()[0]) ** 2 + (player.pos()[1] + obj.pos()[1]) ** 2 > obj.rop ** 2:
+	def touchPlayers(self, player, obj, rod):
+		# print('rop: %d'% (rop))
+		buffer_dist = 0
+		if (player.pos()[0] - obj.pos()[0]) ** 2 + (player.pos()[1] - obj.pos()[1]) ** 2 < (rod + buffer_dist) ** 2:
 			return True
 		else:
 			return False
 	def bulletHitPlayers(self):
+		# print('bulletHitPlayers')
 		for player in self.players:
 			for bullet in self.bullets:
 				for obj in bullet.items:
-					if touchPlayers(player, obj):
-						bullet.removeItem(obj)
-						if len(bullet.item) == 0:
+					print(player.name)
+					if self.touchPlayers(player, obj, bullet.rod) and bullet.owner != player.name:
+						print('hit')
+						bullet.deleteItem(obj)
+						if len(bullet.items) == 0:
 							self.removeBullet(bullet)
 						player.hit(bullet)
+
+		self.screen.ontimer(self.bulletHitPlayers, 100)
 
 
 	def registerPlayer(self, Player):

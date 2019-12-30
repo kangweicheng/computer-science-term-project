@@ -42,12 +42,12 @@ fog_step = 2
 
 gameMap = Map(map_size, fog_step, screen)
 
-p1 = player.player((-200, -200),'哈哈哈',0,'player1-0.gif','left')
+p1 = player.player((200, 100),'玩家1',0,'player1-0.gif','left')
 p1.get_prop(config.ICE_WIZARD())
 p1.display_bar()
 
 
-p2 = player.player((200, 200),'哈哈哈',0,'player2-0.gif','right')
+p2 = player.player((200, 200),'玩家2',0,'player2-0.gif','right')
 p2.get_prop(config.BOMBER())
 p2.display_bar()
 
