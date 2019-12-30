@@ -51,9 +51,14 @@ class player(turtle.Turtle):
     def display_bar(self):
         self.screen.tracer(0)
         self.trueblood.clear()
+        self.screen.update()
         self.trueblood.begin_fill()
         self.trueblood.speed(0)
         if self.bar_on_left_or_right=='left':
+            self.trueblood.penup()
+            self.trueblood.setposition(-config.MAP_SIZE[0]/2-50,config.MAP_SIZE[1]/2+config.bar_height+50)
+            self.trueblood.setheading(0)
+            self.trueblood.pendown()
             self.trueblood.write(f'槍名: {str(self.gun)}',False,'right',("Arial", 14, "normal"))
             self.trueblood.fd(self.hp*config.bar_width/config.hpmax)
             self.trueblood.rt(90)
@@ -74,6 +79,9 @@ class player(turtle.Turtle):
             self.trueblood.rt(90)
             self.trueblood.pendown()
         else:
+            self.trueblood.penup()
+            self.trueblood.setposition(config.MAP_SIZE[0]/2+50,config.MAP_SIZE[1]/2+config.bar_height+50)
+            self.trueblood.pendown()
             self.trueblood.write(f'槍名: {str(self.gun)}',False,'left',("Arial", 14, "normal"))
             self.trueblood.setheading(180)
             self.trueblood.fd(self.hp*config.bar_width/config.hpmax)
@@ -97,7 +105,7 @@ class player(turtle.Turtle):
         self.trueblood.end_fill()
         self.screen.update()
         self.screen.tracer(1)
-        self.screen.ontimer(self.display_bar, 1000)
+        self.screen.ontimer(self.display_bar, 4000)
     def setheading(self,ang,gif):
         self.seth(ang)
         self.image=gif
