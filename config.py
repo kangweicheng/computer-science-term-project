@@ -6,6 +6,7 @@ hpmax=10000
 bar_width=240
 bar_height=30
 keyPressCoolTime = 0.3 # seconds
+playerStepSize = 3
 '''
 name
 cd:countdown time

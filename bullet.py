@@ -62,7 +62,7 @@ class bullet:
         self.dir = dir
         self.move_distance = 0
 
-        self.speed = 400
+        self.speed = 100
         self.step_time = 100 # milliseconds
         self.step=self.speed*self.step_time/1000
 
@@ -92,7 +92,6 @@ class bullet:
         if self.move_distance < self.rop:
             self.screen.ontimer(self.routinely_move, self.step_time)
         else:
-            print('delete')
             self.deleteBullet()
             self.delete_callback(self)
     def move(self):
@@ -112,38 +111,7 @@ class bullet:
                 t.fd(self.step)
                 self.move_distance += self.step
     def setDeleteCallback(self, callback):
-        print('setDeleteCallback')
         self.delete_callback = callback
-
-        # if self.nop==1:
-        #     self.items.setposition(pos)
-        #     self.items.pendown()
-        #     if self.name=='Electro Wizard':
-        #         self.items.setheading(dir-15)
-        #         while self.items.distance(pos)<self.rop:
-        #             self.items.lt(30)
-        #             self.items.forward(10)
-        #             if self.items.distance(pos)>=self.rop:
-        #                 break
-        #             self.items.rt(30)
-        #             self.items.forward(10)
-        #     else:
-        #         self.items.setheading(dir)
-        #         while self.items.distance(pos)<self.rop:
-        #             self.items.forward(1)
-        #     self.items.clear()
-        #     self.items.hideturtle()
-        # else:
-        #     middle=(self.nop-1)/2
-        #     step_ang=self.ang/(self.nop-1)
-        #     for i,t in enumerate(self.items):
-        #         t.setposition(pos)
-        #         t.pendown()
-        #         t.setheading(dir+(middle-i)*step_ang)
-        #         while t.distance(pos)<self.rop:
-        #             t.forward(1)
-        #         t.clear()
-        #         t.hideturtle()
     # remove all bullets objects
     def deleteBullet(self):
 

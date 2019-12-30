@@ -1,11 +1,13 @@
 import turtle
 from datetime import timedelta, datetime
 import random
+import time
 
 
 def initScreen():
 	screen = turtle.Screen()
 	screen.register_shape("rect", ((-5, -5), (5, -5), (5,5), (-5, 5)))
+	screen.screensize(1000, 1000)
 	screen.setworldcoordinates(-300,-300,300,300)
 	return screen
 
@@ -56,28 +58,30 @@ def update():
 	gameMap.update()
 	screen.ontimer(update, 10)
 
-
+def playerForward(player):
+	player.fd(3)
+	if screen:
+		screen.update()
+	time.sleep(0.07)
+	player.fd(3)
+	if screen:
+		screen.update()
+	time.sleep(0.07)
+	player.fd(3)
+	if screen:
+		screen.update()
 def funcUp_p1(screen = None , player = None):
 	player.setheading(90,'player1-90.gif')
-	player.fd(9)
-	if screen:
-		screen.update()
+	playerForward(player)
 def funcDown_p1(screen = None , player = None):
 	player.setheading(270,'player1-270.gif')
-	player.fd(9)
-	# update()
-	if screen:
-		screen.update()
+	playerForward(player)
 def funcLeft_p1(screen = None , player = None):
 	player.setheading(180,'player1-180.gif')
-	player.fd(9)
-	if screen:
-		screen.update()
+	playerForward(player)
 def funcRight_p1(screen = None , player = None):
 	player.setheading(0,'player1-0.gif')
-	player.fd(9)
-	if screen:
-		screen.update()
+	playerForward(player)
 def funcAtt_p1(screen = None, player = None):
 	bullet = player.shoot()
 	bullet.setDeleteCallback(gameMap.removeBullet)
@@ -86,24 +90,16 @@ def funcAtt_p1(screen = None, player = None):
 
 def funcUp_p2(screen = None , player = None):
 	player.setheading(90,'player2-90.gif')
-	player.fd(9)
-	if screen:
-		screen.update()
+	playerForward(player)
 def funcDown_p2(screen = None , player = None):
 	player.setheading(270,'player2-270.gif')
-	player.fd(9)
-	if screen:
-		screen.update()
+	playerForward(player)
 def funcLeft_p2(screen = None , player = None):
 	player.setheading(180,'player2-180.gif')
-	player.fd(9)
-	if screen:
-		screen.update()
+	playerForward(player)
 def funcRight_p2(screen = None , player = None):
 	player.setheading(0,'player2-0.gif')
-	player.fd(9)
-	if screen:
-		screen.update()
+	playerForward(player)
 def funcAtt_p2(screen = None, player = None):
 	bullet = player.shoot()
 	bullet.setDeleteCallback(gameMap.removeBullet)

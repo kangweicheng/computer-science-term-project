@@ -36,6 +36,9 @@ class player(turtle.Turtle):
             self.trueblood.setposition(config.MAP_SIZE[0]/2+50,config.MAP_SIZE[1]/2+config.bar_height+50)
             self.bar.write(self.name,False,'right',font=("Arial", 25, "normal"))
             self.bar.back(config.bar_width)
+        self.screen = turtle.getscreen()
+
+        self.display_bar()
         self.bar.pendown()
         self.trueblood.pendown()
         self.bar.fd(config.bar_width)
@@ -46,10 +49,10 @@ class player(turtle.Turtle):
         self.bar.rt(90)
         self.bar.fd(config.bar_height)
     def display_bar(self):
+        self.screen.tracer(0)
         self.trueblood.clear()
         self.trueblood.begin_fill()
         self.trueblood.speed(0)
-        print(self.hp)
         if self.bar_on_left_or_right=='left':
             self.trueblood.write(f'槍名: {str(self.gun)}',False,'right',("Arial", 14, "normal"))
             self.trueblood.fd(self.hp*config.bar_width/config.hpmax)
@@ -92,6 +95,9 @@ class player(turtle.Turtle):
             self.trueblood.pendown()
             self.dir=90
         self.trueblood.end_fill()
+        self.screen.update()
+        self.screen.tracer(1)
+        self.screen.ontimer(self.display_bar, 1000)
     def setheading(self,ang,gif):
         self.seth(ang)
         self.image=gif
@@ -112,6 +118,8 @@ class player(turtle.Turtle):
     def hit(self,other):
         if isinstance(other,bullet.bullet):
             self.hp -= other.damage*other.attack
+        elif type(other) == int:
+            self.hp -= other
         else:
             self.hp -= other.damage
         return None

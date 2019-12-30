@@ -1,6 +1,6 @@
 from datetime import timedelta, datetime
 class playerKeyPressHandler:
-	def __init__(self, screen = None, player = None, shortest_event_interval = 0.1,
+	def __init__(self, screen = None, player = None, shortest_event_interval = 3,
 			upHandler = None, downHandler = None,
 			leftHandler = None, rightHandler = None,
 			attackHandler = None,
@@ -71,6 +71,7 @@ class playerKeyPressHandler:
 			if self.whenRightCallback:
 				self.whenRightCallback()
 	def attack(self):
+		print(datetime.now())
 		if datetime.now() - self.last_keyPress > timedelta(seconds = self.shortest_event_interval):
 			self.last_keyPress = datetime.now()
 			self.attackHandler(self.screen, self.player)

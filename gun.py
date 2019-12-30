@@ -27,8 +27,6 @@ class gun:
             b=config.wizard(attack_ratio, pos, dir)
         if self.name=='Ice Wizard':
             b=config.ice_wizard(attack_ratio, pos, dir)
-        
-        print(b)
         return b
 #    def hit_gun(self,player_pos):
 #        gun_width=20
