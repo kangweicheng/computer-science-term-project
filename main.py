@@ -45,6 +45,7 @@ p1.display_bar()
 
 
 p2 = player.player((200, 200),'哈哈哈',0,'player2-0.gif','right')
+p1.get_prop(config.BOMBER())
 p2.display_bar()
 
 gameMap.registerPlayer(p1)
