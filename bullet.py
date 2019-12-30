@@ -58,7 +58,7 @@ class bullet:
         self.pos = pos
         self.dir = dir
         self.move_distance = 0
-        self.speed=10
+        self.speed=100
         self.step_time = 1000 # milliseconds
         self.delete_callback = None
 
