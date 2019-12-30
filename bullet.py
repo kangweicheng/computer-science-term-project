@@ -84,9 +84,7 @@ class bullet:
         for i,t in enumerate(self.items):
             t.penup()
             t.setposition(self.pos)
-            t.pendown()
             t.setheading(self.dir+(middle-i)*step_ang)
-            t.pendown()
     # this method is responsible for move the bullets routinely
     def routinely_move(self):
         self.move()
