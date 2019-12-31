@@ -8,20 +8,7 @@ class bullet:
     rop:radius of projectiles
     rod:radius of damage
     ang:spreading angle
-    eff:special effects('Electrify':stuck,'Panic':keyboard out of order,'Freeze':slowed down 50%)
-    bul_gif:image of bullets
-    traj_col:color of trajectories
-    ----------------------------------------------
-    bpoor_gun=bullet.bullet('Poor Gun',1.5,1,600,120,20,0,None,'dark grey','poor_gun.gif')
-    bbomber=bullet.bullet('Bomber',3,1,400,140,20,0,'Panic','orange','fireball.gif')
-    bmusket=bullet.bullet('Musket',1.1,1,1600,140,20,0,None,'plum','poor_gun.gif')
-    bthree_muskets=bullet.bullet('Three Muskets',3,3,1600,140,20,30,None,'plum','poor_gun.gif')
-    bdart_goblin=bullet.bullet('Dart Goblin',0,3,1000,180,2,0,None,'lawn green','poor_gun.gif')
-    belectro_wizard=bullet.bullet('Electro Wizard',2.2,1,300,110,20,0,'Electrify','light sky blue','electrify.gif')
-    bsparky=bullet.bullet('Sparky',6,1,2500,90,20,0,None,'yellow','electrify.gif')
-    bhunter=bullet.bullet('Hunter',2.2,7,850,110,20,90,None,'slate grey','poor_gun.gif')
-    bwizard=bullet.bullet('Wizard',2.2,1,1000,140,50,0,None,'salmon','wizard.gif')
-    bice_wizard=bullet.bullet('Ice Wizard',2.2,1,400,110,20,0,'Freeze','azure','snowball.gif')
+    eff:special effects('Electrify':stuck,'Panic':keyboard out of order,'Freeze':slowed down)
     '''
     def __init__(self,name,cd,nop,damage,rop,rod,ang,eff,traj_col,bul_gif,attack_ratio, pos, dir, affect_time, kill_self_callback=None, owner=None):
         self.affect_time=affect_time
@@ -30,24 +17,22 @@ class bullet:
         self.screen.tracer(0)
         self.owner = owner
         if nop==1:
-
             self.items=[turtle.Turtle()]
-            if name=='Electro Wizard' or name=='Sparky':
-                self.items[0].speed(0)
-            else:
-                self.items[0].speed(8)
-            self.items[0].pensize(rod*0.2)
-            if bul_gif=='snowball.gif' or bul_gif=='electrify.gif' or bul_gif=='fireball.gif' or bul_gif=='poor_gun.gif':
-                self.items[0].shape(bul_gif[:-4]+'-'+str(dir)+'.gif')
-            else:
-                self.items[0].shape(bul_gif)
-            # self.items.hideturtle()
-            # self.items.penup()
+            self.items[0].speed(0)
+            self.items[0].shape(f'{bul_gif}-{str(dir)}.gif')
         else:
+            if name=='Three Muskets':
+                middle=1
+            else:
+                middle=3
             self.items=[turtle.Turtle() for i in range(nop)]
-            for t in self.items:
-                t.pensize(rod*0.2)
-                t.shape(bul_gif)
+            for i,t in enumerate(self.items):
+                if dir==0 and i>middle:
+                    angle=360-15*(i-middle)
+                else:
+                    angle=dir-15*(i-middle)
+                t.speed(0)
+                t.shape(f'{bul_gif}-{str(angle)}.gif')
         self.name=name
         self.cd=cd
         self.nop=nop
@@ -55,10 +40,7 @@ class bullet:
         self.rop=rop
         self.rod=rod
         self.ang=ang
-        self.eff=eff
-        self.traj_col=traj_col
-        #################################
-        # new attr
+        
         self.ratio = 10
         self.attack=attack_ratio
         self.pos = pos
@@ -92,7 +74,6 @@ class bullet:
         if not self.over:
             self.move()
             if self.move_distance < self.rop:
-                
                 self.screen.ontimer(self.routinely_move, self.step_time)
             else:
                 self.deleteBullet()
@@ -100,10 +81,10 @@ class bullet:
     def move(self):
         if self.nop == 1:
             if self.name=='Electro Wizard':
-                self.items.lt(10)
-                self.fd(self.step/2)
-                self.items.rt(10)
-                self.fd(self.step/2)
+                self.items[0].lt(10)
+                self.items[0].fd(self.step/2)
+                self.items[0].rt(10)
+                self.items[0].fd(self.step/2)
                 self.move_distance += self.step
             else:
                 for t in self.items:
@@ -117,7 +98,6 @@ class bullet:
         self.delete_callback = callback
     # remove all bullets objects
     def deleteBullet(self):
-
         for t in self.items:
             print('instance')
             print(t)
