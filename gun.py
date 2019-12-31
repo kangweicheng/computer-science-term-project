@@ -9,38 +9,24 @@ class gun:
         b = None
         if self.name=='Poor Gun':
             b=config.poor_gun(attack_ratio, pos, dir, owner_name)
-        if self.name=='Bomber':
+        elif self.name=='Bomber':
             b=config.bomber(attack_ratio, pos, dir, owner_name)
-        if self.name=='Musket':
+        elif self.name=='Musket':
             b=config.musket(attack_ratio, pos, dir, owner_name)
-        if self.name=='Three Muskets':
+        elif self.name=='Three Muskets':
             b=config.three_muskets(attack_ratio, pos, dir, owner_name)
-        if self.name=='Dart Goblin':
+        elif self.name=='Dart Goblin':
             b=config.dart_goblin(attack_ratio, pos, dir, owner_name)
-        if self.name=='Electro Wizard':
+        elif self.name=='Electro Wizard':
             b=config.electro_wizard(attack_ratio, pos, dir, owner_name)
-        if self.name=='Sparky':
+        elif self.name=='Sparky':
             b=config.sparky(attack_ratio, pos, dir, owner_name)
-        if self.name=='Hunter':
+        elif self.name=='Hunter':
             b=config.hunter(attack_ratio, pos, dir, owner_name)
-        if self.name=='Wizard':
+        elif self.name=='Wizard':
             b=config.wizard(attack_ratio, pos, dir, owner_name)
-        if self.name=='Ice Wizard':
+        elif self.name=='Ice Wizard':
             b=config.ice_wizard(attack_ratio, pos, dir, owner_name)
         return b
-#    def hit_gun(self,player_pos):
-#        gun_width=20
-#        player_width=10
-#        xr=(self.item.xcor-gun_width/2,self.item.xcor+gun_width/2)
-#        yr=(self.item.ycor-gun_width/2,self.item.ycor+gun_width/2)
-#        if player_pos[0]+player_width>=xr[0] or player_pos[0]-player_width<=xr[1] or player_pos[1]+player_width>=yr[0] or player_pos[1]-player_width<=yr[1]:
-#            return True
-#    def hit_bullet(self,player_pos):
-#        bullet_width=20
-#        player_width=10
-#        xr=(self.item.xcor-bullet_width/2,self.item.xcor+bullet_width/2)
-#        yr=(self.item.ycor-bullet_width/2,self.item.ycor+bullet_width/2)
-#        if player_pos[0]+player_width>=xr[0] or player_pos[0]-player_width<=xr[1] or player_pos[1]+player_width>=yr[0] or player_pos[1]-player_width<=yr[1]:
-#            return True
     def __del__(self):
         return
