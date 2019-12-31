@@ -163,12 +163,14 @@ pressHandle = playerKeyPressHandler(
 
 screen.listen()
 proplist = []
-# def createProps():
-# 	proplist.append(props())
-# 	screen.ontimer(createProps, 5000)
+def createProps():
+	prop = props()
+	gameMap.registerProps(prop)
+	screen.ontimer(createProps, 5000)
 
 
-# screen.ontimer(createProps, 5000)
+
+createProps()
 
 
 # screen.ontimer(t.shoot(),15000)

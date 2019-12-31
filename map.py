@@ -5,7 +5,39 @@ import random
 import config
 import player
 from PlayerKeyPressHandler import playerKeyPressHandler
+from props import props
 class Map:
+	def __init__(self, map_size, fog_step, screen, fogUpdateInterval = config.FOG_UPDATE_INTERVAL):
+		self.over = False
+		self.screen = screen
+		self.wall_vertex = []
+		self.wall = []
+
+		self.players = []
+		self.bullets = []
+		self.props = []
+
+		self.fog_position = map_size[0]/ 2
+		self.fog_step = fog_step
+		self.map_size = map_size
+		self.wall_size = 40
+		self.fogUpdateInterval = fogUpdateInterval * 1000
+
+		self.initWallpos(10)
+		self.initWall()
+
+		self.fog = turtle.Turtle()
+		self.fog.color('green')
+		self.fog.hideturtle()
+		self.fog.width(fog_step)
+		self.penup_set_pos(self.fog, ( -1 * map_size[0] /2 , -1 * map_size[1] / 2 - self.fog_step))# - self.fog_step))
+		self.fogMove()
+
+		# self.screen.ontimer(, self.fogUpdateInterval)
+		self.updateFog()
+		self.updateBullets()
+		self.updatePlayers()
+		self.bulletHitPlayers()
 	def penup_set_pos(self, Turtle, pos):
 		Turtle.penup()
 		Turtle.setpos((pos[0], pos[1]))
@@ -40,36 +72,8 @@ class Map:
 			self.wall.append(stamp_id)
 		self.screen.update()
 		self.screen.tracer(1)
-	def __init__(self, map_size, fog_step, screen, fogUpdateInterval = config.FOG_UPDATE_INTERVAL):
-		self.over = False
-		self.screen = screen
-		self.wall_vertex = []
-		self.wall = []
-
-		self.players = []
-		self.bullets = []
-
-		self.fog_position = map_size[0]/ 2
-		self.fog_step = fog_step
-		self.map_size = map_size
-		self.wall_size = 40
-		self.fogUpdateInterval = fogUpdateInterval * 1000
-
-		self.initWallpos(10)
-		self.initWall()
-
-		self.fog = turtle.Turtle()
-		self.fog.color('green')
-		self.fog.hideturtle()
-		self.fog.width(fog_step)
-		self.penup_set_pos(self.fog, ( -1 * map_size[0] /2 , -1 * map_size[1] / 2 - self.fog_step))# - self.fog_step))
-		self.fogMove()
-
-		# self.screen.ontimer(, self.fogUpdateInterval)
-		self.updateFog()
-		self.updateBullets()
-		self.updatePlayers()
-		self.bulletHitPlayers()
+	def generateProps(self):
+		self.props.append(props())
 	def fogMove(self):
 		self.screen.tracer(0)
 		self.fog.forward(self.fog_step)
@@ -207,9 +211,10 @@ class Map:
 		self.updatePlayers()
 		self.players.append(Player)
 	def registerProps(self, Props):
-		None
+		self.props.append(Props)
 	def removeProps(self, Props):
-		None
+		index = self.props.index(Props)
+		del self.props[index]
 	def registerBullet(self, Bullet):
 		self.bullets.append(Bullet)
 	def removeBullet(self, Bullet):
