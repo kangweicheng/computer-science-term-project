@@ -38,3 +38,4 @@ SPARKY=			lambda:gun.gun('Sparky')
 HUNTER=			lambda:gun.gun('Hunter')
 WIZARD=			lambda:gun.gun('Wizard')
 ICE_WIZARD=		lambda:gun.gun('Ice Wizard')
+GUN_LIST=[POOR_GUN,BOMBER,MUSKET,THREE_MUSKETS,DART_GOBLIN,ELECTRO_WIZARD,SPARKY,HUNTER,WIZARD,ICE_WIZARD]
