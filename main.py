@@ -83,16 +83,20 @@ def playerForward(player):
 		if screen:
 			screen.update()
 def funcUp_p1(screen = None , player = None):
-	player.setheading(90)
+        if player.effect!='electrified':
+	    player.setheading(90)
 	playerForward(player)
 def funcDown_p1(screen = None , player = None):
-	player.setheading(270)
+	if player.effect!='electrified':
+	    player.setheading(270)
 	playerForward(player)
 def funcLeft_p1(screen = None , player = None):
-	player.setheading(180)
+	if player.effect!='electrified':
+	    player.setheading(180)
 	playerForward(player)
 def funcRight_p1(screen = None , player = None):
-	player.setheading(0)
+	if player.effect!='electrified':
+	    player.setheading(0)
 	playerForward(player)
 def funcAtt_p1(screen = None, player = None):
 	bullet = player.shoot()
@@ -101,16 +105,20 @@ def funcAtt_p1(screen = None, player = None):
 
 
 def funcUp_p2(screen = None , player = None):
-	player.setheading(90)
+	if player.effect!='electrified':
+	    player.setheading(90)
 	playerForward(player)
 def funcDown_p2(screen = None , player = None):
-	player.setheading(270)
+	if player.effect!='electrified':
+	    player.setheading(270)
 	playerForward(player)
 def funcLeft_p2(screen = None , player = None):
-	player.setheading(180)
+	if player.effect!='electrified':
+	    player.setheading(180)
 	playerForward(player)
 def funcRight_p2(screen = None , player = None):
-	player.setheading(0)
+	if player.effect!='electrified':
+	    player.setheading(0)
 	playerForward(player)
 def funcAtt_p2(screen = None, player = None):
 	bullet = player.shoot()
