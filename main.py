@@ -15,21 +15,20 @@ def initScreen():
 
 screen = initScreen()
 for i in range(24):
-	screen.addshape(f'poor_gun-{i*15}.gif')
+	screen.addshape(f'poor_gun-{15*i}.gif')
 for i in range(4):
 	screen.addshape(f'fireball-{90*i}.gif')
 	screen.addshape(f'snowball-{90*i}.gif')
 	screen.addshape(f'electrify-{90*i}.gif')
+	screen.addshape(f'player1-{90*i}.gif')
+	screen.addshape(f'player2-{90*i}.gif')
+	screen.addshape(f'player1_burnt-{90*i}.gif')
+	screen.addshape(f'player2_burnt-{90*i}.gif')
+	screen.addshape(f'player1_frozen-{90*i}.gif')
+	screen.addshape(f'player2_frozen-{90*i}.gif')
+	screen.addshape(f'player_electrified-{90*i}.gif')
 
-screen.addshape('player1-0.gif')
-screen.addshape('player1-90.gif')
-screen.addshape('player1-180.gif')
-screen.addshape('player1-270.gif')
 
-screen.addshape('player2-0.gif')
-screen.addshape('player2-90.gif')
-screen.addshape('player2-180.gif')
-screen.addshape('player2-270.gif')
 
 import player
 from map import Map
@@ -45,12 +44,12 @@ fog_step = 2
 
 gameMap = Map(map_size, fog_step, screen)
 
-p1 = player.player((200, 100),'玩家1',0,'player1-0.gif','left', blood_empty_callback = gameMap.playerDie)
+p1 = player.player((200, 100),'玩家1',90,'player1','left', blood_empty_callback = gameMap.playerDie)
 p1.get_prop(config.ICE_WIZARD())
 p1.display_bar()
 
 
-p2 = player.player((200, 200),'玩家2',0,'player2-0.gif','right', blood_empty_callback = gameMap.playerDie)
+p2 = player.player((200, 200),'玩家2',270,'player2','right', blood_empty_callback = gameMap.playerDie)
 p2.get_prop(config.BOMBER())
 p2.display_bar()
 
@@ -74,16 +73,16 @@ def playerForward(player):
 	if screen:
 		screen.update()
 def funcUp_p1(screen = None , player = None):
-	player.setheading(90,'player1-90.gif')
+	player.setheading(90)
 	playerForward(player)
 def funcDown_p1(screen = None , player = None):
-	player.setheading(270,'player1-270.gif')
+	player.setheading(270)
 	playerForward(player)
 def funcLeft_p1(screen = None , player = None):
-	player.setheading(180,'player1-180.gif')
+	player.setheading(180)
 	playerForward(player)
 def funcRight_p1(screen = None , player = None):
-	player.setheading(0,'player1-0.gif')
+	player.setheading(0)
 	playerForward(player)
 def funcAtt_p1(screen = None, player = None):
 	bullet = player.shoot()
@@ -92,16 +91,16 @@ def funcAtt_p1(screen = None, player = None):
 
 
 def funcUp_p2(screen = None , player = None):
-	player.setheading(90,'player2-90.gif')
+	player.setheading(90)
 	playerForward(player)
 def funcDown_p2(screen = None , player = None):
-	player.setheading(270,'player2-270.gif')
+	player.setheading(270)
 	playerForward(player)
 def funcLeft_p2(screen = None , player = None):
-	player.setheading(180,'player2-180.gif')
+	player.setheading(180)
 	playerForward(player)
 def funcRight_p2(screen = None , player = None):
-	player.setheading(0,'player2-0.gif')
+	player.setheading(0)
 	playerForward(player)
 def funcAtt_p2(screen = None, player = None):
 	bullet = player.shoot()

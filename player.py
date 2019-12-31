@@ -1,15 +1,15 @@
 import turtle,config,gun,math,bullet
 class player(turtle.Turtle):
-    def __init__(self,pos,name,dir,gif,bar_on_left_or_right, blood_empty_callback = None):
+    def __init__(self,pos,name,dir,gif_head,bar_on_left_or_right, blood_empty_callback = None):
         self.over = False
+        self.original_image=gif_head
         super().__init__()
         self.dir=dir
-        self.image=gif
+        self.image=gif_head
         self.penup()
         self.setposition(pos)
-        self.shape(gif)
         self.penup()
-        self.setheading(90,gif)
+        self.setheading(dir)
         self.original_pos=pos
         self.blood_empty_callback = blood_empty_callback
         # self.pos=list(pos)
@@ -108,10 +108,9 @@ class player(turtle.Turtle):
             self.screen.update()
             self.screen.tracer(1)
             self.screen.ontimer(self.display_bar, 2000)
-    def setheading(self,ang,gif):
+    def setheading(self,ang):
         self.seth(ang)
-        self.image=gif
-        self.shape(gif)
+        self.shape(self.image+f'-{ang}.gif')
         self.dir=ang
     def fd(self,dis):
         self.original_pos=self.position()
@@ -128,6 +127,12 @@ class player(turtle.Turtle):
     def hit(self,other):
         if isinstance(other,bullet.bullet):
             self.hp -= other.damage*other.attack
+            if other.name=='Bomber':
+                self.image=self.original_image+'_burnt'
+            if other.name=='Ice Wizard':
+                self.image=self.original_image+'_frozen'
+            if other.name=='Electro Wizard':
+                self.image=self.original_image[:-1]+'_electrified'
         elif type(other) == int:
             self.hp -= other
         else:
