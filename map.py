@@ -1,5 +1,6 @@
 import turtle
 from datetime import timedelta, datetime
+import time
 import random
 import config
 import player
@@ -40,6 +41,7 @@ class Map:
 		self.screen.update()
 		self.screen.tracer(1)
 	def __init__(self, map_size, fog_step, screen, fogUpdateInterval = config.FOG_UPDATE_INTERVAL):
+		self.over = False
 		self.screen = screen
 		self.wall_vertex = []
 		self.wall = []
@@ -62,7 +64,9 @@ class Map:
 		self.fog.width(fog_step)
 		self.penup_set_pos(self.fog, ( -1 * map_size[0] /2 , -1 * map_size[1] / 2 - self.fog_step))# - self.fog_step))
 		self.fogMove()
-		self.screen.ontimer(self.update, self.fogUpdateInterval)
+
+		# self.screen.ontimer(, self.fogUpdateInterval)
+		self.updateFog()
 		self.updateBullets()
 		self.updatePlayers()
 		self.bulletHitPlayers()
@@ -84,9 +88,10 @@ class Map:
 		self.screen.tracer(1)
 
 
-	def update(self):
-		self.fogMove()
-		self.screen.ontimer(self.update, self.fogUpdateInterval)
+	def updateFog(self):
+		if not self.over:
+			self.fogMove()
+			self.screen.ontimer(self.updateFog, self.fogUpdateInterval)
 	def in_square(self, original_pos, pos, square_pos, square_size):
 		xgt = square_pos[0] + square_size / 2 > pos[0]
 		xlt = square_pos[0] - square_size / 2 < pos[0]
@@ -137,7 +142,6 @@ class Map:
 		if xgt and xlt and ygt and ylt:
 			return False, None
 		else:
-			
 			pos = [pos[0], pos[1]]
 			if pos[0] > self.map_size[0]/2 - buffer_region:
 				pos[0] = self.map_size[0]/2 - buffer_region
@@ -151,33 +155,32 @@ class Map:
 			return True, pos
 
 	def updatePlayers(self):
-		
-		for i in self.players:
-			collide, backPos = self.hit_wall(i)
-			if collide:
-				i.back(9)
+		if not self.over:
+			for i in self.players:
+				collide, backPos = self.hit_wall(i)
+				if collide:
+					i.back(9)
 
-			collide, backPos = self.hit_boundary(i)
-			if collide:
-				i.setpos(backPos)
-				i.hit(config.TOUCH_FOG_DAMAGE)
-		self.screen.ontimer(self.updatePlayers, 100)
+				collide, backPos = self.hit_boundary(i)
+				if collide:
+					i.setpos(backPos)
+					i.hit(config.TOUCH_FOG_DAMAGE)
+			self.screen.ontimer(self.updatePlayers, 100)
 
 	def updateBullets(self):
-		
-		for bullet in self.bullets:
-			for obj in bullet.items:
-				collide, backPos = self.hit_wall(obj)
-				if collide:
-					bullet.deleteItem(obj)
+		if not self.over:
+			for bullet in self.bullets:
+				for obj in bullet.items:
+					collide, backPos = self.hit_wall(obj)
+					if collide:
+						bullet.deleteItem(obj)
 
-				collide, backPos = self.hit_boundary(obj)
-				if collide:
-					bullet.deleteItem(obj)
-		self.screen.ontimer(self.updateBullets, 100)
+					collide, backPos = self.hit_boundary(obj)
+					if collide:
+						bullet.deleteItem(obj)
+			self.screen.ontimer(self.updateBullets, 100)
 
 	def touchPlayers(self, player, obj, rod):
-		# print('rop: %d'% (rop))
 		buffer_dist = 0
 		if (player.pos()[0] - obj.pos()[0]) ** 2 + (player.pos()[1] - obj.pos()[1]) ** 2 < (rod + buffer_dist) ** 2:
 			return True
@@ -185,18 +188,19 @@ class Map:
 			return False
 	def bulletHitPlayers(self):
 		# print('bulletHitPlayers')
-		for player in self.players:
-			for bullet in self.bullets:
-				for obj in bullet.items:
-					print(player.name)
-					if self.touchPlayers(player, obj, bullet.rod) and bullet.owner != player.name:
-						print('hit')
-						bullet.deleteItem(obj)
-						if len(bullet.items) == 0:
-							self.removeBullet(bullet)
-						player.hit(bullet)
-
-		self.screen.ontimer(self.bulletHitPlayers, 100)
+		if not self.over:
+			for player in self.players:
+				for bullet in self.bullets:
+					for obj in bullet.items:
+						print(player.name)
+						if self.touchPlayers(player, obj, bullet.rod) and bullet.owner != player.name:
+							print('hit')
+							bullet.deleteItem(obj)
+							if len(bullet.items) == 0:
+								self.removeBullet(bullet)
+							player.hit(bullet)
+		
+			self.screen.ontimer(self.bulletHitPlayers, 100)
 
 
 	def registerPlayer(self, Player):
@@ -211,4 +215,29 @@ class Map:
 	def removeBullet(self, Bullet):
 		index = self.bullets.index(Bullet)
 		del self.bullets[index]
+	def gameOver(self):
+		self.screen.clearscreen()
+		for i in self.bullets:
+			i.over = True
+		for i in self.players:
+			i.over = True
+		self.over = True
+		print('Gameover')
+		t = turtle.Turtle()
+		t.hideturtle()
+		t.penup()
+		t.setpos(-150,50)
+		t.pendown()
+		t.write('Winner is %s'%(self.players[0].name), font=("Arial", 32, "normal"))
+	def playerDie(self, player):
+		try:
+			player.hideturtle()
+			player.clear()
+			player.over = True
+			index = self.players.index(player)
+			del self.players[index]
+			if len(self.players) == 1:
+				self.gameOver()
+		except:
+			None
 

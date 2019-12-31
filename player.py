@@ -1,6 +1,7 @@
 import turtle,config,gun,math,bullet
 class player(turtle.Turtle):
-    def __init__(self,pos,name,dir,gif,bar_on_left_or_right):
+    def __init__(self,pos,name,dir,gif,bar_on_left_or_right, blood_empty_callback = None):
+        self.over = False
         super().__init__()
         self.dir=dir
         self.image=gif
@@ -10,6 +11,7 @@ class player(turtle.Turtle):
         self.penup()
         self.setheading(90,gif)
         self.original_pos=pos
+        self.blood_empty_callback = blood_empty_callback
         # self.pos=list(pos)
         self.name=name
         self.attack=1
@@ -49,62 +51,63 @@ class player(turtle.Turtle):
         self.bar.rt(90)
         self.bar.fd(config.bar_height)
     def display_bar(self):
-        self.screen.tracer(0)
-        self.trueblood.clear()
-        self.screen.update()
-        self.trueblood.begin_fill()
-        self.trueblood.speed(0)
-        if self.bar_on_left_or_right=='left':
-            self.trueblood.penup()
-            self.trueblood.setposition(-config.MAP_SIZE[0]/2-50,config.MAP_SIZE[1]/2+config.bar_height+50)
-            self.trueblood.setheading(0)
-            self.trueblood.pendown()
-            self.trueblood.write(f'槍名: {str(self.gun)}',False,'right',("Arial", 14, "normal"))
-            self.trueblood.fd(self.hp*config.bar_width/config.hpmax)
-            self.trueblood.rt(90)
-            self.trueblood.fd(config.bar_height)
-            self.trueblood.rt(90)
-            self.trueblood.fd(self.hp*config.bar_width/config.hpmax)
-            self.trueblood.write(f'血量: {self.hp}',False,'right',font=("Arial", 14, "normal"))
-            self.trueblood.rt(90)
-            self.trueblood.fd(config.bar_height)
-            self.trueblood.penup()
-            self.trueblood.setheading(270)
-            self.trueblood.fd(55)
-            self.trueblood.write(f'攻擊加成: {(self.attack-1)*100}%',False,'right',("Arial", 14, "normal"))
-            self.trueblood.fd(25)
-            self.trueblood.write(f'減低傷害: {(1-self.defense)*100}%',False,'right',("Arial", 14, "normal"))
-            self.trueblood.rt(180)
-            self.trueblood.fd(80)
-            self.trueblood.rt(90)
-            self.trueblood.pendown()
-        else:
-            self.trueblood.penup()
-            self.trueblood.setposition(config.MAP_SIZE[0]/2+50,config.MAP_SIZE[1]/2+config.bar_height+50)
-            self.trueblood.pendown()
-            self.trueblood.write(f'槍名: {str(self.gun)}',False,'left',("Arial", 14, "normal"))
-            self.trueblood.setheading(180)
-            self.trueblood.fd(self.hp*config.bar_width/config.hpmax)
-            self.trueblood.lt(90)
-            self.trueblood.fd(config.bar_height)
-            self.trueblood.lt(90)
-            self.trueblood.fd(self.hp*config.bar_width/config.hpmax)
-            self.trueblood.write(f'血量: {self.hp}',False,'left',font=("Arial", 14, "normal"))
-            self.trueblood.lt(90)
-            self.trueblood.fd(config.bar_height)
-            self.trueblood.penup()
-            self.trueblood.setheading(270)
-            self.trueblood.fd(55)
-            self.trueblood.write(f'攻擊加成: {(self.attack-1)*100}%',False,'left',("Arial", 14, "normal"))
-            self.trueblood.fd(25)
-            self.trueblood.write(f'減低傷害: {(1-self.defense)*100}%',False,'left',("Arial", 14, "normal"))
-            self.trueblood.rt(180)
-            self.trueblood.fd(80)
-            self.trueblood.pendown()
-        self.trueblood.end_fill()
-        self.screen.update()
-        self.screen.tracer(1)
-        self.screen.ontimer(self.display_bar, 2000)
+        if not self.over:
+            self.screen.tracer(0)
+            self.trueblood.clear()
+            self.screen.update()
+            self.trueblood.begin_fill()
+            self.trueblood.speed(0)
+            if self.bar_on_left_or_right=='left':
+                self.trueblood.penup()
+                self.trueblood.setposition(-config.MAP_SIZE[0]/2-50,config.MAP_SIZE[1]/2+config.bar_height+50)
+                self.trueblood.setheading(0)
+                self.trueblood.pendown()
+                self.trueblood.write(f'槍名: {str(self.gun)}',False,'right',("Arial", 14, "normal"))
+                self.trueblood.fd(self.hp*config.bar_width/config.hpmax)
+                self.trueblood.rt(90)
+                self.trueblood.fd(config.bar_height)
+                self.trueblood.rt(90)
+                self.trueblood.fd(self.hp*config.bar_width/config.hpmax)
+                self.trueblood.write(f'血量: {self.hp}',False,'right',font=("Arial", 14, "normal"))
+                self.trueblood.rt(90)
+                self.trueblood.fd(config.bar_height)
+                self.trueblood.penup()
+                self.trueblood.setheading(270)
+                self.trueblood.fd(55)
+                self.trueblood.write(f'攻擊加成: {(self.attack-1)*100}%',False,'right',("Arial", 14, "normal"))
+                self.trueblood.fd(25)
+                self.trueblood.write(f'減低傷害: {(1-self.defense)*100}%',False,'right',("Arial", 14, "normal"))
+                self.trueblood.rt(180)
+                self.trueblood.fd(80)
+                self.trueblood.rt(90)
+                self.trueblood.pendown()
+            else:
+                self.trueblood.penup()
+                self.trueblood.setposition(config.MAP_SIZE[0]/2+50,config.MAP_SIZE[1]/2+config.bar_height+50)
+                self.trueblood.pendown()
+                self.trueblood.write(f'槍名: {str(self.gun)}',False,'left',("Arial", 14, "normal"))
+                self.trueblood.setheading(180)
+                self.trueblood.fd(self.hp*config.bar_width/config.hpmax)
+                self.trueblood.lt(90)
+                self.trueblood.fd(config.bar_height)
+                self.trueblood.lt(90)
+                self.trueblood.fd(self.hp*config.bar_width/config.hpmax)
+                self.trueblood.write(f'血量: {self.hp}',False,'left',font=("Arial", 14, "normal"))
+                self.trueblood.lt(90)
+                self.trueblood.fd(config.bar_height)
+                self.trueblood.penup()
+                self.trueblood.setheading(270)
+                self.trueblood.fd(55)
+                self.trueblood.write(f'攻擊加成: {(self.attack-1)*100}%',False,'left',("Arial", 14, "normal"))
+                self.trueblood.fd(25)
+                self.trueblood.write(f'減低傷害: {(1-self.defense)*100}%',False,'left',("Arial", 14, "normal"))
+                self.trueblood.rt(180)
+                self.trueblood.fd(80)
+                self.trueblood.pendown()
+            self.trueblood.end_fill()
+            self.screen.update()
+            self.screen.tracer(1)
+            self.screen.ontimer(self.display_bar, 2000)
     def setheading(self,ang,gif):
         self.seth(ang)
         self.image=gif
@@ -129,6 +132,8 @@ class player(turtle.Turtle):
             self.hp -= other
         else:
             self.hp -= other.damage
+        if self.hp <= 0:
+            self.blood_empty_callback(self)
         return None
 
     def shoot(self):

@@ -4,6 +4,7 @@ import random
 import time
 
 
+
 def initScreen():
 	screen = turtle.Screen()
 	screen.register_shape("rect", ((-5, -5), (5, -5), (5,5), (-5, 5)))
@@ -31,9 +32,11 @@ screen.addshape('player2-180.gif')
 screen.addshape('player2-270.gif')
 
 import player
-from PlayerKeyPressHandler import playerKeyPressHandler
 from map import Map
 from props import props
+
+from PlayerKeyPressHandler import playerKeyPressHandler
+
 import config
 
 map_size = config.MAP_SIZE
@@ -42,12 +45,12 @@ fog_step = 2
 
 gameMap = Map(map_size, fog_step, screen)
 
-p1 = player.player((200, 100),'玩家1',0,'player1-0.gif','left')
+p1 = player.player((200, 100),'玩家1',0,'player1-0.gif','left', blood_empty_callback = gameMap.playerDie)
 p1.get_prop(config.ICE_WIZARD())
 p1.display_bar()
 
 
-p2 = player.player((200, 200),'玩家2',0,'player2-0.gif','right')
+p2 = player.player((200, 200),'玩家2',0,'player2-0.gif','right', blood_empty_callback = gameMap.playerDie)
 p2.get_prop(config.BOMBER())
 p2.display_bar()
 
@@ -143,12 +146,12 @@ pressHandle = playerKeyPressHandler(
 
 screen.listen()
 proplist = []
-def createProps():
-	proplist.append(props())
-	screen.ontimer(createProps, 5000)
+# def createProps():
+# 	proplist.append(props())
+# 	screen.ontimer(createProps, 5000)
 
 
-screen.ontimer(createProps, 5000)
+# screen.ontimer(createProps, 5000)
 
 
 # screen.ontimer(t.shoot(),15000)

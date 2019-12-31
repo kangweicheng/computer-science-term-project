@@ -24,6 +24,7 @@ class bullet:
     bice_wizard=bullet.bullet('Ice Wizard',2.2,1,400,110,20,0,'Freeze','azure','snowball.gif')
     '''
     def __init__(self,name,cd,nop,damage,rop,rod,ang,eff,traj_col,bul_gif,attack_ratio, pos, dir, kill_self_callback=None, owner=None):
+        self.over = False
         self.screen = turtle.getscreen()
         self.screen.tracer(0)
         self.owner = owner
@@ -87,12 +88,14 @@ class bullet:
             t.setheading(self.dir+(middle-i)*step_ang)
     # this method is responsible for move the bullets routinely
     def routinely_move(self):
-        self.move()
-        if self.move_distance < self.rop:
-            self.screen.ontimer(self.routinely_move, self.step_time)
-        else:
-            self.deleteBullet()
-            self.delete_callback(self)
+        if not self.over:
+            self.move()
+            if self.move_distance < self.rop:
+                
+                self.screen.ontimer(self.routinely_move, self.step_time)
+            else:
+                self.deleteBullet()
+                self.delete_callback(self)
     def move(self):
         if self.nop == 1:
             if self.name=='Electro Wizard':

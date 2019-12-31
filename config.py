@@ -1,7 +1,7 @@
 import bullet,gun
 MAP_SIZE = (500, 500)
 FOG_UPDATE_INTERVAL = 2
-TOUCH_FOG_DAMAGE = 10
+TOUCH_FOG_DAMAGE = 1000
 hpmax=10000
 bar_width=240
 bar_height=30
