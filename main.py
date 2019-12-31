@@ -83,8 +83,8 @@ def playerForward(player):
 		if screen:
 			screen.update()
 def funcUp_p1(screen = None , player = None):
-        if player.effect!='electrified':
-	    player.setheading(90)
+	if player.effect!='electrified':
+		player.setheading(90)
 	playerForward(player)
 def funcDown_p1(screen = None , player = None):
 	if player.effect!='electrified':

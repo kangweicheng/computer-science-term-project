@@ -113,7 +113,7 @@ class player(turtle.Turtle):
         if self.effect=='burnt':
             ang+=180
         self.seth(ang)
-        self.shape(self.image+f'-{ang}.gif')
+        self.shape(self.image+f'-{ang%360}.gif')
         self.dir=ang
     def fd(self,dis):
         self.original_pos=self.position()
