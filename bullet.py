@@ -23,7 +23,8 @@ class bullet:
     bwizard=bullet.bullet('Wizard',2.2,1,1000,140,50,0,None,'salmon','wizard.gif')
     bice_wizard=bullet.bullet('Ice Wizard',2.2,1,400,110,20,0,'Freeze','azure','snowball.gif')
     '''
-    def __init__(self,name,cd,nop,damage,rop,rod,ang,eff,traj_col,bul_gif,attack_ratio, pos, dir, kill_self_callback=None, owner=None):
+    def __init__(self,name,cd,nop,damage,rop,rod,ang,eff,traj_col,bul_gif,attack_ratio, pos, dir, affect_time, kill_self_callback=None, owner=None):
+        self.affect_time=affect_time
         self.over = False
         self.screen = turtle.getscreen()
         self.screen.tracer(0)

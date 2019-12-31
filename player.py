@@ -126,17 +126,20 @@ class player(turtle.Turtle):
             self.attack+=other.ratio
     def hit(self,other):
         if isinstance(other,bullet.bullet):
-            self.hp -= other.damage*other.attack
+            self.hp -= other.damage*other.attack*self.defense
             if other.name=='Bomber':
                 self.image=self.original_image+'_burnt'
+                self.screen.ontimer(self.change_to_original_image(),other.affect_time*1000)
             if other.name=='Ice Wizard':
                 self.image=self.original_image+'_frozen'
+                self.screen.ontimer(self.change_to_original_image(),other.affect_time*1000)
             if other.name=='Electro Wizard':
                 self.image=self.original_image[:-1]+'_electrified'
+                self.screen.ontimer(self.change_to_original_image(),other.affect_time*1000)
         elif type(other) == int:
             self.hp -= other
         else:
-            self.hp -= other.damage
+            self.hp -= other.damage*self.defense
         if self.hp <= 0:
             self.blood_empty_callback(self)
         return None
@@ -144,3 +147,6 @@ class player(turtle.Turtle):
     def shoot(self):
         print(self.dir)
         return self.gun.attack(self.pos(),self.dir,self.attack, self.name)
+
+    def change_to_original_image(self):
+        self.image=self.original_image
