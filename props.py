@@ -1,31 +1,28 @@
-import turtle,random
+import turtle,random,config
 class props:
-    def __init__(self,):#props_gif
+    def __init__(self,pos):
         self.item=turtle.Turtle()
         self.item.penup()
-        self.item.setposition(random.randint(-250,250),random.randint(-250,250))
-        prob=random.randint(1,3)
-        if prob==1:
-            self.type='defense'
-        elif prob==2:
-            self.type='attack'
+        self.item.setposition(pos)
+        if random.randint(1,3)==1:
+            g=random.choice(config.GUN_LIST)()
+            self.type=g.name
+            #self.shape(gun.gun_gif)#haven't modified!!!
         else:
-            self.type='heal'
-        prob=random.randint(1,6)
-        if prob==1:
-            self.ratio=2000 if self.type=='HEAL' else 0.2
-        elif prob==2 or prob==3:
-            self.ratio=1500 if self.type=='HEAL' else 0.15
-        else:
-            self.ratio=1000 if self.type=='HEAL' else 0.1
-    def hit_prop(self,player_pos):#center to front
-        props_width=20
-        player_width=10
-        xr=(self.item.xcor-props_width/2,self.item.xcor+props_width/2)
-        yr=(self.item.ycor-props_width/2,self.item.ycor+props_width/2)
-        if player_pos[0]+player_width>=xr[0] or player_pos[0]-player_width<=xr[1] or player_pos[1]+player_width>=yr[0] or player_pos[1]-player_width<=yr[1]:
-            return True #I can't del self here, please do it in __main__.
+            option=[('defense','DEF+.gif'),('attack','ATK+.gif'),('heal','HEAL.gif')]
+            t,s=random.choice(option)
+            self.type=t
+            self.item.shape(s)
+            option=[(2000,0.2),(1500,0.15),(1000,0.1)]
+            ch=random.choices(option,[1,2,3])[0]
+            self.ratio=ch[0] if self.type=='heal' else ch[1]
     def __str__(self):
         return self.type
     def __del__(self):
         return
+if __name__=='__main__':
+    turtle.addshape('ATK+.gif')
+    turtle.addshape('DEF+.gif')
+    turtle.addshape('HEAL.gif')
+    p=props((0,0))
+    print(p)
