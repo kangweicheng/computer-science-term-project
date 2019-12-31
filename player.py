@@ -2,6 +2,7 @@ import turtle,config,gun,math,bullet
 class player(turtle.Turtle):
     def __init__(self,pos,name,dir,gif_head,bar_on_left_or_right, blood_empty_callback = None):
         self.over = False
+        self.effect=None
         self.original_image=gif_head
         super().__init__()
         self.dir=dir
@@ -109,6 +110,8 @@ class player(turtle.Turtle):
             self.screen.tracer(1)
             self.screen.ontimer(self.display_bar, 2000)
     def setheading(self,ang):
+        if self.effect=='burnt':
+            ang+=180
         self.seth(ang)
         self.shape(self.image+f'-{ang}.gif')
         self.dir=ang
@@ -129,12 +132,15 @@ class player(turtle.Turtle):
             self.hp -= other.damage*other.attack*self.defense
             if other.name=='Bomber':
                 self.image=self.original_image+'_burnt'
+                self.effect='burnt'
                 self.screen.ontimer(self.change_to_original_image,other.affect_time*1000)
             if other.name=='Ice Wizard':
                 self.image=self.original_image+'_frozen'
+                self.effect='frozen'
                 self.screen.ontimer(self.change_to_original_image,other.affect_time*1000)
             if other.name=='Electro Wizard':
                 self.image=self.original_image[:-1]+'_electrified'
+                self.effect='electrified'
                 self.screen.ontimer(self.change_to_original_image,other.affect_time*1000)
         elif type(other) == int:
             self.hp -= other
@@ -150,3 +156,4 @@ class player(turtle.Turtle):
 
     def change_to_original_image(self):
         self.image=self.original_image
+        self.effect=None

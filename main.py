@@ -61,17 +61,27 @@ def update():
 	screen.ontimer(update, 10)
 
 def playerForward(player):
-	player.fd(3)
-	if screen:
-		screen.update()
-	time.sleep(0.07)
-	player.fd(3)
-	if screen:
-		screen.update()
-	time.sleep(0.07)
-	player.fd(3)
-	if screen:
-		screen.update()
+	if player.effect!='electrified':
+		if player.effect=='frozen':
+			player.fd(1)
+		else:
+			player.fd(3)
+		if screen:
+			screen.update()
+		time.sleep(0.07)
+		if player.effect=='frozen':
+			player.fd(1)
+		else:
+			player.fd(3)
+		if screen:
+			screen.update()
+		time.sleep(0.07)
+		if player.effect=='frozen':
+			player.fd(1)
+		else:
+			player.fd(3)
+		if screen:
+			screen.update()
 def funcUp_p1(screen = None , player = None):
 	player.setheading(90)
 	playerForward(player)
