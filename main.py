@@ -27,6 +27,8 @@ for i in range(4):
 	screen.addshape(f'player1_frozen-{90*i}.gif')
 	screen.addshape(f'player2_frozen-{90*i}.gif')
 	screen.addshape(f'player_electrified-{90*i}.gif')
+for i in range(24):
+        screen.addshape(f'{i}.gif')
 screen.addshape('ATK+.gif')
 screen.addshape('DEF+.gif')
 screen.addshape('HEAL.gif')
@@ -47,12 +49,12 @@ fog_step = 2
 gameMap = Map(map_size, fog_step, screen)
 
 p1 = player.player((200, 100),'玩家1',90,'player1','left', blood_empty_callback = gameMap.playerDie)
-p1.get_prop(config.THREE_MUSKETS())
+p1.get_prop(config.ELECTRO_WIZARD())
 p1.display_bar()
 
 
 p2 = player.player((200, 200),'玩家2',270,'player2','right', blood_empty_callback = gameMap.playerDie)
-p2.get_prop(config.ICE_WIZARD())
+p2.get_prop(config.HUNTER())
 p2.display_bar()
 
 gameMap.registerPlayer(p1)

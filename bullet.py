@@ -23,6 +23,9 @@ class bullet:
                 self.items[0].shape(bul_gif)
                 self.items[0].color('gold')
 #                self.items[0].turtlesize(1,1,1)
+            elif name=='Bomber':
+                self.items[0].shape(bul_gif)
+                self.items[0].color('black')
             else:
                 self.items[0].shape(f'{bul_gif}-{str(dir)}.gif')
         else:
@@ -94,48 +97,56 @@ class bullet:
                 self.delete_callback(self)
     def move(self):
         if self.name=='Electro Wizard':
-            print(self.items)
-            self.items[0].pendown()
-            self.items[0].pensize(self.rod*0.5)
-            self.items[0].pencolor('gold')
+            for t in self.items:
+                t.pendown()
+                t.pensize(self.rod*0.5)
+                t.pencolor('gold')
         if not (self.over or self.isDeleted):
-            if self.nop == 1:
-                if self.name=='Electro Wizard':
-                    self.items[0].lt(70)
-                    self.items[0].fd(self.step/2)
-                    self.items[0].rt(70)
-                    self.items[0].fd(self.step/2)
-                    self.move_distance += self.step
-                elif self.name=='Sparky':
-                    if self.move_distance<=self.step:
-                        self.items[0].fd(self.step*0.5)
-                        self.move_distance += self.step*0.5
-                        if self.move_distance==self.step:
-                            self.items[0].hideturtle()
+            for t in self.items:
+                if self.nop == 1:
+                    if self.name=='Electro Wizard':
+                        t.lt(70)
+                        t.fd(self.step/2)
+                        t.rt(70)
+                        t.fd(self.step/2)
+                        self.move_distance += self.step
+                    elif self.name=='Sparky':
+                        if self.move_distance<=self.step:
+                            t.fd(self.step*0.5)
+                            self.move_distance += self.step*0.5
+                            if self.move_distance==self.step:
+                                t.hideturtle()
+                        else:
+                            t.fd(self.step)
+                            self.move_distance += self.step
                     else:
-                        self.items[0].fd(self.step)
+                        t.fd(self.step)
                         self.move_distance += self.step
                 else:
-                    self.items[0].fd(self.step)
-                    self.move_distance += self.step
-            else:
-                for t in self.items:
-                    t.fd(self.step*3)
-                    self.move_distance += self.step*3
+                        t.fd(self.step*3)
+                        self.move_distance += self.step*3
     def setDeleteCallback(self, callback):
         self.delete_callback = callback
     # remove all bullets objects
-    def deleteBullet(self):
+    def deleteBullet(self):#haven't dealt with Sparky!!!
+        print(self.items)
         self.isDeleted = True
         for t in self.items:
+            if self.name=='Bomber':
+                for i in range(24):
+                    t.shape(f'{i}.gif')
             #print('instance')
             #print(t)
             t.clear()
             t.hideturtle()
             del t
     # remove one object
-    def deleteItem(self, item):
+    def deleteItem(self, item):#haven't dealt with Sparky!!!
         try:
+            for t in self.items:
+                if self.name=='Bomber':
+                    for i in range(24):
+                        t.shape(f'{i}.gif')
             index = self.items.index(item)
             self.items[index].clear()
             self.items[index].hideturtle()
