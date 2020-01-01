@@ -32,7 +32,9 @@ class bullet:
                 middle=3
             self.items=[turtle.Turtle() for i in range(nop)]
             for i,t in enumerate(self.items):
-                angle=(dir-15*(i-middle))%360
+                if i%2==1:
+                    i=-(i+1)
+                angle=int((dir+15*(i/2))%360)
                 t.speed(0)
                 t.shape(f'{bul_gif}-{str(angle)}.gif')
         self.name=name
@@ -76,9 +78,11 @@ class bullet:
             middle=(self.nop-1)/2
             step_ang=self.ang/(self.nop-1)
         for i,t in enumerate(self.items):
+            if i%2==1:
+                i=-(i+1)
             t.penup()
             t.setposition(self.pos)
-            t.setheading(self.dir+(middle-i)*step_ang)
+            t.setheading(int((self.dir+15*(i/2))%360))
     # this method is responsible for move the bullets routinely
     def routinely_move(self):
         if not self.over:
@@ -116,8 +120,8 @@ class bullet:
                     self.move_distance += self.step
             else:
                 for t in self.items:
-                    t.fd(self.step)
-                    self.move_distance += self.step
+                    t.fd(self.step*3)
+                    self.move_distance += self.step*3
     def setDeleteCallback(self, callback):
         self.delete_callback = callback
     # remove all bullets objects
