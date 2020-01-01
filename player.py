@@ -133,14 +133,17 @@ class player(turtle.Turtle):
             self.hp -= other.damage*other.attack*self.defense
             if other.name=='Bomber':
                 self.image=self.original_image+'_burnt'
+                self.shape(self.image+f'-{self.dir}.gif')
                 self.effect='burnt'
                 self.screen.ontimer(self.change_to_original_image,other.affect_time*1000)
             if other.name=='Ice Wizard':
                 self.image=self.original_image+'_frozen'
+                self.shape(self.image+f'-{self.dir}.gif')
                 self.effect='frozen'
                 self.screen.ontimer(self.change_to_original_image,other.affect_time*1000)
             if other.name=='Electro Wizard':
                 self.image=self.original_image[:-1]+'_electrified'
+                self.shape(self.image+f'-{self.dir}.gif')
                 self.effect='electrified'
                 self.screen.ontimer(self.change_to_original_image,other.affect_time*1000)
         elif type(other) == int:

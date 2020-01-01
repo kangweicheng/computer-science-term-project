@@ -52,7 +52,7 @@ p1.display_bar()
 
 
 p2 = player.player((200, 200),'玩家2',270,'player2','right', blood_empty_callback = gameMap.playerDie)
-p2.get_prop(config.BOMBER())
+p2.get_prop(config.ELECTRO_WIZARD())
 p2.display_bar()
 
 gameMap.registerPlayer(p1)
@@ -166,7 +166,7 @@ pressHandle = playerKeyPressHandler(
 screen.listen()
 proplist = []
 def createProps():
-	prop = props()
+	prop = props((0,0))
 	gameMap.registerProps(prop)
 	screen.ontimer(createProps, 5000)
 
