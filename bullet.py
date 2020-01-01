@@ -22,7 +22,7 @@ class bullet:
             if name=='Electro Wizard':
                 self.items[0].shape(bul_gif)
                 self.items[0].color('gold')
-                self.items[0].turtlesize(0.5,0.5,0.5)
+#                self.items[0].turtlesize(1,1,1)
             else:
                 self.items[0].shape(f'{bul_gif}-{str(dir)}.gif')
         else:
@@ -32,7 +32,9 @@ class bullet:
                 middle=3
             self.items=[turtle.Turtle() for i in range(nop)]
             for i,t in enumerate(self.items):
-                angle=(dir-15*(i-middle))%360
+                if i%2==1:
+                    i=-(i+1)
+                angle=int((dir+15*(i/2))%360)
                 t.speed(0)
                 t.shape(f'{bul_gif}-{str(angle)}.gif')
         self.name=name
@@ -47,7 +49,7 @@ class bullet:
         self.attack=attack_ratio
         self.pos = pos
         if name=='Electro Wizard':
-            self.dir = dir-20
+            self.dir = dir-35
         else:
             self.dir=dir
         self.move_distance = 0
@@ -55,7 +57,7 @@ class bullet:
         if name=='Sparky':
             self.speed=300
         elif name=='Electro Wizard':
-            self.speed=220
+            self.speed=350
         else:
             self.speed = 150
         self.step_time = 50 # milliseconds
@@ -76,9 +78,11 @@ class bullet:
             middle=(self.nop-1)/2
             step_ang=self.ang/(self.nop-1)
         for i,t in enumerate(self.items):
+            if i%2==1:
+                i=-(i+1)
             t.penup()
             t.setposition(self.pos)
-            t.setheading(self.dir+(middle-i)*step_ang)
+            t.setheading(int((self.dir+15*(i/2))%360))
     # this method is responsible for move the bullets routinely
     def routinely_move(self):
         if not self.over:
@@ -92,14 +96,14 @@ class bullet:
         if self.name=='Electro Wizard':
             print(self.items)
             self.items[0].pendown()
-            self.items[0].pensize(self.rod*0.25)
+            self.items[0].pensize(self.rod*0.5)
             self.items[0].pencolor('gold')
         if not (self.over or self.isDeleted):
             if self.nop == 1:
                 if self.name=='Electro Wizard':
-                    self.items[0].lt(40)
+                    self.items[0].lt(70)
                     self.items[0].fd(self.step/2)
-                    self.items[0].rt(40)
+                    self.items[0].rt(70)
                     self.items[0].fd(self.step/2)
                     self.move_distance += self.step
                 elif self.name=='Sparky':
@@ -116,8 +120,8 @@ class bullet:
                     self.move_distance += self.step
             else:
                 for t in self.items:
-                    t.fd(self.step)
-                    self.move_distance += self.step
+                    t.fd(self.step*3)
+                    self.move_distance += self.step*3
     def setDeleteCallback(self, callback):
         self.delete_callback = callback
     # remove all bullets objects
