@@ -182,6 +182,11 @@ class Map:
 					collide, backPos = self.hit_boundary(obj)
 					if collide:
 						bullet.deleteItem(obj)
+				print(bullet.items)
+				if len(bullet.items) == 0:
+					bullet.deleteBullet()
+
+					self.removeBullet(bullet)
 			self.screen.ontimer(self.updateBullets, 100)
 
 	def touchPlayers(self, player, obj, rod):
@@ -196,12 +201,12 @@ class Map:
 			for player in self.players:
 				for bullet in self.bullets:
 					for obj in bullet.items:
-						print(player.name)
 						if self.touchPlayers(player, obj, bullet.rod) and bullet.owner != player.name:
-							print('hit')
 							bullet.deleteItem(obj)
 							if len(bullet.items) == 0:
+								bullet.deleteBullet()
 								self.removeBullet(bullet)
+								print('remove')
 							player.hit(bullet)
 		
 			self.screen.ontimer(self.bulletHitPlayers, 100)

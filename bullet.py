@@ -13,6 +13,7 @@ class bullet:
     def __init__(self,name,cd,nop,damage,rop,rod,ang,bul_gif,attack_ratio, pos, dir, affect_time, kill_self_callback=None, owner=None):
         self.affect_time=affect_time
         self.over = False
+        self.isDeleted = False
         self.screen = turtle.getscreen()
         self.screen.tracer(0)
         self.owner = owner
@@ -79,25 +80,27 @@ class bullet:
                 self.deleteBullet()
                 self.delete_callback(self)
     def move(self):
-        if self.nop == 1:
-            if self.name=='Electro Wizard':
-                self.items[0].lt(10)
-                self.items[0].fd(self.step/2)
-                self.items[0].rt(10)
-                self.items[0].fd(self.step/2)
-                self.move_distance += self.step
+        if not (self.over or self.isDeleted):
+            if self.nop == 1:
+                if self.name=='Electro Wizard':
+                    self.items[0].lt(10)
+                    self.items[0].fd(self.step/2)
+                    self.items[0].rt(10)
+                    self.items[0].fd(self.step/2)
+                    self.move_distance += self.step
+                else:
+                    for t in self.items:
+                        t.fd(self.step)
+                        self.move_distance += self.step
             else:
                 for t in self.items:
                     t.fd(self.step)
                     self.move_distance += self.step
-        else:
-            for t in self.items:
-                t.fd(self.step)
-                self.move_distance += self.step
     def setDeleteCallback(self, callback):
         self.delete_callback = callback
     # remove all bullets objects
     def deleteBullet(self):
+        self.isDeleted = True
         for t in self.items:
             print('instance')
             print(t)
