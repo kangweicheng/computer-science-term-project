@@ -135,9 +135,6 @@ class bullet:
             del t
     # remove one object
     def deleteItem(self, item):
-        #print(self.items)
-        
-        #print(index)
         try:
             index = self.items.index(item)
             self.items[index].clear()

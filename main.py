@@ -47,7 +47,7 @@ fog_step = 2
 gameMap = Map(map_size, fog_step, screen)
 
 p1 = player.player((200, 100),'玩家1',90,'player1','left', blood_empty_callback = gameMap.playerDie)
-p1.get_prop(config.HUNTER())
+p1.get_prop(config.THREE_MUSKETS())
 p1.display_bar()
 
 
@@ -166,9 +166,12 @@ pressHandle = playerKeyPressHandler(
 screen.listen()
 proplist = []
 def createProps():
-	prop = props((0,0))
-	gameMap.registerProps(prop)
-	screen.ontimer(createProps, 5000)
+	x = (random.random() - 0.5)* 500
+	y = (random.random() - 0.5)* 500
+	prop = props((x, y))
+	if gameMap.validProps(prop):
+		gameMap.registerProps(prop)
+	screen.ontimer(createProps, 3000)
 
 
 

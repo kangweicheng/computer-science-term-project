@@ -175,12 +175,13 @@ class Map:
 
 	def updateBullets(self):
 		if not self.over:
+
 			for bullet in self.bullets:
+
 				for obj in bullet.items:
-					collide, backPos = self.hit_wall(obj, buffer_region = 20)
-					print('iscollide')
+					collide, backPos = self.hit_wall(obj, buffer_region = 10)
 					if collide:
-						print('collide')
+
 						bullet.deleteItem(obj)
 
 					collide, backPos = self.hit_boundary(obj, buffer_region = 20)
@@ -215,16 +216,32 @@ class Map:
 	def registerPlayer(self, Player):
 		self.updatePlayers()
 		self.players.append(Player)
+	def validProps(self, Props):
+		collide, backPos = self.hit_wall(Props, buffer_region = 10)
+		if collide:
+
+			return False
+
+		collide, backPos = self.hit_boundary(Props, buffer_region = 20)
+		if collide:
+			return False
+		return True
 	def registerProps(self, Props):
 		self.props.append(Props)
 	def removeProps(self, Props):
-		index = self.props.index(Props)
-		del self.props[index]
+		try:
+			index = self.props.index(Props)
+			del self.props[index]
+		except:
+			None
 	def registerBullet(self, Bullet):
 		self.bullets.append(Bullet)
 	def removeBullet(self, Bullet):
-		index = self.bullets.index(Bullet)
-		del self.bullets[index]
+		try:
+			index = self.bullets.index(Bullet)
+			del self.bullets[index]
+		except:
+			None
 	def gameOver(self):
 		self.screen.clearscreen()
 		for i in self.bullets:
