@@ -137,27 +137,33 @@ class Map:
 				# self.penup_set_pos(obj, y)
 				# obj.penup()
 
-	def hit_boundary(self, obj, buffer_region = 10):
+	def hit_boundary(self, obj, buffer_region = (10, 10)):
 		square_pos = (0, 0)
 		square_size = self.map_size[0]
 		pos = obj.pos()
-		xgt = square_pos[0] + square_size / 2 > pos[0] + buffer_region
-		xlt = square_pos[0] - square_size / 2 < pos[0] - buffer_region
-		ygt = square_pos[1] + square_size / 2 > pos[1] + buffer_region
-		ylt = square_pos[1] - square_size / 2 < pos[1] - buffer_region
+		if obj.heading() < 45 or obj.heading() > 315 or (obj.heading() < 225 and obj.heading() > 135):
+			buffer_x = buffer_region[0]
+			buffer_y = buffer_region[1]
+		else:
+			buffer_x = buffer_region[1]
+			buffer_y = buffer_region[0]
+		xgt = square_pos[0] + square_size / 2 > pos[0] + buffer_x
+		xlt = square_pos[0] - square_size / 2 < pos[0] - buffer_x
+		ygt = square_pos[1] + square_size / 2 > pos[1] + buffer_y
+		ylt = square_pos[1] - square_size / 2 < pos[1] - buffer_y
 		if xgt and xlt and ygt and ylt:
 			return False, None
 		else:
 			pos = [pos[0], pos[1]]
-			if pos[0] > self.map_size[0]/2 - buffer_region:
-				pos[0] = self.map_size[0]/2 - buffer_region
-			elif pos[0] < -1 * self.map_size[0]/2 + buffer_region:
-				pos[0] = -1 * self.map_size[0]/2 + buffer_region
+			if pos[0] > self.map_size[0]/2 - buffer_x:
+				pos[0] = self.map_size[0]/2 - buffer_x
+			elif pos[0] < -1 * self.map_size[0]/2 + buffer_x:
+				pos[0] = -1 * self.map_size[0]/2 + buffer_x
 
-			if pos[1] > self.map_size[1]/2 - buffer_region:
-				pos[1] = self.map_size[1]/2 - buffer_region
-			elif pos[1] < -1 * self.map_size[1]/2 + buffer_region:
-				pos[1] = -1 * self.map_size[1]/2 + buffer_region
+			if pos[1] > self.map_size[1]/2 - buffer_y:
+				pos[1] = self.map_size[1]/2 - buffer_y
+			elif pos[1] < -1 * self.map_size[1]/2 + buffer_y:
+				pos[1] = -1 * self.map_size[1]/2 + buffer_y
 			return True, pos
 
 	def updatePlayers(self):
@@ -177,7 +183,7 @@ class Map:
 		if not self.over:
 			for bullet in self.bullets:
 				for obj in bullet.items:
-					collide, backPos = self.hit_wall(obj, buffer_region = 20)
+					collide, backPos = self.hit_wall(obj, buffer_region = (30,20))
 					print('iscollide')
 					if collide:
 						print('collide')

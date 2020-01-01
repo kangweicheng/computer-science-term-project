@@ -58,7 +58,7 @@ class bullet:
             self.speed=220
         else:
             self.speed = 150
-        self.step_time = 100 # milliseconds
+        self.step_time = 50 # milliseconds
         self.step=self.speed*self.step_time/1000
 
         self.delete_callback = None
