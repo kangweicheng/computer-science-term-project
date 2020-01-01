@@ -22,7 +22,7 @@ class bullet:
             if name=='Electro Wizard':
                 self.items[0].shape(bul_gif)
                 self.items[0].color('gold')
-                self.items[0].turtlesize(0.5,0.5,0.5)
+#                self.items[0].turtlesize(1,1,1)
             else:
                 self.items[0].shape(f'{bul_gif}-{str(dir)}.gif')
         else:
@@ -47,7 +47,7 @@ class bullet:
         self.attack=attack_ratio
         self.pos = pos
         if name=='Electro Wizard':
-            self.dir = dir-20
+            self.dir = dir-35
         else:
             self.dir=dir
         self.move_distance = 0
@@ -55,7 +55,7 @@ class bullet:
         if name=='Sparky':
             self.speed=300
         elif name=='Electro Wizard':
-            self.speed=220
+            self.speed=350
         else:
             self.speed = 150
         self.step_time = 100 # milliseconds
@@ -92,14 +92,14 @@ class bullet:
         if self.name=='Electro Wizard':
             print(self.items)
             self.items[0].pendown()
-            self.items[0].pensize(self.rod*0.25)
+            self.items[0].pensize(self.rod*0.5)
             self.items[0].pencolor('gold')
         if not (self.over or self.isDeleted):
             if self.nop == 1:
                 if self.name=='Electro Wizard':
-                    self.items[0].lt(40)
+                    self.items[0].lt(70)
                     self.items[0].fd(self.step/2)
-                    self.items[0].rt(40)
+                    self.items[0].rt(70)
                     self.items[0].fd(self.step/2)
                     self.move_distance += self.step
                 elif self.name=='Sparky':
