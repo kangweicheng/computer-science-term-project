@@ -166,12 +166,13 @@ pressHandle = playerKeyPressHandler(
 screen.listen()
 proplist = []
 def createProps():
-	x = (random.random() - 0.5)* 500
-	y = (random.random() - 0.5)* 500
-	prop = props((x, y))
-	if gameMap.validProps(prop):
-		gameMap.registerProps(prop)
-	screen.ontimer(createProps, 3000)
+	if not gameMap.over:
+		x = (random.random() - 0.5)* 500
+		y = (random.random() - 0.5)* 500
+		prop = props((x, y))
+		if gameMap.validProps(prop):
+			gameMap.registerProps(prop)
+		screen.ontimer(createProps, 3000)
 
 
 
