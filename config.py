@@ -22,7 +22,7 @@ bomber=			lambda ratio, pos, dir, owner_name:bullet.bullet('Bomber'			,3		,1	,40
 musket=			lambda ratio, pos, dir, owner_name:bullet.bullet('Musket'			,1.1	,1	,1600,280,20,0,'poor_gun',ratio, pos, dir, 0, owner = owner_name)
 three_muskets=	lambda ratio, pos, dir, owner_name:bullet.bullet('Three Muskets'	,3		,3	,1600,260,20,30,'poor_gun',ratio, pos, dir, 0, owner = owner_name)
 dart_goblin=	lambda ratio, pos, dir, owner_name:bullet.bullet('Dart Goblin'		,0		,3	,1000,360,2,0,'poor_gun',ratio, pos, dir, 0, owner = owner_name)
-electro_wizard=	lambda ratio, pos, dir, owner_name:bullet.bullet('Electro Wizard'	,2.2	,1	,300,220,20,0,'electrify',ratio, pos, dir, 2, owner = owner_name)
+electro_wizard=	lambda ratio, pos, dir, owner_name:bullet.bullet('Electro Wizard'	,2.2	,1	,300,220/0.9848,20,0,'circle',ratio, pos, dir, 2, owner = owner_name)
 sparky=			lambda ratio, pos, dir, owner_name:bullet.bullet('Sparky'			,6		,1	,2500,180,20,0,'electrify',ratio, pos, dir, 0, owner = owner_name)
 hunter=			lambda ratio, pos, dir, owner_name:bullet.bullet('Hunter'			,2.2	,7	,850,220,20,90,'poor_gun',ratio, pos, dir, 0, owner = owner_name)
 wizard=			lambda ratio, pos, dir, owner_name:bullet.bullet('Wizard'			,2.2	,1	,1000,280,50,0,'wizard',ratio, pos, dir, 0, owner = owner_name)
