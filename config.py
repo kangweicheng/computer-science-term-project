@@ -1,7 +1,7 @@
 import bullet,gun
 MAP_SIZE = (500, 500)
 FOG_UPDATE_INTERVAL = 2
-TOUCH_FOG_DAMAGE = 10
+TOUCH_FOG_DAMAGE = 1000
 hpmax=10000
 bar_width=240
 bar_height=30
@@ -24,7 +24,7 @@ three_muskets=	lambda ratio, pos, dir, owner_name:bullet.bullet('Three Muskets'	
 dart_goblin=	lambda ratio, pos, dir, owner_name:bullet.bullet('Dart Goblin'		,0		,3	,1000,360,2,0,'poor_gun',ratio, pos, dir, 0, owner = owner_name)
 electro_wizard=	lambda ratio, pos, dir, owner_name:bullet.bullet('Electro Wizard'	,2.2	,1	,300,220/0.9848,20,0,'triangle',ratio, pos, dir, 2, owner = owner_name)
 sparky=			lambda ratio, pos, dir, owner_name:bullet.bullet('Sparky'			,6		,1	,2500,180,20,0,'electrify',ratio, pos, dir, 0, owner = owner_name)
-hunter=			lambda ratio, pos, dir, owner_name:bullet.bullet('Hunter'			,2.2	,7	,850,220,20,90,'poor_gun',ratio, pos, dir, 0, owner = owner_name)
+hunter=			lambda ratio, pos, dir, owner_name:bullet.bullet('Hunter'			,2.2	,7	,800,190,20,90,'poor_gun',ratio, pos, dir, 0, owner = owner_name)
 wizard=			lambda ratio, pos, dir, owner_name:bullet.bullet('Wizard'			,2.2	,1	,1000,280,50,0,'wizard',ratio, pos, dir, 0, owner = owner_name)
 ice_wizard=		lambda ratio, pos, dir, owner_name:bullet.bullet('Ice Wizard'		,2.2	,1	,400,220,20,0,'snowball',ratio, pos, dir, 7, owner = owner_name)
 
