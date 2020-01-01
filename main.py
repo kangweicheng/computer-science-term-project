@@ -47,7 +47,7 @@ fog_step = 2
 gameMap = Map(map_size, fog_step, screen)
 
 p1 = player.player((200, 100),'玩家1',90,'player1','left', blood_empty_callback = gameMap.playerDie)
-p1.get_prop(config.ICE_WIZARD())
+p1.get_prop(config.HUNTER())
 p1.display_bar()
 
 
