@@ -47,7 +47,7 @@ class Map:
 	def draw_wall(self, Turtle, pos, size):
 		Turtle.penup()
 		Turtle.shape('square')
-		Turtle.turtlesize(size / 20 - 0.8, size / 20 - 0.8)
+		Turtle.turtlesize(size / 20, size / 20)
 		Turtle.setpos(pos[0], pos[1])
 		stamp_id = Turtle.stamp()
 		return stamp_id
@@ -96,48 +96,50 @@ class Map:
 		if not self.over:
 			self.fogMove()
 			self.screen.ontimer(self.updateFog, self.fogUpdateInterval)
-	def in_square(self, original_pos, pos, square_pos, square_size):
-		xgt = square_pos[0] + square_size / 2 > pos[0]
-		xlt = square_pos[0] - square_size / 2 < pos[0]
-		ygt = square_pos[1] + square_size / 2 > pos[1]
-		ylt = square_pos[1] - square_size / 2 < pos[1]
+	def in_square(self, original_pos, pos, square_pos, square_size, buffer_region = 10):
+		xgt = square_pos[0] + square_size / 2 > pos[0] - buffer_region
+		xlt = square_pos[0] - square_size / 2 < pos[0] + buffer_region
+		ygt = square_pos[1] + square_size / 2 > pos[1] - buffer_region
+		ylt = square_pos[1] - square_size / 2 < pos[1] + buffer_region
 		if xgt and xlt and ygt and ylt:
+			print('hit wall')
 			if original_pos:
-				xgt = square_pos[0] + square_size / 2 <= original_pos[0]
-				xlt = square_pos[0] - square_size / 2 >= original_pos[0]
-				ygt = square_pos[1] + square_size / 2 <= original_pos[1]
-				ylt = square_pos[1] - square_size / 2 >= original_pos[1]
+				xgt = square_pos[0] + square_size / 2 <= original_pos[0] - buffer_region
+				xlt = square_pos[0] - square_size / 2 >= original_pos[0] + buffer_region
+				ygt = square_pos[1] + square_size / 2 <= original_pos[1] - buffer_region
+				ylt = square_pos[1] - square_size / 2 >= original_pos[1] + buffer_region
 				if xgt:
-					return True, (square_pos[0]  + square_size / 2 + 1, original_pos[1])
-				if xlt:
-					return True, (square_pos[0]  - square_size / 2 - 1, original_pos[1])
-				if ygt:
-					return True, (original_pos[0], square_pos[1] + square_size / 2 + 1)
-				if ylt:
-					return True, (original_pos[0], square_pos[1] - square_size / 2 - 1)
+					return True, (square_pos[0]  + square_size / 2 + 1 + buffer_region, original_pos[1])
+				elif xlt:
+					return True, (square_pos[0]  - square_size / 2 - 1 - buffer_region, original_pos[1])
+				elif ygt:
+					return True, (original_pos[0], square_pos[1] + square_size / 2 + 1 + buffer_region)
+				elif ylt:
+					return True, (original_pos[0], square_pos[1] - square_size / 2 - 1 - buffer_region)
 
-				return True, (original_pos[0], square_pos[1] - square_size / 2 - 1)
+				return True, (original_pos[0], square_pos[1] - square_size / 2 - 1 - buffer_region)
 			else:
 				return True, None
 		else:
 			return False, None
 
-	def hit_wall(self, obj):
+	def hit_wall(self, obj, buffer_region = 10):
 		for i in self.wall_pos:
 			if hasattr(obj, 'original_pos'):
-				x, y = self.in_square(obj.original_pos, obj.pos(), i, self.wall_size)
+				x, y = self.in_square(obj.original_pos, obj.pos(), i, self.wall_size, buffer_region = buffer_region)
 			else:
-				x, y = self.in_square(None, obj.pos(), i, self.wall_size)
+				x, y = self.in_square(None, obj.pos(), i, self.wall_size, buffer_region = buffer_region)
 			if x:
+				print('collide')
+				print(y)
 				return True, y
 		return False, None
 				# self.penup_set_pos(obj, y)
 				# obj.penup()
 
-	def hit_boundary(self, obj):
+	def hit_boundary(self, obj, buffer_region = 10):
 		square_pos = (0, 0)
 		square_size = self.map_size[0]
-		buffer_region = 10
 		pos = obj.pos()
 		xgt = square_pos[0] + square_size / 2 > pos[0] + buffer_region
 		xlt = square_pos[0] - square_size / 2 < pos[0] - buffer_region
@@ -175,19 +177,20 @@ class Map:
 		if not self.over:
 			for bullet in self.bullets:
 				for obj in bullet.items:
-					collide, backPos = self.hit_wall(obj)
+					collide, backPos = self.hit_wall(obj, buffer_region = 20)
+					print('iscollide')
 					if collide:
+						print('collide')
 						bullet.deleteItem(obj)
 
-					collide, backPos = self.hit_boundary(obj)
+					collide, backPos = self.hit_boundary(obj, buffer_region = 20)
 					if collide:
 						bullet.deleteItem(obj)
-				print(bullet.items)
 				if len(bullet.items) == 0:
 					bullet.deleteBullet()
 
 					self.removeBullet(bullet)
-			self.screen.ontimer(self.updateBullets, 100)
+			self.screen.ontimer(self.updateBullets, 30)
 
 	def touchPlayers(self, player, obj, rod):
 		buffer_dist = 0
@@ -196,7 +199,6 @@ class Map:
 		else:
 			return False
 	def bulletHitPlayers(self):
-		# print('bulletHitPlayers')
 		if not self.over:
 			for player in self.players:
 				for bullet in self.bullets:
@@ -206,9 +208,7 @@ class Map:
 							if len(bullet.items) == 0:
 								bullet.deleteBullet()
 								self.removeBullet(bullet)
-								print('remove')
 							player.hit(bullet)
-		
 			self.screen.ontimer(self.bulletHitPlayers, 100)
 
 
