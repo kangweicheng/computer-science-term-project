@@ -136,9 +136,10 @@ class bullet:
     # remove one object
     def deleteItem(self, item):
         #print(self.items)
-        index = self.items.index(item)
+        
         #print(index)
         try:
+            index = self.items.index(item)
             self.items[index].clear()
             self.items[index].hideturtle()
             del self.items[index]
