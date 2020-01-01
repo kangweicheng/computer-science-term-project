@@ -8,7 +8,6 @@ class bullet:
     rop:radius of projectiles
     rod:radius of damage
     ang:spreading angle
-    eff:special effects('Electrify':stuck,'Panic':keyboard out of order,'Freeze':slowed down)
     '''
     def __init__(self,name,cd,nop,damage,rop,rod,ang,bul_gif,attack_ratio, pos, dir, affect_time, kill_self_callback=None, owner=None):
         self.affect_time=affect_time
@@ -20,7 +19,12 @@ class bullet:
         if nop==1:
             self.items=[turtle.Turtle()]
             self.items[0].speed(0)
-            self.items[0].shape(f'{bul_gif}-{str(dir)}.gif')
+            if name=='Electro Wizard':
+                self.items[0].shape(bul_gif)
+                self.items[0].color('gold')
+                self.items[0].turtlesize(0.5,0.5,0.5)
+            else:
+                self.items[0].shape(f'{bul_gif}-{str(dir)}.gif')
         else:
             if name=='Three Muskets':
                 middle=1
@@ -28,27 +32,32 @@ class bullet:
                 middle=3
             self.items=[turtle.Turtle() for i in range(nop)]
             for i,t in enumerate(self.items):
-                if dir==0 and i>middle:
-                    angle=360-15*(i-middle)
-                else:
-                    angle=dir-15*(i-middle)
+                angle=(dir-15*(i-middle))%360
                 t.speed(0)
                 t.shape(f'{bul_gif}-{str(angle)}.gif')
         self.name=name
         self.cd=cd
         self.nop=nop
         self.damage=damage
-        self.rop=rop
+        self.rop=rop*nop
         self.rod=rod
         self.ang=ang
         
         self.ratio = 10
         self.attack=attack_ratio
         self.pos = pos
-        self.dir = dir
+        if name=='Electro Wizard':
+            self.dir = dir-20
+        else:
+            self.dir=dir
         self.move_distance = 0
 
-        self.speed = 100
+        if name=='Sparky':
+            self.speed=300
+        elif name=='Electro Wizard':
+            self.speed=220
+        else:
+            self.speed = 150
         self.step_time = 100 # milliseconds
         self.step=self.speed*self.step_time/1000
 
@@ -80,18 +89,31 @@ class bullet:
                 self.deleteBullet()
                 self.delete_callback(self)
     def move(self):
+        if self.name=='Electro Wizard':
+            print(self.items)
+            self.items[0].pendown()
+            self.items[0].pensize(self.rod*0.25)
+            self.items[0].pencolor('gold')
         if not (self.over or self.isDeleted):
             if self.nop == 1:
                 if self.name=='Electro Wizard':
-                    self.items[0].lt(10)
+                    self.items[0].lt(40)
                     self.items[0].fd(self.step/2)
-                    self.items[0].rt(10)
+                    self.items[0].rt(40)
                     self.items[0].fd(self.step/2)
                     self.move_distance += self.step
-                else:
-                    for t in self.items:
-                        t.fd(self.step)
+                elif self.name=='Sparky':
+                    if self.move_distance<=self.step:
+                        self.items[0].fd(self.step*0.5)
+                        self.move_distance += self.step*0.5
+                        if self.move_distance==self.step:
+                            self.items[0].hideturtle()
+                    else:
+                        self.items[0].fd(self.step)
                         self.move_distance += self.step
+                else:
+                    self.items[0].fd(self.step)
+                    self.move_distance += self.step
             else:
                 for t in self.items:
                     t.fd(self.step)
@@ -102,16 +124,16 @@ class bullet:
     def deleteBullet(self):
         self.isDeleted = True
         for t in self.items:
-            print('instance')
-            print(t)
+            #print('instance')
+            #print(t)
             t.clear()
             t.hideturtle()
             del t
     # remove one object
     def deleteItem(self, item):
-        print(self.items)
+        #print(self.items)
         index = self.items.index(item)
-        print(index)
+        #print(index)
         try:
             self.items[index].clear()
             self.items[index].hideturtle()
