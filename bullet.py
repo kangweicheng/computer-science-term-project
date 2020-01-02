@@ -143,6 +143,7 @@ class bullet:
     # remove one object
     def deleteItem(self, item):#haven't dealt with Sparky!!!
         try:
+            self.step=0
             for t in self.items:
                 if self.name=='Bomber':
                     for i in range(24):
