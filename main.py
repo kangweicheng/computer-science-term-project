@@ -59,6 +59,7 @@ fog_step = 2
 gameMap = Map(map_size, fog_step, screen)
 
 p1 = player.player((0, 10),'玩家1',90,'player1','left', blood_empty_callback = gameMap.playerDie)
+p1.gun = config.HUNTER()
 p2 = player.player((20, 20),'玩家2',270,'player2','right', blood_empty_callback = gameMap.playerDie)
 
 
@@ -197,9 +198,12 @@ def createProps():
 	if not gameMap.over:
 		x = (random.random() - 0.5)* 500
 		y = (random.random() - 0.5)* 500
-		if gameMap.validPos((x, y)):
-			prop = props((x, y))
-			gameMap.registerProps(prop)
+		while not gameMap.validPos((x, y)):
+			x = (random.random() - 0.5)* 500
+			y = (random.random() - 0.5)* 500
+		
+		prop = props((x, y))
+		gameMap.registerProps(prop)
 		screen.ontimer(createProps, 2000)
 
 

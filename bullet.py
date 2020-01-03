@@ -59,7 +59,7 @@ class bullet:
             self.speed=350
         else:
             self.speed = 150
-        self.step_time = 50 # milliseconds
+        self.step_time = 20 # milliseconds
         self.step=self.speed*self.step_time/1000
 
         self.delete_callback = None
@@ -141,7 +141,6 @@ class bullet:
     # remove one object
     def deleteItem(self, item):
         try:
-            self.step=0
             for t in self.items:
                 if self.name=='Bomber':
                     for i in range(24):
