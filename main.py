@@ -59,7 +59,7 @@ fog_step = 2
 gameMap = Map(map_size, fog_step, screen)
 
 p1 = player.player((0, 10),'玩家1',90,'player1','left', blood_empty_callback = gameMap.playerDie)
-p1.gun = config.HUNTER()
+p1.gun = config.BOMBER()
 p2 = player.player((20, 20),'玩家2',270,'player2','right', blood_empty_callback = gameMap.playerDie)
 
 
