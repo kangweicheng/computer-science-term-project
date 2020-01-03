@@ -9,8 +9,10 @@ class props(turtle.Turtle):
             g=random.choice(config.GUN_LIST)()
             self.shape('square')
             self.color('red')
-            self.type=g.name
-            self.shape(f'{self.type}.gif')
+            self.type='gun'
+            self.object = g
+            print(g)
+            self.shape(f'{str(self.object)}.gif')
         else:
             option=[('defense','DEF+.gif'),('attack','ATK+.gif'),('heal','HEAL.gif')]
             t,s=random.choice(option)

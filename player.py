@@ -120,14 +120,16 @@ class player(turtle.Turtle):
         self.original_pos=self.position()
         self.forward(dis)
     def get_prop(self,other):
-        if isinstance(other,gun.gun):
-            self.gun=other
+        if str(other) == 'gun':
+            self.gun=other.object
         elif str(other)=='defense':
             self.defense-=other.ratio
         elif str(other)=='heal':
             self.hp+=other.ratio
-        else:
+        elif str(other)=='attack':
             self.attack+=other.ratio
+        else:
+            print('not avail props')
     def hit(self,other):
         if isinstance(other,bullet.bullet):
             self.hp -= other.damage*other.attack*self.defense
