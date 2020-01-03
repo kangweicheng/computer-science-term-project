@@ -125,14 +125,22 @@ class player(turtle.Turtle):
         elif str(other)=='defense':
             self.defense-=other.ratio
         elif str(other)=='heal':
-            self.hp+=other.ratio
+            hp_after=self.hp+other.ratio
+            if hp_after>config.hpmax:
+                self.hp=config.hpmax
+            else:
+                self.hp=hp_after
         elif str(other)=='attack':
             self.attack+=other.ratio
         else:
             print('not avail props')
     def hit(self,other):
         if isinstance(other,bullet.bullet):
-            self.hp -= other.damage*other.attack*self.defense
+            hp_after=self.hp-other.damage*other.attack*self.defense
+            if hp_after<0:
+                self.hp=0
+            else:
+                self.hp=hp_after
             if other.name=='Bomber':
                 self.image=self.original_image+'_burnt'
                 self.shape(self.image+f'-{self.dir}.gif')
