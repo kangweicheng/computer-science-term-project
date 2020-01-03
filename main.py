@@ -174,7 +174,7 @@ def createProps():
 		if gameMap.validPos((x, y)):
 			prop = props((x, y))
 			gameMap.registerProps(prop)
-		screen.ontimer(createProps, 1000)
+		screen.ontimer(createProps, 5000)
 
 
 

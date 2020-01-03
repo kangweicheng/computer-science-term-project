@@ -38,6 +38,7 @@ class Map:
 		self.updateBullets()
 		self.updatePlayers()
 		self.bulletHitPlayers()
+		self.propsHitPlayers()
 	def penup_set_pos(self, Turtle, pos):
 		Turtle.penup()
 		Turtle.setpos((pos[0], pos[1]))
@@ -68,7 +69,6 @@ class Map:
 			t.width(3)
 
 			stamp_id = self.draw_wall(t, i, self.wall_size)
-			# print(stamp_id)
 			self.wall.append(stamp_id)
 		self.screen.update()
 		self.screen.tracer(1)
@@ -216,6 +216,16 @@ class Map:
 								self.removeBullet(bullet)
 							player.hit(bullet)
 			self.screen.ontimer(self.bulletHitPlayers, 100)
+	def propsHitPlayers(self):
+		if not self.over:
+			for player in self.players:
+				for props in self.props:
+						if self.touchPlayers(player, props, 30):
+							print('hit props')
+							props.deleteSelf()
+							player.get_prop(props)
+							self.removeProps(props)
+			self.screen.ontimer(self.propsHitPlayers, 100)
 
 
 	def registerPlayer(self, Player):

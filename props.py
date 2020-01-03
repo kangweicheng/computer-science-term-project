@@ -16,6 +16,9 @@ class props(turtle.Turtle):
             option=[(2000,0.2),(1500,0.15),(1000,0.1)]
             ch=random.choices(option,[1,2,3])[0]
             self.ratio=ch[0] if self.type=='heal' else ch[1]
+    def deleteSelf(self):
+        self.clear()
+        self.hideturtle()
     def __str__(self):
         return self.type
     def __del__(self):
