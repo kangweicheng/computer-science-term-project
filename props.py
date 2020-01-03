@@ -7,8 +7,6 @@ class props(turtle.Turtle):
         self.setposition(pos)
         if random.randint(1,3)==1:
             g=random.choice(config.GUN_LIST)()
-            self.shape('square')
-            self.color('red')
             self.type='gun'
             self.object = g
             print(g)
