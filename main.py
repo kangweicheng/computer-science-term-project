@@ -16,6 +16,7 @@ def initScreen():
 screen = initScreen()
 for i in range(24):
 	screen.addshape(f'poor_gun-{15*i}.gif')
+	screen.addshape(f'{i}.gif')
 for i in range(4):
         screen.addshape(f'dart-{90*i}.gif')
         screen.addshape(f'fireball-{90*i}.gif')
@@ -28,8 +29,6 @@ for i in range(4):
         screen.addshape(f'player1_frozen-{90*i}.gif')
         screen.addshape(f'player2_frozen-{90*i}.gif')
         screen.addshape(f'player_electrified-{90*i}.gif')
-for i in range(24):
-        screen.addshape(f'{i}.gif')
 screen.addshape('ATK+.gif')
 screen.addshape('DEF+.gif')
 screen.addshape('HEAL.gif')
