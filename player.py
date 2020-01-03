@@ -3,6 +3,8 @@ from datetime import datetime,timedelta
 class player(turtle.Turtle):
     def __init__(self,pos,name,dir,gif_head,bar_on_left_or_right, blood_empty_callback = None):
         self.over = False
+        self.air=1
+        self.have_new_gun=1
         self.effect=None
         self.last_shot=0
         self.b=None
@@ -80,8 +82,11 @@ class player(turtle.Turtle):
                 self.trueblood.write(f'攻擊加成: {round((self.attack-1),2)*100}%',False,'right',("Arial", 14, "normal"))
                 self.trueblood.fd(25)
                 self.trueblood.write(f'減低傷害: {round((1-self.defense),2)*100}%',False,'right',("Arial", 14, "normal"))
+                self.trueblood.fd(25)
+                if self.air==1:
+                    self.trueblood.write('子彈已上膛!',False,'right',("Arial", 14, "normal"))
                 self.trueblood.rt(180)
-                self.trueblood.fd(80)
+                self.trueblood.fd(105)
                 self.trueblood.rt(90)
                 self.trueblood.pendown()
             else:
@@ -104,8 +109,11 @@ class player(turtle.Turtle):
                 self.trueblood.write(f'攻擊加成: {round((self.attack-1),2)*100}%',False,'left',("Arial", 14, "normal"))
                 self.trueblood.fd(25)
                 self.trueblood.write(f'減低傷害: {round((1-self.defense),2)*100}%',False,'left',("Arial", 14, "normal"))
+                self.trueblood.fd(25)
+                if self.air==1:
+                    self.trueblood.write('子彈已上膛!',False,'left',("Arial", 14, "normal"))
                 self.trueblood.rt(180)
-                self.trueblood.fd(80)
+                self.trueblood.fd(105)
                 self.trueblood.pendown()
             self.trueblood.end_fill()
             self.screen.update()
@@ -124,6 +132,9 @@ class player(turtle.Turtle):
         if str(other) == 'gun':
             self.last_shot=0
             self.gun=other.object
+            self.have_new_gun=1
+            self.air=1
+            self.display_bar()
         elif str(other)=='defense':
             self.defense-=other.ratio
         elif str(other)=='heal':
@@ -172,9 +183,20 @@ class player(turtle.Turtle):
         if self.last_shot==0 or datetime.now()-self.last_shot>=timedelta(seconds=self.b.cd):
             self.b=self.gun.attack(self.pos(),self.dir,self.attack, self.name)
             self.last_shot=datetime.now()
+            self.screen.ontimer(self.change_to_air1,int(self.b.cd*1000))
+            self.air=0
+            self.display_bar()
+            self.have_new_gun=0
             return self.b
         return None
 
     def change_to_original_image(self):
         self.image=self.original_image
         self.effect=None
+
+    def change_to_air1(self):
+        if self.have_new_gun==1:
+            return
+        else:
+            self.air=1
+            self.display_bar()
