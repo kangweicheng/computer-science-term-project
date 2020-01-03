@@ -38,4 +38,6 @@ SPARKY=			lambda:gun.gun('Sparky')
 HUNTER=			lambda:gun.gun('Hunter')
 WIZARD=			lambda:gun.gun('Wizard')
 ICE_WIZARD=		lambda:gun.gun('Ice Wizard')
-GUN_LIST=[POOR_GUN,BOMBER,MUSKET,THREE_MUSKETS,DART_GOBLIN,ELECTRO_WIZARD,SPARKY,HUNTER,WIZARD,ICE_WIZARD]
+GUN_LIST=[POOR_GUN,MUSKET,THREE_MUSKETS,DART_GOBLIN,ELECTRO_WIZARD,BOMBER,SPARKY,HUNTER,WIZARD,ICE_WIZARD]
+PROPS_LIST=['ATK+','DEF+','HEAL']
+description=['爛到爆的槍','高傷射擊','三個火槍','吹箭手','閃電，嗯(?)','發射炸彈，蹦泵绷','超高傷超級痛','散彈槍，近距離痛到炸!','噴射火球','冷凍槍阿很難懂嗎幹嘛圖示','增加傷害','增加防禦','增加血量']

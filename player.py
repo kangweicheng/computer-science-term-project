@@ -45,6 +45,7 @@ class player(turtle.Turtle):
             self.bar.write(self.name,False,'right',font=("Arial", 25, "normal"))
             self.bar.back(config.bar_width)
         self.screen = turtle.getscreen()
+        self.screen.tracer(0)
         self.bar.pendown()
         self.trueblood.pendown()
         self.bar.fd(config.bar_width)
@@ -54,6 +55,7 @@ class player(turtle.Turtle):
         self.bar.fd(config.bar_width)
         self.bar.rt(90)
         self.bar.fd(config.bar_height)
+        self.screen.tracer(1)
         self.display_bar()
     def display_bar(self):
         if not self.over:

@@ -2,7 +2,7 @@ import turtle
 from datetime import timedelta, datetime
 import random
 import time
-
+import gun
 
 
 def initScreen():
@@ -60,6 +60,26 @@ gameMap = Map(map_size, fog_step, screen)
 
 p1 = player.player((0, 10),'玩家1',90,'player1','left', blood_empty_callback = gameMap.playerDie)
 p2 = player.player((20, 20),'玩家2',270,'player2','right', blood_empty_callback = gameMap.playerDie)
+
+
+def comment():
+	screen.tracer(0)
+	c_list=[turtle.Turtle() for i in range(13)]
+	for i,c in enumerate(c_list):
+		c.penup()
+		c.setposition(-570,280-50*i)
+		c.pendown()
+	for i,c in enumerate(zip(c_list,config.GUN_LIST+config.PROPS_LIST)):
+		c,g=c[0],c[1]
+		if isinstance(g,str):
+			c.shape(f'{g}.gif')
+		else:
+			g=g()
+			c.shape(f'{str(g)}.gif')
+		c.write(f'    {config.description[i]}',False,'left',("Arial", 14, "normal"))
+	screen.tracer(1)
+comment()
+
 
 gameMap.registerPlayer(p1)
 gameMap.registerPlayer(p2)
@@ -180,7 +200,7 @@ def createProps():
 		if gameMap.validPos((x, y)):
 			prop = props((x, y))
 			gameMap.registerProps(prop)
-		screen.ontimer(createProps, 500)
+		screen.ontimer(createProps, 3000)
 
 
 
