@@ -37,8 +37,10 @@ class Map:
 		self.updateFog()
 		self.updateBullets()
 		self.updatePlayers()
+		self.updateProps()
 		self.bulletHitPlayers()
 		self.propsHitPlayers()
+
 	def penup_set_pos(self, Turtle, pos):
 		Turtle.penup()
 		Turtle.setpos((pos[0], pos[1]))
@@ -225,6 +227,13 @@ class Map:
 							player.get_prop(props)
 							self.removeProps(props)
 			self.screen.ontimer(self.propsHitPlayers, 100)
+	def updateProps(self):
+		for props in self.props:
+			if datetime.now() > props.vanishTime:
+				props.deleteSelf()
+				self.removeProps(props)
+
+		self.screen.ontimer(self.updateProps, 5000)
 	def registerPlayer(self, Player):
 		self.updatePlayers()
 		self.players.append(Player)

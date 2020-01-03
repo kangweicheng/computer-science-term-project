@@ -1,10 +1,12 @@
 import turtle,random,config
+import datetime
 class props(turtle.Turtle):
     def __init__(self,pos):
         super().__init__()
         self.penup()
         self.hideturtle()
         self.setposition(pos)
+        self.vanishTime = datetime.datetime.now() + datetime.timedelta(seconds = 15)
         if random.randint(1,3)==1:
             g=random.choice(config.GUN_LIST)()
             self.type='gun'
