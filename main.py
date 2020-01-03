@@ -32,6 +32,16 @@ for i in range(24):
 screen.addshape('ATK+.gif')
 screen.addshape('DEF+.gif')
 screen.addshape('HEAL.gif')
+screen.addshape('Poor Gun.gif')
+screen.addshape('Bomber.gif')
+screen.addshape('Musket.gif')
+screen.addshape('Three Muskets.gif')
+screen.addshape('Dart Goblin.gif')
+screen.addshape('Sparky.gif')
+screen.addshape('Electro Wizard.gif')
+screen.addshape('Hunter.gif')
+screen.addshape('Wizard.gif')
+screen.addshape('Ice Wizard.gif')
 
 
 import player
