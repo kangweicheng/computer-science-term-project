@@ -63,7 +63,7 @@ p1.gun = config.BOMBER()
 p2 = player.player((20, 20),'玩家2',270,'player2','right', blood_empty_callback = gameMap.playerDie)
 
 
-def comment():
+def icon():
 	screen.tracer(0)
 	c_list=[turtle.Turtle() for i in range(13)]
 	for i,c in enumerate(c_list):
@@ -79,7 +79,7 @@ def comment():
 			c.shape(f'{str(g)}.gif')
 		c.write(f'    {config.description[i]}',False,'left',("Arial", 14, "normal"))
 	screen.tracer(1)
-comment()
+icon()
 
 
 gameMap.registerPlayer(p1)

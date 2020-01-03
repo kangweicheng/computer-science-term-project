@@ -24,6 +24,7 @@ class player(turtle.Turtle):
         self.hp=config.hpmax
         self.defense=1
         self.gun=config.POOR_GUN()
+        self.gun_image=str(self.gun)
         self.bar=turtle.Turtle()
         self.bar.width(5)
         self.bar.pencolor('black')
@@ -33,17 +34,20 @@ class player(turtle.Turtle):
         self.trueblood.width(5)
         self.trueblood.hideturtle()
         self.bar_on_left_or_right=bar_on_left_or_right
+        self.gun_image_display=turtle.Turtle()
         self.bar.penup()
         self.trueblood.penup()
+        self.gun_image_display.penup()
+        self.gun_image_display.hideturtle()
         if bar_on_left_or_right=='left':
             self.bar.setposition(-config.MAP_SIZE[0]/2-50,config.MAP_SIZE[1]/2+config.bar_height+50)
-            self.trueblood.setposition(-config.MAP_SIZE[0]/2-50,config.MAP_SIZE[1]/2+config.bar_height+50)
             self.bar.write(self.name,False,'left',font=("Arial", 25, "normal"))
+            self.gun_image_display.setposition(-config.MAP_SIZE[0]/2-80,config.MAP_SIZE[1]/2+config.bar_height+70)
         else:
             self.bar.setposition(config.MAP_SIZE[0]/2+50,config.MAP_SIZE[1]/2+config.bar_height+50)
-            self.trueblood.setposition(config.MAP_SIZE[0]/2+50,config.MAP_SIZE[1]/2+config.bar_height+50)
             self.bar.write(self.name,False,'right',font=("Arial", 25, "normal"))
             self.bar.back(config.bar_width)
+            self.gun_image_display.setposition(config.MAP_SIZE[0]/2+130,config.MAP_SIZE[1]/2+config.bar_height+70)
         self.screen = turtle.getscreen()
         self.screen.tracer(0)
         self.bar.pendown()
@@ -55,6 +59,7 @@ class player(turtle.Turtle):
         self.bar.fd(config.bar_width)
         self.bar.rt(90)
         self.bar.fd(config.bar_height)
+        self.gun_image_display.showturtle()
         self.screen.tracer(1)
         self.display_bar()
     def display_bar(self):
@@ -69,7 +74,8 @@ class player(turtle.Turtle):
                 self.trueblood.setposition(-config.MAP_SIZE[0]/2-50,config.MAP_SIZE[1]/2+config.bar_height+50)
                 self.trueblood.setheading(0)
                 self.trueblood.pendown()
-                self.trueblood.write(f'槍名: {str(self.gun)}',False,'right',("Arial", 14, "normal"))
+                self.trueblood.write('槍種:              ',False,'right',("Arial", 14, "normal"))
+                self.gun_image_display.shape(f'{str(self.gun)}.gif')
                 self.trueblood.fd(self.hp*config.bar_width/config.hpmax)
                 self.trueblood.rt(90)
                 self.trueblood.fd(config.bar_height)
@@ -95,7 +101,8 @@ class player(turtle.Turtle):
                 self.trueblood.penup()
                 self.trueblood.setposition(config.MAP_SIZE[0]/2+50,config.MAP_SIZE[1]/2+config.bar_height+50)
                 self.trueblood.pendown()
-                self.trueblood.write(f'槍名: {str(self.gun)}',False,'left',("Arial", 14, "normal"))
+                self.trueblood.write('槍種:',False,'left',("Arial", 14, "normal"))
+                self.gun_image_display.shape(f'{str(self.gun)}.gif')
                 self.trueblood.setheading(180)
                 self.trueblood.fd(self.hp*config.bar_width/config.hpmax)
                 self.trueblood.lt(90)
@@ -134,6 +141,7 @@ class player(turtle.Turtle):
         if str(other) == 'gun':
             self.last_shot=0
             self.gun=other.object
+            self.gun_image=str(self.gun)
             self.have_new_gun=1
             self.air=1
             self.display_bar()
