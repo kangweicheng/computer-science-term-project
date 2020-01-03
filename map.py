@@ -27,9 +27,9 @@ class Map:
 		self.initWall()
 
 		self.fog = turtle.Turtle()
-		self.fog.color('green')
+		self.fog.color('grey')
 		self.fog.hideturtle()
-		self.fog.width(fog_step)
+		self.fog.width(fog_step * 2)
 		self.penup_set_pos(self.fog, ( -1 * map_size[0] /2 , -1 * map_size[1] / 2 - self.fog_step))# - self.fog_step))
 		self.fogMove()
 
@@ -102,7 +102,6 @@ class Map:
 		ygt = square_pos[1] + square_size / 2 > pos[1] - buffer_region
 		ylt = square_pos[1] - square_size / 2 < pos[1] + buffer_region
 		if xgt and xlt and ygt and ylt:
-			print('hit wall')
 			if original_pos:
 				xgt = square_pos[0] + square_size / 2 <= original_pos[0] - buffer_region
 				xlt = square_pos[0] - square_size / 2 >= original_pos[0] + buffer_region
@@ -131,8 +130,6 @@ class Map:
 				else:
 					x, y = self.in_square(None, obj.pos(), i, self.wall_size, buffer_region = buffer_region)
 				if x:
-					print('collide')
-					print(y)
 					return True, y
 			return False, None
 		else:
@@ -140,7 +137,7 @@ class Map:
 				x, y = self.in_square(None, pos, i, self.wall_size, buffer_region = buffer_region)
 				if x:
 					return True, y
-				return False, None
+			return False, None
 	def hit_boundary(self, obj = None, pos = None, buffer_region = 10):
 		square_pos = (0, 0)
 		square_size = self.map_size[0]
@@ -221,26 +218,22 @@ class Map:
 			for player in self.players:
 				for props in self.props:
 						if self.touchPlayers(player, props, 30):
-							print('hit props')
 							props.deleteSelf()
 							player.get_prop(props)
 							self.removeProps(props)
 			self.screen.ontimer(self.propsHitPlayers, 100)
-
-
 	def registerPlayer(self, Player):
 		self.updatePlayers()
 		self.players.append(Player)
 	def validPos(self, Pos):
-		collide, backPos = self.hit_wall(pos = Pos, buffer_region = 20)
+		collide, backPos = self.hit_wall(pos = Pos, buffer_region = 40)
 		if collide:
-			print('collide')
+
 			return False
 
-		collide, backPos = self.hit_boundary(pos = Pos, buffer_region = 20)
+		collide, backPos = self.hit_boundary(pos = Pos, buffer_region = 40)
 		
 		if collide:
-			print('collide')
 			return False
 		return True
 	def registerProps(self, Props):
