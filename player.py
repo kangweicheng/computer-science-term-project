@@ -43,8 +43,6 @@ class player(turtle.Turtle):
             self.bar.write(self.name,False,'right',font=("Arial", 25, "normal"))
             self.bar.back(config.bar_width)
         self.screen = turtle.getscreen()
-
-        self.display_bar()
         self.bar.pendown()
         self.trueblood.pendown()
         self.bar.fd(config.bar_width)
@@ -54,6 +52,7 @@ class player(turtle.Turtle):
         self.bar.fd(config.bar_width)
         self.bar.rt(90)
         self.bar.fd(config.bar_height)
+        self.display_bar()
     def display_bar(self):
         if not self.over:
             self.screen.tracer(0)
@@ -111,7 +110,6 @@ class player(turtle.Turtle):
             self.trueblood.end_fill()
             self.screen.update()
             self.screen.tracer(1)
-            self.screen.ontimer(self.display_bar, 2000)
     def setheading(self,ang):
         if self.effect=='burnt':
             ang+=180
@@ -138,6 +136,7 @@ class player(turtle.Turtle):
             self.attack+=other.ratio
         else:
             print('not avail props')
+        self.display_bar()
     def hit(self,other):
         if isinstance(other,bullet.bullet):
             hp_after=self.hp-other.damage*other.attack*self.defense
@@ -166,6 +165,7 @@ class player(turtle.Turtle):
             self.hp -= other.damage*self.defense
         if self.hp <= 0:
             self.blood_empty_callback(self)
+        self.display_bar()
         return None
 
     def shoot(self):

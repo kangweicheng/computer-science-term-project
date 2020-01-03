@@ -59,13 +59,7 @@ fog_step = 2
 gameMap = Map(map_size, fog_step, screen)
 
 p1 = player.player((0, 10),'玩家1',90,'player1','left', blood_empty_callback = gameMap.playerDie)
-p1.get_prop(config.ELECTRO_WIZARD())
-p1.display_bar()
-
-
 p2 = player.player((20, 20),'玩家2',270,'player2','right', blood_empty_callback = gameMap.playerDie)
-p2.get_prop(config.BOMBER())
-p2.display_bar()
 
 gameMap.registerPlayer(p1)
 gameMap.registerPlayer(p2)
