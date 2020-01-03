@@ -29,10 +29,6 @@ class bullet:
             else:
                 self.items[0].shape(f'{bul_gif}-{str(dir)}.gif')
         else:
-            if name=='Three Muskets':
-                middle=1
-            else:
-                middle=3
             self.items=[turtle.Turtle() for i in range(nop)]
             for i,t in enumerate(self.items):
                 if i%2==1:

@@ -18,10 +18,10 @@ ang:spreading angle
 bul_gif:image of bullets
 '''
 poor_gun=		lambda ratio, pos, dir, owner_name:bullet.bullet('Poor Gun'			,1.5	,1	,600,240,20,0,'poor_gun',ratio, pos, dir, 0, owner = owner_name)
-bomber=			lambda ratio, pos, dir, owner_name:bullet.bullet('Bomber'			,3		,1	,400,280,20,0,'circle',ratio, pos, dir, 5, owner = owner_name)
+bomber=			lambda ratio, pos, dir, owner_name:bullet.bullet('Bomber'			,5		,1	,1600,280,20,0,'circle',ratio, pos, dir, 5, owner = owner_name)
 musket=			lambda ratio, pos, dir, owner_name:bullet.bullet('Musket'			,1.1	,1	,1600,280,20,0,'poor_gun',ratio, pos, dir, 0, owner = owner_name)
 three_muskets=	lambda ratio, pos, dir, owner_name:bullet.bullet('Three Muskets'	,3		,3	,1600,260,20,30,'poor_gun',ratio, pos, dir, 0, owner = owner_name)
-dart_goblin=	lambda ratio, pos, dir, owner_name:bullet.bullet('Dart Goblin'		,0		,3	,1000,360,2,0,'dart',ratio, pos, dir, 0, owner = owner_name)
+dart_goblin=	lambda ratio, pos, dir, owner_name:bullet.bullet('Dart Goblin'		,0		,1	,1000,360,2,0,'dart',ratio, pos, dir, 0, owner = owner_name)
 electro_wizard=	lambda ratio, pos, dir, owner_name:bullet.bullet('Electro Wizard'	,2.2	,1	,300,220/0.819152,20,0,'triangle',ratio, pos, dir, 2, owner = owner_name)
 sparky=			lambda ratio, pos, dir, owner_name:bullet.bullet('Sparky'			,6		,1	,2500,180,20,0,'electrify',ratio, pos, dir, 0, owner = owner_name)
 hunter=			lambda ratio, pos, dir, owner_name:bullet.bullet('Hunter'			,2.2	,7	,800,190,20,90,'poor_gun',ratio, pos, dir, 0, owner = owner_name)
