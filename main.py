@@ -114,8 +114,9 @@ def funcRight_p1(screen = None , player = None):
 	playerForward(player)
 def funcAtt_p1(screen = None, player = None):
 	bullet = player.shoot()
-	bullet.setDeleteCallback(gameMap.removeBullet)
-	gameMap.registerBullet(bullet)
+	if bullet:
+		bullet.setDeleteCallback(gameMap.removeBullet)
+		gameMap.registerBullet(bullet)
 
 
 def funcUp_p2(screen = None , player = None):
@@ -136,8 +137,9 @@ def funcRight_p2(screen = None , player = None):
 	playerForward(player)
 def funcAtt_p2(screen = None, player = None):
 	bullet = player.shoot()
-	bullet.setDeleteCallback(gameMap.removeBullet)
-	gameMap.registerBullet(bullet)
+	if bullet:
+		bullet.setDeleteCallback(gameMap.removeBullet)
+		gameMap.registerBullet(bullet)
 
 def upCallback():
 	None

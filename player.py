@@ -1,8 +1,11 @@
 import turtle,config,gun,math,bullet
+from datetime import datetime,timedelta
 class player(turtle.Turtle):
     def __init__(self,pos,name,dir,gif_head,bar_on_left_or_right, blood_empty_callback = None):
         self.over = False
         self.effect=None
+        self.last_shot=0
+        self.b=None
         self.original_image=gif_head
         super().__init__()
         self.dir=dir
@@ -121,6 +124,7 @@ class player(turtle.Turtle):
         self.forward(dis)
     def get_prop(self,other):
         if str(other) == 'gun':
+            self.last_shot=0
             self.gun=other.object
         elif str(other)=='defense':
             self.defense-=other.ratio
@@ -165,7 +169,11 @@ class player(turtle.Turtle):
         return None
 
     def shoot(self):
-        return self.gun.attack(self.pos(),self.dir,self.attack, self.name)
+        if self.last_shot==0 or datetime.now()-self.last_shot>=timedelta(seconds=self.b.cd):
+            self.b=self.gun.attack(self.pos(),self.dir,self.attack, self.name)
+            self.last_shot=datetime.now()
+            return self.b
+        return None
 
     def change_to_original_image(self):
         self.image=self.original_image
