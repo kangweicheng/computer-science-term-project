@@ -123,31 +123,35 @@ class bullet:
                         t.fd(self.step)
                         self.move_distance += self.step
                 else:
-                        t.fd(self.step*3)
-                        self.move_distance += self.step*3
+                    t.fd(self.step*3)
+                    self.move_distance += self.step*3
     def setDeleteCallback(self, callback):
         self.delete_callback = callback
     # remove all bullets objects
-    def deleteBullet(self):#haven't dealt with Sparky!!!
+    def deleteBullet(self):
         print(self.items)
         self.isDeleted = True
         for t in self.items:
             if self.name=='Bomber':
                 for i in range(24):
                     t.shape(f'{i}.gif')
+            elif self.name=='Sparky':
+                t.showturtle()
             #print('instance')
             #print(t)
             t.clear()
             t.hideturtle()
             del t
     # remove one object
-    def deleteItem(self, item):#haven't dealt with Sparky!!!
+    def deleteItem(self, item):
         try:
             self.step=0
             for t in self.items:
                 if self.name=='Bomber':
                     for i in range(24):
                         t.shape(f'{i}.gif')
+                elif self.name=='Sparky':
+                    t.showturtle()
             index = self.items.index(item)
             self.items[index].clear()
             self.items[index].hideturtle()
