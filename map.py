@@ -56,8 +56,8 @@ class Map:
 	def initWallpos(self, num):
 		self.wall_pos = []
 		while len(self.wall_pos) < num:
-			x1 = (random.random() - 0.5) * self.map_size[0]
-			y1 = (random.random() - 0.5) * self.map_size[1]
+			x1 = (random.random() - 0.5) * (self.map_size[0] - 50)
+			y1 = (random.random() - 0.5) * (self.map_size[1] - 50)
 			self.wall_pos.append((x1, y1))
 	def initWall(self):
 		self.screen.tracer(0)
@@ -123,24 +123,29 @@ class Map:
 		else:
 			return False, None
 
-	def hit_wall(self, obj, buffer_region = 10):
-		for i in self.wall_pos:
-			if hasattr(obj, 'original_pos'):
-				x, y = self.in_square(obj.original_pos, obj.pos(), i, self.wall_size, buffer_region = buffer_region)
-			else:
-				x, y = self.in_square(None, obj.pos(), i, self.wall_size, buffer_region = buffer_region)
-			if x:
-				print('collide')
-				print(y)
-				return True, y
-		return False, None
-				# self.penup_set_pos(obj, y)
-				# obj.penup()
-
-	def hit_boundary(self, obj, buffer_region = 10):
+	def hit_wall(self, obj = None, pos = None, buffer_region = 10):
+		if obj:
+			for i in self.wall_pos:
+				if hasattr(obj, 'original_pos'):
+					x, y = self.in_square(obj.original_pos, obj.pos(), i, self.wall_size, buffer_region = buffer_region)
+				else:
+					x, y = self.in_square(None, obj.pos(), i, self.wall_size, buffer_region = buffer_region)
+				if x:
+					print('collide')
+					print(y)
+					return True, y
+			return False, None
+		else:
+			for i in self.wall_pos:
+				x, y = self.in_square(None, pos, i, self.wall_size, buffer_region = buffer_region)
+				if x:
+					return True, y
+				return False, None
+	def hit_boundary(self, obj = None, pos = None, buffer_region = 10):
 		square_pos = (0, 0)
 		square_size = self.map_size[0]
-		pos = obj.pos()
+		if obj:
+			pos = obj.pos()
 		xgt = square_pos[0] + square_size / 2 > pos[0] + buffer_region
 		xlt = square_pos[0] - square_size / 2 < pos[0] - buffer_region
 		ygt = square_pos[1] + square_size / 2 > pos[1] + buffer_region
@@ -163,11 +168,11 @@ class Map:
 	def updatePlayers(self):
 		if not self.over:
 			for i in self.players:
-				collide, backPos = self.hit_wall(i)
+				collide, backPos = self.hit_wall(obj = i, buffer_region = 8)
 				if collide:
 					i.back(9)
 
-				collide, backPos = self.hit_boundary(i)
+				collide, backPos = self.hit_boundary(obj = i, buffer_region = 8)
 				if collide:
 					i.setpos(backPos)
 					i.hit(config.TOUCH_FOG_DAMAGE)
@@ -179,12 +184,12 @@ class Map:
 			for bullet in self.bullets:
 
 				for obj in bullet.items:
-					collide, backPos = self.hit_wall(obj, buffer_region = 10)
+					collide, backPos = self.hit_wall(obj = obj, buffer_region = 10)
 					if collide:
 
 						bullet.deleteItem(obj)
 
-					collide, backPos = self.hit_boundary(obj, buffer_region = 20)
+					collide, backPos = self.hit_boundary(obj = obj, buffer_region = 20)
 					if collide:
 						bullet.deleteItem(obj)
 				if len(bullet.items) == 0:
@@ -216,14 +221,16 @@ class Map:
 	def registerPlayer(self, Player):
 		self.updatePlayers()
 		self.players.append(Player)
-	def validProps(self, Props):
-		collide, backPos = self.hit_wall(Props, buffer_region = 10)
+	def validPos(self, Pos):
+		collide, backPos = self.hit_wall(pos = Pos, buffer_region = 20)
 		if collide:
-
+			print('collide')
 			return False
 
-		collide, backPos = self.hit_boundary(Props, buffer_region = 20)
+		collide, backPos = self.hit_boundary(pos = Pos, buffer_region = 20)
+		
 		if collide:
+			print('collide')
 			return False
 		return True
 	def registerProps(self, Props):

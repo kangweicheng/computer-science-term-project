@@ -171,10 +171,10 @@ def createProps():
 	if not gameMap.over:
 		x = (random.random() - 0.5)* 500
 		y = (random.random() - 0.5)* 500
-		prop = props((x, y))
-		if gameMap.validProps(prop):
+		if gameMap.validPos((x, y)):
+			prop = props((x, y))
 			gameMap.registerProps(prop)
-		screen.ontimer(createProps, 3000)
+		screen.ontimer(createProps, 1000)
 
 
 

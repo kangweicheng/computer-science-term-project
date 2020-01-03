@@ -155,7 +155,6 @@ class player(turtle.Turtle):
         return None
 
     def shoot(self):
-        print(self.dir)
         return self.gun.attack(self.pos(),self.dir,self.attack, self.name)
 
     def change_to_original_image(self):
