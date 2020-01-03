@@ -129,10 +129,14 @@ class bullet:
         self.isDeleted = True
         for t in self.items:
             if self.name=='Bomber':
+                self.step = 0
                 for i in range(24):
                     t.shape(f'{i}.gif')
             elif self.name=='Sparky':
+                self.step = 0
                 t.showturtle()
+                for i in range(24,54):
+                        t.shape(f'{i}.gif')
             #print('instance')
             #print(t)
             t.clear()
@@ -147,7 +151,10 @@ class bullet:
                     for i in range(24):
                         t.shape(f'{i}.gif')
                 elif self.name=='Sparky':
+                    self.step = 0
                     t.showturtle()
+                    for i in range(24,54):
+                        t.shape(f'{i}.gif')
             index = self.items.index(item)
             self.items[index].clear()
             self.items[index].hideturtle()

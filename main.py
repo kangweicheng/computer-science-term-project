@@ -17,6 +17,8 @@ screen = initScreen()
 for i in range(24):
 	screen.addshape(f'poor_gun-{15*i}.gif')
 	screen.addshape(f'{i}.gif')
+for i in range(24,54):
+        screen.addshape(f'{i}.gif')
 for i in range(4):
         screen.addshape(f'dart-{90*i}.gif')
         screen.addshape(f'fireball-{90*i}.gif')
@@ -29,9 +31,10 @@ for i in range(4):
         screen.addshape(f'player1_frozen-{90*i}.gif')
         screen.addshape(f'player2_frozen-{90*i}.gif')
         screen.addshape(f'player_electrified-{90*i}.gif')
-screen.addshape('ATK+.gif')
-screen.addshape('DEF+.gif')
-screen.addshape('HEAL.gif')
+for i in range(4,7):
+        screen.addshape(f'ATK+{5*i}.gif')
+        screen.addshape(f'DEF+{5*i}.gif')
+        screen.addshape(f'HEAL{5*i}.gif')
 screen.addshape('Poor Gun.gif')
 screen.addshape('Bomber.gif')
 screen.addshape('Musket.gif')
@@ -73,7 +76,7 @@ def icon():
 	for i,c in enumerate(zip(c_list,config.GUN_LIST+config.PROPS_LIST)):
 		c,g=c[0],c[1]
 		if isinstance(g,str):
-			c.shape(f'{g}.gif')
+			c.shape(f'{g}30.gif')
 		else:
 			g=g()
 			c.shape(f'{str(g)}.gif')
