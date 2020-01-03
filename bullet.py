@@ -143,6 +143,7 @@ class bullet:
         try:
             for t in self.items:
                 if self.name=='Bomber':
+                    self.step=0
                     for i in range(24):
                         t.shape(f'{i}.gif')
                 elif self.name=='Sparky':
