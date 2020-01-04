@@ -42,6 +42,7 @@ screen.addshape('Electro Wizard.gif')
 screen.addshape('Hunter.gif')
 screen.addshape('Wizard.gif')
 screen.addshape('Ice Wizard.gif')
+screen.addshape('th1.gif')
 
 
 import player
@@ -79,7 +80,19 @@ def icon():
 			c.shape(f'{str(g)}.gif')
 		c.write(f'    {config.description[i]}',False,'left',("Arial", 14, "normal"))
 	screen.tracer(1)
+
+def decorating():
+	screen.tracer(0)
+	t=turtle.Turtle()
+	t.penup()
+	t.hideturtle()
+	t.setposition(450,-80)
+	t.showturtle()
+	t.shape('th1.gif')
+	screen.tracer(1)
+
 icon()
+decorating()
 
 
 gameMap.registerPlayer(p1)
