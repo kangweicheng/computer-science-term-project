@@ -37,6 +37,9 @@ for i in range(4,7):
         screen.addshape(f'ATK+{5*i}.gif')
         screen.addshape(f'DEF+{5*i}.gif')
         screen.addshape(f'HEAL{5*i}.gif')
+screen.addshape('electrified.gif')
+screen.addshape('frozen.gif')
+screen.addshape('burnt.gif')
 screen.addshape('player1.gif')
 screen.addshape('player2.gif')
 screen.addshape('Poor Gun.gif')
@@ -66,7 +69,6 @@ fog_step = 2
 gameMap = Map(map_size, fog_step, screen)
 
 p1 = player.player((0, 10),'玩家1',90,'player1','left', blood_empty_callback = gameMap.playerDie)
-p1.gun = config.BOMBER()
 p2 = player.player((20, 20),'玩家2',270,'player2','right', blood_empty_callback = gameMap.playerDie)
 
 
@@ -92,7 +94,7 @@ def decorating():
 	t=turtle.Turtle()
 	t.penup()
 	t.hideturtle()
-	t.setposition(450,-80)
+	t.setposition(510,-130)
 	t.showturtle()
 	t.shape('th1.gif')
 	screen.tracer(1)

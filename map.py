@@ -191,7 +191,6 @@ class Map:
 					collide, backPos = self.hit_boundary(obj = obj, buffer_region = 20)
 					if collide:
 						bullet.deleteItem(obj)
-				print(bullet.items)
 				if len(bullet.items) == 0:
 					print('empty bullet')
 					bullet.deleteBullet()
@@ -278,6 +277,10 @@ class Map:
 		t.setpos(-150,50)
 		t.pendown()
 		t.write('Winner is %s'%(self.players[0].name), font=("Arial", 32, "normal"))
+		p=turtle.Turtle()
+		p.penup()
+		p.setpos(0,-100)
+		p.shape(f'player{self.players[0].name[-1]}-90.gif')
 	def playerDie(self, player):
 		try:
 			player.hideturtle()

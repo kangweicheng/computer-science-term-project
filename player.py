@@ -2,6 +2,12 @@ import turtle,config,gun,math,bullet
 from datetime import datetime,timedelta
 class player(turtle.Turtle):
     def __init__(self,pos,name,dir,gif_head,bar_on_left_or_right, blood_empty_callback = None):
+        self.eff_gif=turtle.Turtle()
+        self.eff_gif.penup()
+        if name=='玩家1':
+            self.eff_gif.setposition((-330,170))
+        else:
+            self.eff_gif.setposition((330,170))
         self.over = False
         self.air=1
         self.have_new_gun=1
@@ -177,12 +183,12 @@ class player(turtle.Turtle):
                 self.shape(self.image+f'-{self.dir}.gif')
                 self.effect='burnt'
                 self.screen.ontimer(self.change_to_original_image,other.affect_time*1000)
-            if other.name=='Ice Wizard':
+            elif other.name=='Ice Wizard':
                 self.image=self.original_image+'_frozen'
                 self.shape(self.image+f'-{self.dir}.gif')
                 self.effect='frozen'
                 self.screen.ontimer(self.change_to_original_image,other.affect_time*1000)
-            if other.name=='Electro Wizard':
+            elif other.name=='Electro Wizard':
                 self.image=self.original_image[:-1]+'_electrified'
                 self.shape(self.image+f'-{self.dir}.gif')
                 self.effect='electrified'
@@ -191,6 +197,9 @@ class player(turtle.Turtle):
                 self.image=self.original_image+'_hurt'
                 self.shape(self.image+f'-{self.dir}.gif')
                 self.screen.ontimer(self.change_to_original_image,1000)
+            if self.effect!=None:
+                self.eff_gif.shape(f'{self.effect}.gif')
+                self.eff_gif.showturtle()
         
         elif type(other) == int:
             self.hp -= other
@@ -225,6 +234,7 @@ class player(turtle.Turtle):
         self.image=self.original_image
         self.shape(self.image+f'-{self.dir}.gif')
         self.effect=None
+        self.eff_gif.hideturtle()
 
     def change_to_air1(self):
         if self.have_new_gun==1:

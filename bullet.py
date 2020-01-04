@@ -54,11 +54,11 @@ class bullet:
         self.move_distance = 0
 
         if name=='Sparky':
-            self.speed=300
+            self.speed=600
         elif name=='Electro Wizard':
-            self.speed=350
+            self.speed=1000
         else:
-            self.speed = 150
+            self.speed = 200
         self.step_time = 20 # milliseconds
         self.step=self.speed*self.step_time/1000
 
@@ -95,7 +95,7 @@ class bullet:
         if self.name=='Electro Wizard':
             for t in self.items:
                 t.pendown()
-                t.pensize(self.rod*0.5)
+                t.pensize(self.rod*0.4)
                 t.pencolor('gold')
         if not (self.over or self.isDeleted):
             for t in self.items:
@@ -125,7 +125,6 @@ class bullet:
         self.delete_callback = callback
     # remove all bullets objects
     def deleteBullet(self):
-        print(self.items)
         self.isDeleted = True
         for t in self.items:
             if self.name=='Bomber':
@@ -137,8 +136,6 @@ class bullet:
                 t.showturtle()
                 for i in range(24,54):
                         t.shape(f'{i}.gif')
-            #print('instance')
-            #print(t)
             t.clear()
             t.hideturtle()
             del t
@@ -146,7 +143,10 @@ class bullet:
     def deleteItem(self, item):
         try:
             for t in self.items:
-                if self.name=='Bomber':
+                if self.name=='Electro Wizard':
+                    self.step = 0
+                    t.pencolor('white')
+                elif self.name=='Bomber':
                     self.step = 0
                     for i in range(24):
                         t.shape(f'{i}.gif')
