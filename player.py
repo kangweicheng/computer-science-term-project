@@ -34,22 +34,29 @@ class player(turtle.Turtle):
         self.trueblood.width(5)
         self.trueblood.hideturtle()
         self.bar_on_left_or_right=bar_on_left_or_right
+        self.show_personal_fig=turtle.Turtle()
         self.gun_image_display=turtle.Turtle()
         self.bar.penup()
         self.trueblood.penup()
         self.gun_image_display.penup()
         self.gun_image_display.hideturtle()
+        self.show_personal_fig.penup()
+        self.show_personal_fig.hideturtle()
         if bar_on_left_or_right=='left':
             self.bar.setposition(-config.MAP_SIZE[0]/2-50,config.MAP_SIZE[1]/2+config.bar_height+50)
             self.bar.write(self.name,False,'left',font=("Arial", 25, "normal"))
             self.gun_image_display.setposition(-config.MAP_SIZE[0]/2-80,config.MAP_SIZE[1]/2+config.bar_height+70)
+            self.show_personal_fig.setposition(-config.MAP_SIZE[0]/2+80,config.MAP_SIZE[1]/2+config.bar_height+75)
         else:
             self.bar.setposition(config.MAP_SIZE[0]/2+50,config.MAP_SIZE[1]/2+config.bar_height+50)
             self.bar.write(self.name,False,'right',font=("Arial", 25, "normal"))
             self.bar.back(config.bar_width)
             self.gun_image_display.setposition(config.MAP_SIZE[0]/2+130,config.MAP_SIZE[1]/2+config.bar_height+70)
+            self.show_personal_fig.setposition(config.MAP_SIZE[0]/2-80,config.MAP_SIZE[1]/2+config.bar_height+75)
         self.screen = turtle.getscreen()
         self.screen.tracer(0)
+        self.show_personal_fig.showturtle()
+        self.show_personal_fig.shape(gif_head+'.gif')
         self.bar.pendown()
         self.trueblood.pendown()
         self.bar.fd(config.bar_width)
@@ -180,12 +187,26 @@ class player(turtle.Turtle):
                 self.shape(self.image+f'-{self.dir}.gif')
                 self.effect='electrified'
                 self.screen.ontimer(self.change_to_original_image,other.affect_time*1000)
+            else:
+                self.image=self.original_image+'_hurt'
+                self.shape(self.image+f'-{self.dir}.gif')
+                self.screen.ontimer(self.change_to_original_image,1000)
+        
         elif type(other) == int:
             self.hp -= other
+            self.image=self.original_image+'_hurt'
+            self.shape(self.image+f'-{self.dir}.gif')
+            self.screen.ontimer(self.change_to_original_image,1000)
+
         else:
             self.hp -= other.damage*self.defense
+            self.image=self.original_image+'_hurt'
+            self.shape(self.image+f'-{self.dir}.gif')
+            self.screen.ontimer(self.change_to_original_image,1000)
+
         if self.hp <= 0:
             self.blood_empty_callback(self)
+
         self.display_bar()
         return None
 
@@ -202,6 +223,7 @@ class player(turtle.Turtle):
 
     def change_to_original_image(self):
         self.image=self.original_image
+        self.shape(self.image+f'-{self.dir}.gif')
         self.effect=None
 
     def change_to_air1(self):

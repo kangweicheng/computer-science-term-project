@@ -28,13 +28,13 @@ for i in range(4):
         screen.addshape(f'player2-{90*i}.gif')
         screen.addshape(f'player1_burnt-{90*i}.gif')
         screen.addshape(f'player2_burnt-{90*i}.gif')
+        screen.addshape(f'player1_hurt-{90*i}.gif')
+        screen.addshape(f'player2_hurt-{90*i}.gif')
         screen.addshape(f'player1_frozen-{90*i}.gif')
         screen.addshape(f'player2_frozen-{90*i}.gif')
         screen.addshape(f'player_electrified-{90*i}.gif')
-for i in range(4,7):
-        screen.addshape(f'ATK+{5*i}.gif')
-        screen.addshape(f'DEF+{5*i}.gif')
-        screen.addshape(f'HEAL{5*i}.gif')
+screen.addshape('player1.gif')
+screen.addshape('player2.gif')
 screen.addshape('Poor Gun.gif')
 screen.addshape('Bomber.gif')
 screen.addshape('Musket.gif')
@@ -45,7 +45,7 @@ screen.addshape('Electro Wizard.gif')
 screen.addshape('Hunter.gif')
 screen.addshape('Wizard.gif')
 screen.addshape('Ice Wizard.gif')
-
+screen.addshape('th1.gif')
 
 import player
 from map import Map
@@ -82,7 +82,19 @@ def icon():
 			c.shape(f'{str(g)}.gif')
 		c.write(f'    {config.description[i]}',False,'left',("Arial", 14, "normal"))
 	screen.tracer(1)
+
+def decorating():
+	screen.tracer(0)
+	t=turtle.Turtle()
+	t.penup()
+	t.hideturtle()
+	t.setposition(450,-80)
+	t.showturtle()
+	t.shape('th1.gif')
+	screen.tracer(1)
+
 icon()
+decorating()
 
 
 gameMap.registerPlayer(p1)
