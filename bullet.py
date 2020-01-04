@@ -90,7 +90,8 @@ class bullet:
                 self.screen.ontimer(self.routinely_move, self.step_time)
             else:
                 self.deleteBullet()
-                self.delete_callback(self)
+                if self.delete_callback:
+                    self.delete_callback(self)
     def move(self):
         if self.name=='Electro Wizard':
             for t in self.items:

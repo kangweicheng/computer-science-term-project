@@ -6,6 +6,7 @@ import config
 import player
 from PlayerKeyPressHandler import playerKeyPressHandler
 from props import props
+random.seed(8)
 class Map:
 	def __init__(self, map_size, fog_step, screen, fogUpdateInterval = config.FOG_UPDATE_INTERVAL):
 		self.over = False
@@ -207,16 +208,20 @@ class Map:
 			return False
 	def bulletHitPlayers(self):
 		if not self.over:
+			print(self.bullets)
 			for player in self.players:
 				for bullet in self.bullets:
+					print(bullet)
 					for obj in bullet.items:
+						print(self.touchPlayers(player, obj, bullet.rod))
 						if self.touchPlayers(player, obj, bullet.rod) and bullet.owner != player.name:
+							print('hit')
 							bullet.deleteItem(obj)
 							if len(bullet.items) == 0:
 								bullet.deleteBullet()
 								self.removeBullet(bullet)
 							player.hit(bullet)
-			self.screen.ontimer(self.bulletHitPlayers, 100)
+			self.screen.ontimer(self.bulletHitPlayers, 30)
 	def propsHitPlayers(self):
 		if not self.over:
 			for player in self.players:

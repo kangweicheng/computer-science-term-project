@@ -1,4 +1,4 @@
-import turtle,config,gun,math,bullet
+import turtle,config,gun,math,bullet, time
 from datetime import datetime,timedelta
 class player(turtle.Turtle):
     def __init__(self,pos,name,dir,gif_head,bar_on_left_or_right, blood_empty_callback = None):
@@ -16,14 +16,21 @@ class player(turtle.Turtle):
         self.last_shot=0
         self.b=None
         self.original_image=gif_head
+        self.screen = turtle.getscreen()
+        self.screen.tracer(0)
         super().__init__()
+        # self.hideturtle()
         self.dir=dir
         self.image=gif_head
         self.penup()
         self.setposition(pos)
-        self.penup()
         self.setheading(dir)
         self.original_pos=pos
+        # time.sleep(10)
+        self.screen.update()
+        self.screen.tracer(1)
+
+
         self.blood_empty_callback = blood_empty_callback
         # self.pos=list(pos)
         self.name=name
@@ -33,6 +40,7 @@ class player(turtle.Turtle):
         self.gun=config.POOR_GUN()
         self.gun_image=str(self.gun)
         self.bar=turtle.Turtle()
+
         self.bar.width(5)
         self.bar.pencolor('black')
         self.bar.hideturtle()
@@ -49,6 +57,7 @@ class player(turtle.Turtle):
         self.gun_image_display.hideturtle()
         self.show_personal_fig.penup()
         self.show_personal_fig.hideturtle()
+
         if bar_on_left_or_right=='left':
             self.bar.setposition(-config.MAP_SIZE[0]/2-50,config.MAP_SIZE[1]/2+config.bar_height+50)
             self.bar.write(self.name,False,'left',font=("Arial", 25, "normal"))
@@ -60,7 +69,7 @@ class player(turtle.Turtle):
             self.bar.back(config.bar_width)
             self.gun_image_display.setposition(config.MAP_SIZE[0]/2+130,config.MAP_SIZE[1]/2+config.bar_height+70)
             self.show_personal_fig.setposition(config.MAP_SIZE[0]/2-80,config.MAP_SIZE[1]/2+config.bar_height+75)
-        self.screen = turtle.getscreen()
+        
         self.screen.tracer(0)
         self.show_personal_fig.showturtle()
         self.show_personal_fig.shape(gif_head+'.gif')
@@ -76,6 +85,7 @@ class player(turtle.Turtle):
         self.gun_image_display.showturtle()
         self.screen.tracer(1)
         self.display_bar()
+
     def display_bar(self):
         if not self.over:
             self.screen.tracer(0)
@@ -145,8 +155,10 @@ class player(turtle.Turtle):
         if self.effect=='burnt':
             ang+=180
             ang%=360
-        self.seth(ang)
         self.shape(self.image+f'-{ang}.gif')
+        self.seth(ang)
+        # time.sleep(10)
+        
         self.dir=ang
     def fd(self,dis):
         self.original_pos=self.position()
