@@ -31,12 +31,12 @@ for i in range(4):
         screen.addshape(f'player1_frozen-{90*i}.gif')
         screen.addshape(f'player2_frozen-{90*i}.gif')
         screen.addshape(f'player_electrified-{90*i}.gif')
-        
+for i in range(4,7):
+        screen.addshape(f'ATK+{5*i}.gif')
+        screen.addshape(f'DEF+{5*i}.gif')
+        screen.addshape(f'HEAL{5*i}.gif')
 screen.addshape('player1.gif')
 screen.addshape('player2.gif')
-screen.addshape('ATK+.gif')
-screen.addshape('DEF+.gif')
-screen.addshape('HEAL.gif')
 screen.addshape('Poor Gun.gif')
 screen.addshape('Bomber.gif')
 screen.addshape('Musket.gif')
