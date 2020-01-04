@@ -8,19 +8,19 @@ class props(turtle.Turtle):
         self.setposition(pos)
         self.vanishTime = datetime.datetime.now() + datetime.timedelta(seconds = 15)
         if random.randint(1,3)==1:
+            option=[('defense','DEF+'),('attack','ATK+'),('heal','HEAL')]
+            t,s=random.choice(option)
+            self.type=t
+            option=[(2000,0.15,'30'),(1500,0.1,'25'),(1000,0.05,'20')]
+            ch=random.choices(option,[1,2,3])[0]
+            self.shape(s+ch[2]+'.gif')
+            self.ratio=ch[0] if self.type=='heal' else ch[1]
+        else:
             g=random.choice(config.GUN_LIST)()
             self.type='gun'
             self.object = g
             print(g)
             self.shape(f'{str(self.object)}.gif')
-        else:
-            option=[('defense','DEF+.gif'),('attack','ATK+.gif'),('heal','HEAL.gif')]
-            t,s=random.choice(option)
-            self.type=t
-            self.shape(s)
-            option=[(2000,0.2),(1500,0.15),(1000,0.1)]
-            ch=random.choices(option,[1,2,3])[0]
-            self.ratio=ch[0] if self.type=='heal' else ch[1]
         self.showturtle()
     def deleteSelf(self):
         self.clear()
