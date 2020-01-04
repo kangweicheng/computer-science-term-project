@@ -26,6 +26,8 @@ for i in range(4):
         screen.addshape(f'player2-{90*i}.gif')
         screen.addshape(f'player1_burnt-{90*i}.gif')
         screen.addshape(f'player2_burnt-{90*i}.gif')
+        screen.addshape(f'player1_hurt-{90*i}.gif')
+        screen.addshape(f'player2_hurt-{90*i}.gif')
         screen.addshape(f'player1_frozen-{90*i}.gif')
         screen.addshape(f'player2_frozen-{90*i}.gif')
         screen.addshape(f'player_electrified-{90*i}.gif')
@@ -43,7 +45,6 @@ screen.addshape('Hunter.gif')
 screen.addshape('Wizard.gif')
 screen.addshape('Ice Wizard.gif')
 screen.addshape('th1.gif')
-
 
 import player
 from map import Map

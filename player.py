@@ -180,12 +180,26 @@ class player(turtle.Turtle):
                 self.shape(self.image+f'-{self.dir}.gif')
                 self.effect='electrified'
                 self.screen.ontimer(self.change_to_original_image,other.affect_time*1000)
+            else:
+                self.image=self.original_image+'_hurt'
+                self.shape(self.image+f'-{self.dir}.gif')
+                self.screen.ontimer(self.change_to_original_image,1000)
+        
         elif type(other) == int:
             self.hp -= other
+            self.image=self.original_image+'_hurt'
+            self.shape(self.image+f'-{self.dir}.gif')
+            self.screen.ontimer(self.change_to_original_image,1000)
+
         else:
             self.hp -= other.damage*self.defense
+            self.image=self.original_image+'_hurt'
+            self.shape(self.image+f'-{self.dir}.gif')
+            self.screen.ontimer(self.change_to_original_image,1000)
+
         if self.hp <= 0:
             self.blood_empty_callback(self)
+
         self.display_bar()
         return None
 
@@ -202,6 +216,7 @@ class player(turtle.Turtle):
 
     def change_to_original_image(self):
         self.image=self.original_image
+        self.shape(self.image+f'-{self.dir}.gif')
         self.effect=None
 
     def change_to_air1(self):
