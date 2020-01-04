@@ -8,6 +8,7 @@ class player(turtle.Turtle):
             self.eff_gif.setposition((-330,170))
         else:
             self.eff_gif.setposition((330,170))
+        self.eff_gif.hideturtle()
         self.over = False
         self.air=1
         self.have_new_gun=1
