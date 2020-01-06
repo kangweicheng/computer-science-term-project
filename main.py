@@ -69,7 +69,7 @@ fog_step = 3
 gameMap = Map(map_size, fog_step, screen)
 
 p1 = player.player((0, 100),'玩家1',90,'player1','left', blood_empty_callback = gameMap.playerDie)
-p1.gun = config.HUNTER()
+# p1.gun = config.HUNTER()
 p2 = player.player((0, -100),'玩家2',270,'player2','right', blood_empty_callback = gameMap.playerDie)
 
 def icon():
