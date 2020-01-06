@@ -1,7 +1,7 @@
 import bullet,gun
 MAP_SIZE = (500, 500)
-FOG_UPDATE_INTERVAL = 2
-TOUCH_FOG_DAMAGE = 10
+FOG_UPDATE_INTERVAL = 5
+TOUCH_FOG_DAMAGE = 100
 hpmax=10000
 bar_width=240
 bar_height=30
@@ -38,6 +38,16 @@ SPARKY=			lambda:gun.gun('Sparky')
 HUNTER=			lambda:gun.gun('Hunter')
 WIZARD=			lambda:gun.gun('Wizard')
 ICE_WIZARD=		lambda:gun.gun('Ice Wizard')
-GUN_LIST=[POOR_GUN,MUSKET,THREE_MUSKETS,DART_GOBLIN,ELECTRO_WIZARD,BOMBER,SPARKY,HUNTER,WIZARD,ICE_WIZARD]
+GUN_LIST=[
+	{'func': POOR_GUN, 'name': 'Poor Gun'},
+	{'func': MUSKET, 'name': 'Musket'},
+	{'func': THREE_MUSKETS, 'name': 'Three Muskets'},
+	{'func': DART_GOBLIN, 'name': 'Dart Goblin'},
+	{'func': ELECTRO_WIZARD, 'name': 'Electro Wizard'},
+	{'func': BOMBER, 'name': 'Bomber'},
+	{'func': SPARKY, 'name': 'Sparky'},
+	{'func': HUNTER, 'name': 'Hunter'},
+	{'func': WIZARD, 'name': 'Wizard'},
+	{'func': ICE_WIZARD, 'name': 'Ice Wizard'}]
 PROPS_LIST=['ATK+','DEF+','HEAL']
 description=['爛到爆的槍','火槍，高傷射擊','三個火槍，超值選擇','吹箭手，吹得快','閃電，嗯(?)','發射炸彈，蹦泵绷！','高能注意！超級痛！','散彈槍，近距離痛到炸!','噴射巨~~~型火球','冷凍槍阿很難懂嗎幹嘛圖示','增加傷害5~15%(圖小→大)','增加防禦5~15%(圖小→大)','增加血量1000~2000(圖小→大)']

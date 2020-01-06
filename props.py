@@ -16,11 +16,10 @@ class props(turtle.Turtle):
             self.shape(s+ch[2]+'.gif')
             self.ratio=ch[0] if self.type=='heal' else ch[1]
         else:
-            g=random.choice(config.GUN_LIST)()
+            g=random.choice(config.GUN_LIST)
             self.type='gun'
-            self.object = g
-            print(g)
-            self.shape(f'{str(self.object)}.gif')
+            self.object = g['func']
+            self.shape('%s.gif' % (g['name']))
         self.showturtle()
     def deleteSelf(self):
         self.clear()

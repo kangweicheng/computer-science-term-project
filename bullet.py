@@ -1,4 +1,4 @@
-import turtle
+import turtle, time
 class bullet:
     '''
     name
@@ -9,13 +9,14 @@ class bullet:
     rod:radius of damage
     ang:spreading angle
     '''
-    def __init__(self,name,cd,nop,damage,rop,rod,ang,bul_gif,attack_ratio, pos, dir, affect_time, kill_self_callback=None, owner=None):
+    def __init__(self,name,cd,nop,damage,rop,rod,ang,bul_gif,attack_ratio, pos, dir, affect_time, kill_self_callback=None, owner=None, map=None):
         self.affect_time=affect_time
         self.over = False
         self.isDeleted = False
         self.screen = turtle.getscreen()
         self.screen.tracer(0)
         self.owner = owner
+        self.item_len=None
         if nop==1:
             self.items=[turtle.Turtle()]
             self.items[0].speed(0)
@@ -28,7 +29,9 @@ class bullet:
                 self.items[0].color('black')
             else:
                 self.items[0].shape(f'{bul_gif}-{str(dir)}.gif')
+            self.item_len = 1
         else:
+            self.item_len = nop
             self.items=[turtle.Turtle() for i in range(nop)]
             for i,t in enumerate(self.items):
                 if i%2==1:
@@ -44,6 +47,7 @@ class bullet:
         self.rod=rod
         self.ang=ang
         
+        self.map = map
         self.ratio = 10
         self.attack=attack_ratio
         self.pos = pos
@@ -59,7 +63,7 @@ class bullet:
             self.speed=1000
         else:
             self.speed = 200
-        self.step_time = 20 # milliseconds
+        self.step_time = 10 # milliseconds
         self.step=self.speed*self.step_time/1000
 
         self.delete_callback = None
@@ -86,81 +90,108 @@ class bullet:
     def routinely_move(self):
         if not self.over:
             self.move()
-            if self.move_distance < self.rop:
+            if self.move_distance < self.rop and (not self.isDeleted):
                 self.screen.ontimer(self.routinely_move, self.step_time)
             else:
                 self.deleteBullet()
                 if self.delete_callback:
                     self.delete_callback(self)
+    def addMap(self, map):
+        self.map = map
     def move(self):
+        # self.screen.tracer(0)
+        # print('step', self.step)
         if self.name=='Electro Wizard':
             for t in self.items:
-                t.pendown()
-                t.pensize(self.rod*0.4)
-                t.pencolor('gold')
+                if t:
+                    t.pendown()
+                    t.pensize(self.rod*0.4)
+                    t.pencolor('gold')
         if not (self.over or self.isDeleted):
             for t in self.items:
-                if self.nop == 1:
-                    if self.name=='Electro Wizard':
-                        t.lt(70)
-                        t.fd(self.step/2)
-                        t.rt(70)
-                        t.fd(self.step/2)
-                        self.move_distance += self.step
-                    elif self.name=='Sparky':
-                        if self.move_distance<=self.step:
-                            t.fd(self.step*0.5)
-                            self.move_distance += self.step*0.5
-                            if self.move_distance==self.step:
-                                t.hideturtle()
+                if t:
+                    if self.nop == 1:
+                        if self.name=='Electro Wizard':
+                            t.lt(70)
+                            t.fd(self.step/2)
+                            t.rt(70)
+                            t.fd(self.step/2)
+                            self.move_distance += self.step
+                        elif self.name=='Sparky':
+                            if self.move_distance<=self.step:
+                                t.fd(self.step*0.5)
+                                self.move_distance += self.step*0.5
+                                if self.move_distance==self.step:
+                                    t.hideturtle()
+                            else:
+                                t.fd(self.step)
+                                self.move_distance += self.step
                         else:
                             t.fd(self.step)
                             self.move_distance += self.step
                     else:
-                        t.fd(self.step)
-                        self.move_distance += self.step
-                else:
-                    t.fd(self.step*3)
-                    self.move_distance += self.step*3
+                        t.fd(self.step*3)
+                        self.move_distance += self.step*3
+        # if self.map:
+        #     self.map.updateBullets()
+        #     self.map.bulletHitPlayers()
+        # self.screen.update()
+        # self.screen.tracer(1)
+            # print('final')
     def setDeleteCallback(self, callback):
         self.delete_callback = callback
     # remove all bullets objects
     def deleteBullet(self):
         self.isDeleted = True
-        for t in self.items:
-            if self.name=='Bomber':
-                self.step = 0
-                for i in range(24):
-                    t.shape(f'{i}.gif')
-            elif self.name=='Sparky':
-                self.step = 0
-                t.showturtle()
-                for i in range(24,54):
-                        t.shape(f'{i}.gif')
-            t.clear()
-            t.hideturtle()
-            del t
-    # remove one object
-    def deleteItem(self, item):
-        try:
-            for t in self.items:
-                if self.name=='Electro Wizard':
-                    self.step = 0
-                    t.pencolor('white')
-                elif self.name=='Bomber':
+        for t in range(len(self.items)):
+            if self.items[t]:
+                if self.name=='Bomber':
                     self.step = 0
                     for i in range(24):
-                        t.shape(f'{i}.gif')
+                        self.items[t].shape(f'{i}.gif')
                 elif self.name=='Sparky':
                     self.step = 0
-                    t.showturtle()
+                    self.items[t].showturtle()
                     for i in range(24,54):
-                        t.shape(f'{i}.gif')
+                            self.items[t].shape(f'{i}.gif')
+                self.deleteItem(self.items[t])
+
+    # remove one object
+    def deleteItem(self, item):
+        print('delete')
+        if item:
+            for t in self.items:
+                if t:
+                    if self.name=='Electro Wizard':
+                        self.step = 0
+                        t.pencolor('white')
+                    elif self.name=='Bomber':
+                        self.step = 0
+                        for i in range(24):
+                            t.shape(f'{i}.gif')
+                    elif self.name=='Sparky':
+                        self.step = 0
+                        t.showturtle()
+                        for i in range(24,54):
+                            t.shape(f'{i}.gif')
+
             index = self.items.index(item)
-            self.items[index].clear()
-            self.items[index].hideturtle()
-            del self.items[index]
-        except:
-            print('except')
+            self.removeTurtleFromScreen(item)
+            item.hideturtle()
+            item.clear()
+            self.items[index]=None
+            self.item_len -= 1
+            if self.item_len == 0:
+                self.isDeleted = True
+                if self.delete_callback:
+                    self.delete_callback(self)
+        # except:
+        #     print('except')
+    def removeTurtleFromScreen(self, turtle):
+        # try:
+            index = self.screen.turtles().index(turtle)
+            del self.screen.turtles()[index]
+        # except:
+        #     print('except when removeTurtleFromScreen in bullet.py')
 
 

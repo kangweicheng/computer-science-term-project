@@ -44,7 +44,7 @@ class playerKeyPressHandler:
 		if self.rightHandler and self.rightKey:
 			self.screen.onkeypress(self.right, self.rightKey)
 		if self.attackHandler and self.attackKey:
-			self.screen.onkeypress(self.attack, self.attackKey)
+			self.screen.onkey(self.attack, self.attackKey)
 	def up(self):
 		if datetime.now() - self.last_keyPress > timedelta(seconds = self.shortest_event_interval):
 			self.last_keyPress = datetime.now()

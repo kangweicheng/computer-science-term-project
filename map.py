@@ -37,9 +37,11 @@ class Map:
 		# self.screen.ontimer(, self.fogUpdateInterval)
 		self.updateFog()
 		self.updateBullets()
+		time.sleep(0.01)
+		self.bulletHitPlayers()
 		self.updatePlayers()
 		self.updateProps()
-		self.bulletHitPlayers()
+		
 		self.propsHitPlayers()
 
 	def penup_set_pos(self, Turtle, pos):
@@ -179,24 +181,28 @@ class Map:
 			self.screen.ontimer(self.updatePlayers, 100)
 
 	def updateBullets(self):
+		print(len(self.screen.turtles()))
+		# print('self.bullets', self.bullets)
 		if not self.over:
-
 			for bullet in self.bullets:
+				if bullet:
+					for obj in bullet.items:
+						if obj:
+							collide, backPos = self.hit_wall(obj = obj, buffer_region = 10)
+							if collide:
 
-				for obj in bullet.items:
-					collide, backPos = self.hit_wall(obj = obj, buffer_region = 10)
-					if collide:
+								bullet.deleteItem(obj)
 
-						bullet.deleteItem(obj)
+							collide, backPos = self.hit_boundary(obj = obj, buffer_region = 20)
+							if collide:
+								print('collide')
 
-					collide, backPos = self.hit_boundary(obj = obj, buffer_region = 20)
-					if collide:
-						bullet.deleteItem(obj)
-				if len(bullet.items) == 0:
-					print('empty bullet')
-					bullet.deleteBullet()
-
-					self.removeBullet(bullet)
+								bullet.deleteItem(obj)
+					if bullet.item_len == 0:
+						print('empty bullet')
+						self.removeBullet(bullet)
+						bullet.deleteBullet()
+			self.bullets= list(filter(lambda x : x, self.bullets))
 
 			self.screen.ontimer(self.updateBullets, 30)
 
@@ -208,35 +214,39 @@ class Map:
 			return False
 	def bulletHitPlayers(self):
 		if not self.over:
-			print(self.bullets)
 			for player in self.players:
 				for bullet in self.bullets:
-					print(bullet)
-					for obj in bullet.items:
-						print(self.touchPlayers(player, obj, bullet.rod))
-						if self.touchPlayers(player, obj, bullet.rod) and bullet.owner != player.name:
-							print('hit')
-							bullet.deleteItem(obj)
-							if len(bullet.items) == 0:
-								bullet.deleteBullet()
-								self.removeBullet(bullet)
-							player.hit(bullet)
+					if bullet:
+						for obj in bullet.items:
+							if obj:
+								if self.touchPlayers(player, obj, bullet.rod) and bullet.owner != player.name:
+									print('hit')
+									bullet.deleteItem(obj)
+									player.hit(bullet)
+						if bullet.item_len == 0:
+							bullet.deleteBullet()
+							self.removeBullet(bullet)
+			self.bullets= list(filter(lambda x : x, self.bullets))
 			self.screen.ontimer(self.bulletHitPlayers, 30)
 	def propsHitPlayers(self):
 		if not self.over:
 			for player in self.players:
 				for props in self.props:
+					if props:
 						if self.touchPlayers(player, props, 30):
 							props.deleteSelf()
 							player.get_prop(props)
 							self.removeProps(props)
+			self.props = list(filter(lambda x : x, self.props))
 			self.screen.ontimer(self.propsHitPlayers, 100)
 	def updateProps(self):
 		for props in self.props:
-			if datetime.now() > props.vanishTime:
-				props.deleteSelf()
-				self.removeProps(props)
-
+			if props:
+				if datetime.now() > props.vanishTime:
+					props.deleteSelf()
+					self.removeProps(props)
+		self.props = list(filter(lambda x : x, self.props))
+		self.screen.update()
 		self.screen.ontimer(self.updateProps, 5000)
 	def registerPlayer(self, Player):
 		self.updatePlayers()
@@ -257,15 +267,18 @@ class Map:
 	def removeProps(self, Props):
 		try:
 			index = self.props.index(Props)
-			del self.props[index]
+			self.removeTurtleFromScreen(Props)
+			self.props[index] = None
+			print('remove props success')
 		except:
-			None
+			print('except when remove Props')
 	def registerBullet(self, Bullet):
+		Bullet.addMap(self)
 		self.bullets.append(Bullet)
 	def removeBullet(self, Bullet):
 		try:
 			index = self.bullets.index(Bullet)
-			del self.bullets[index]
+			self.bullets[index] = None
 		except:
 			None
 	def gameOver(self):
@@ -297,4 +310,11 @@ class Map:
 				self.gameOver()
 		except:
 			None
+	def removeTurtleFromScreen(self, turtle):
+		try:
+			index = self.screen.turtles().index(turtle)
+			del self.screen.turtles()[index]
+		except:
+			print('except when removeTurtleFromScreen in map.py')
+
 

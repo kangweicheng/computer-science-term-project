@@ -39,8 +39,8 @@ class player(turtle.Turtle):
         self.defense=1
         self.gun=config.POOR_GUN()
         self.gun_image=str(self.gun)
+        
         self.bar=turtle.Turtle()
-
         self.bar.width(5)
         self.bar.pencolor('black')
         self.bar.hideturtle()
@@ -165,8 +165,9 @@ class player(turtle.Turtle):
         self.forward(dis)
     def get_prop(self,other):
         if str(other) == 'gun':
+            self.dropGun()
             self.last_shot=0
-            self.gun=other.object
+            self.gun=other.object()
             self.gun_image=str(self.gun)
             self.have_new_gun=1
             self.air=1
@@ -255,3 +256,9 @@ class player(turtle.Turtle):
         else:
             self.air=1
             self.display_bar()
+    def dropGun(self):
+        try:
+            index = self.screen.turtles().index(self.gun.item)
+            del self.screen.turtles()[index]
+        except:
+            print('except when removeTurtleFromScreen in player.py')
