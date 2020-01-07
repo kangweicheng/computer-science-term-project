@@ -37,7 +37,6 @@ class Map:
 		# self.screen.ontimer(, self.fogUpdateInterval)
 		self.updateFog()
 		self.updateBullets()
-		time.sleep(0.01)
 		self.bulletHitPlayers()
 		self.updatePlayers()
 		self.updateProps()
@@ -170,18 +169,18 @@ class Map:
 	def updatePlayers(self):
 		if not self.over:
 			for i in self.players:
-				collide, backPos = self.hit_wall(obj = i, buffer_region = 8)
+				collide, backPos = self.hit_wall(obj = i, buffer_region = 15)
 				if collide:
 					i.back(9)
 
-				collide, backPos = self.hit_boundary(obj = i, buffer_region = 8)
+				collide, backPos = self.hit_boundary(obj = i, buffer_region = 15)
 				if collide:
 					i.setpos(backPos)
 					i.hit(config.TOUCH_FOG_DAMAGE)
 			self.screen.ontimer(self.updatePlayers, 100)
 
 	def updateBullets(self):
-		print(len(self.screen.turtles()))
+		# print(len(self.screen.turtles()))
 		# print('self.bullets', self.bullets)
 		if not self.over:
 			for bullet in self.bullets:
@@ -193,15 +192,16 @@ class Map:
 
 								bullet.deleteItem(obj)
 
-							collide, backPos = self.hit_boundary(obj = obj, buffer_region = 20)
+							collide, backPos = self.hit_boundary(obj = obj, buffer_region = 10)
 							if collide:
-								print('collide')
+								# print(obj, 'collide')
 
 								bullet.deleteItem(obj)
 					if bullet.item_len == 0:
 						print('empty bullet')
-						self.removeBullet(bullet)
+						# print(bullet)
 						bullet.deleteBullet()
+						self.removeBullet(bullet)
 			self.bullets= list(filter(lambda x : x, self.bullets))
 
 			self.screen.ontimer(self.updateBullets, 30)
@@ -273,14 +273,16 @@ class Map:
 		except:
 			print('except when remove Props')
 	def registerBullet(self, Bullet):
-		Bullet.addMap(self)
+		# Bullet.addMap(self)
+		# print(Bullet.items)
 		self.bullets.append(Bullet)
 	def removeBullet(self, Bullet):
+		# print(self.bullets, Bullet)
 		try:
 			index = self.bullets.index(Bullet)
 			self.bullets[index] = None
 		except:
-			None
+			print('error')
 	def gameOver(self):
 		self.screen.clearscreen()
 		for i in self.bullets:

@@ -239,7 +239,7 @@ class player(turtle.Turtle):
             self.last_shot=datetime.now()
             self.screen.ontimer(self.change_to_air1,int(self.b.cd*1000))
             self.air=0
-            self.display_bar()
+            # self.display_bar()
             self.have_new_gun=0
             return self.b
         return None

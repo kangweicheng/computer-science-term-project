@@ -176,6 +176,7 @@ class bullet:
                             t.shape(f'{i}.gif')
 
             index = self.items.index(item)
+            print(item)
             self.removeTurtleFromScreen(item)
             item.hideturtle()
             item.clear()
@@ -188,10 +189,11 @@ class bullet:
         # except:
         #     print('except')
     def removeTurtleFromScreen(self, turtle):
-        # try:
+        # print(turtle)
+        try:
             index = self.screen.turtles().index(turtle)
             del self.screen.turtles()[index]
-        # except:
-        #     print('except when removeTurtleFromScreen in bullet.py')
+        except:
+            print('except when removeTurtleFromScreen in bullet.py')
 
 
