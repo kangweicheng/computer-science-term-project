@@ -149,7 +149,7 @@ def funcRight_p1(screen = None , player = None):
 	    player.setheading(0)
 	playerForward(player)
 def funcAtt_p1(screen = None, player = None):
-	print('func1')
+	# print('func1')
 	bullet = player.shoot()
 	if bullet:
 		# print('func1',bullet.items)
@@ -176,7 +176,7 @@ def funcRight_p2(screen = None , player = None):
 	    player.setheading(0)
 	playerForward(player)
 def funcAtt_p2(screen = None, player = None):
-	print('func2')
+	# print('func2')
 	bullet = player.shoot()
 	# print('func2',bullet.items)
 	if bullet:

@@ -186,25 +186,27 @@ class Map:
 			for bullet in self.bullets:
 				if bullet:
 					for obj in bullet.items:
+						# print(bullet.items)
 						if obj:
 							collide, backPos = self.hit_wall(obj = obj, buffer_region = 10)
 							if collide:
-
+								# print(f'delete: {obj}')
+								# print(bullet.items, obj, 'collide wall')
 								bullet.deleteItem(obj)
-
+								
 							collide, backPos = self.hit_boundary(obj = obj, buffer_region = 10)
 							if collide:
-								# print(obj, 'collide')
-
+								# print(bullet.items, obj, 'collide boundary')
+								# print(f'delete: {obj}')
 								bullet.deleteItem(obj)
 					if bullet.item_len == 0:
-						print('empty bullet')
+						# print('empty bullet in updateBullets')
 						# print(bullet)
 						bullet.deleteBullet()
 						self.removeBullet(bullet)
 			self.bullets= list(filter(lambda x : x, self.bullets))
 
-			self.screen.ontimer(self.updateBullets, 30)
+			self.screen.ontimer(self.updateBullets, 20)
 
 	def touchPlayers(self, player, obj, rod):
 		buffer_dist = 0
@@ -220,10 +222,12 @@ class Map:
 						for obj in bullet.items:
 							if obj:
 								if self.touchPlayers(player, obj, bullet.rod) and bullet.owner != player.name:
-									print('hit')
+									# print('hit')
 									bullet.deleteItem(obj)
 									player.hit(bullet)
 						if bullet.item_len == 0:
+							# print('empty bullet in bulletHitPlayers')
+							# print(bullet)
 							bullet.deleteBullet()
 							self.removeBullet(bullet)
 			self.bullets= list(filter(lambda x : x, self.bullets))
@@ -278,11 +282,11 @@ class Map:
 		self.bullets.append(Bullet)
 	def removeBullet(self, Bullet):
 		# print(self.bullets, Bullet)
-		try:
-			index = self.bullets.index(Bullet)
-			self.bullets[index] = None
-		except:
-			print('error')
+		# try:
+		index = self.bullets.index(Bullet)
+		self.bullets[index] = None
+		# except:
+		# 	print('error')
 	def gameOver(self):
 		self.screen.clearscreen()
 		for i in self.bullets:

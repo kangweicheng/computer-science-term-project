@@ -63,7 +63,7 @@ class bullet:
             self.speed=1000
         else:
             self.speed = 200
-        self.step_time = 10 # milliseconds
+        self.step_time = 20 # milliseconds
         self.step=self.speed*self.step_time/1000
 
         self.delete_callback = None
@@ -91,11 +91,13 @@ class bullet:
         if not self.over:
             self.move()
             if self.move_distance < self.rop and (not self.isDeleted):
+                # print('ontimer', self)
                 self.screen.ontimer(self.routinely_move, self.step_time)
             else:
-                self.deleteBullet()
-                if self.delete_callback:
-                    self.delete_callback(self)
+                if self.move_distance >= self.rop:
+                    self.deleteBullet()
+                    if self.delete_callback:
+                        self.delete_callback(self)
     def addMap(self, map):
         self.map = map
     def move(self):
@@ -142,6 +144,7 @@ class bullet:
         self.delete_callback = callback
     # remove all bullets objects
     def deleteBullet(self):
+        print('deleteBullet')
         self.isDeleted = True
         for t in range(len(self.items)):
             if self.items[t]:
@@ -154,11 +157,14 @@ class bullet:
                     self.items[t].showturtle()
                     for i in range(24,54):
                             self.items[t].shape(f'{i}.gif')
+                print(f'delete: {self.items[t]}')
                 self.deleteItem(self.items[t])
+                self.move_distance = 0
+        print('deleteBullet Done')
 
     # remove one object
     def deleteItem(self, item):
-        print('delete')
+        print('delete', item, self)
         if item:
             for t in self.items:
                 if t:
@@ -184,16 +190,16 @@ class bullet:
             self.item_len -= 1
             if self.item_len == 0:
                 self.isDeleted = True
-                if self.delete_callback:
-                    self.delete_callback(self)
+                # if self.delete_callback:
+                #     self.delete_callback(self)
         # except:
         #     print('except')
     def removeTurtleFromScreen(self, turtle):
         # print(turtle)
-        try:
+        # try:
             index = self.screen.turtles().index(turtle)
             del self.screen.turtles()[index]
-        except:
-            print('except when removeTurtleFromScreen in bullet.py')
+        # except:
+        #     print('except when removeTurtleFromScreen in bullet.py')
 
 
