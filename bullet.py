@@ -197,8 +197,8 @@ class bullet:
     def removeTurtleFromScreen(self, turtle):
         # print(turtle)
         # try:
-            index = self.screen.turtles().index(turtle)
-            del self.screen.turtles()[index]
+            #index = self.screen.turtles().index(turtle)
+            #del self.screen.turtles()[index]
         # except:
         #     print('except when removeTurtleFromScreen in bullet.py')
 

@@ -59,7 +59,7 @@ class Map:
 
 
 	def initWallpos(self, num):
-		self.wall_pos = []
+		self.wall_pos = [(0,0)]
 		while len(self.wall_pos) < num:
 			x1 = (random.random() - 0.5) * (self.map_size[0] - 50)
 			y1 = (random.random() - 0.5) * (self.map_size[1] - 50)
