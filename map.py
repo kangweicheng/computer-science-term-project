@@ -6,7 +6,7 @@ import config
 import player
 from PlayerKeyPressHandler import playerKeyPressHandler
 from props import props
-random.seed(8)
+
 class Map:
 	def __init__(self, map_size, fog_step, screen, fogUpdateInterval = config.FOG_UPDATE_INTERVAL):
 		self.over = False
